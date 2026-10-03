@@ -22,7 +22,7 @@
 <title>La Ronda</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Caveat+Brush&family=JetBrains+Mono:wght@500;700&family=Monoton&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Caveat+Brush&family=JetBrains+Mono:wght@500;700&family=Monoton&family=Cinzel+Decorative:wght@700&family=IM+Fell+English:ital@0;1&display=swap">
 <style>
 /* Layout: app de bar de barrio de noche — azulejo de fondo, posavasos, caña que se llena; El Burdel cambia a sala de neones. Columna única de 760px con barra de pestañas abajo */
 :root{
@@ -159,7 +159,7 @@ h1,h2,h3{text-wrap:balance;margin:0}
 .tab[aria-selected="true"]{background:var(--amber);color:var(--on-accent)}
 .tab[data-v="burdel"]{color:var(--pink)}
 .tab[data-v="burdel"][aria-selected="true"]{background:var(--pink);color:#18051A;box-shadow:0 0 18px var(--pink)}
-@media (max-width:640px){.tab{padding:10px 9px;font-size:13px}.tab span{display:none}.tab[aria-selected="true"] span{display:inline}}
+@media (max-width:640px){.tab{padding:10px 8px;font-size:13px}.tab span{display:none}.tab[aria-selected="true"] span{display:inline}}
 .view{animation:viewIn .35s ease both}
 @keyframes viewIn{from{opacity:0;transform:translateY(10px)}}
 .sec{margin-top:30px;display:grid;gap:14px}
@@ -449,7 +449,7 @@ body.neon .sec-h h2{color:#FFE1F2;text-shadow:0 0 10px rgba(255,60,172,.6)}
 .early{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--ink-2)}
 .early input{background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 10px}
 .warn{background:rgba(255,228,94,.1);border:1px solid rgba(255,228,94,.45);border-radius:12px;padding:10px 12px;font-size:13.5px}
-.sess{display:grid;grid-template-columns:auto 1fr auto auto;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.sess{display:grid;grid-template-columns:auto 1fr auto auto auto;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
 .sess .dot{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;color:#14100A}
 .sess .dot svg{width:18px;height:18px}
 .sess .when{color:var(--muted);font-size:12.5px}
@@ -469,7 +469,7 @@ body.neon .sec-h h2{color:#FFE1F2;text-shadow:0 0 10px rgba(255,60,172,.6)}
 .ev span{min-width:0}
 
 /* ---------- TUTORIAL ---------- */
-#tuto,#avModal,#cropModal,#fotoModal{position:fixed;inset:0;z-index:70;display:grid;place-items:center;padding:16px;background:rgba(5,10,8,.78);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:fadeIn .3s ease both}
+#tuto,#avModal,#cropModal,#fotoModal,#rateModal{position:fixed;inset:0;z-index:70;display:grid;place-items:center;padding:16px;background:rgba(5,10,8,.78);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:fadeIn .3s ease both}
 @keyframes fadeIn{from{opacity:0}}
 .tcard{width:min(440px,100%);max-height:calc(100% - 8px);overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:26px;box-shadow:0 30px 80px rgba(0,0,0,.6);
   animation:tpop .5s cubic-bezier(.2,1.5,.4,1) both;display:grid}
@@ -622,6 +622,63 @@ body.neon .sec-h h2{color:#FFE1F2;text-shadow:0 0 10px rgba(255,60,172,.6)}
 .lb .frame{max-width:340px;margin:12px auto 0;cursor:default}
 .lb-row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .del.arm{background:var(--red);color:#fff}
+/* ---------- LAS CRÓNICAS DE TABERNIA ---------- */
+body.fantasy{--bg:#100E12; --surface:#1E1A16; --surface-2:#2A241D; --line:#4A3D2A; --muted:#A8977A; --ink-2:#D6C7A6; --tile:rgba(242,179,61,.03)}
+body.fantasy .mini-logo{font-family:'Cinzel Decorative',Georgia,serif;font-size:20px;transform:none;text-shadow:0 0 12px rgba(242,179,61,.4)}
+body.fantasy .sec-h h2{font-family:'Cinzel Decorative',Georgia,serif;font-weight:700;font-size:22px;color:#F1E2BC}
+body.fantasy .tab[aria-selected="true"]{background:#C9A24A;color:#241805}
+.tab-hero{position:relative;padding:28px 22px 24px;text-align:center;color:#3B2A14;border-radius:6px;
+  background:radial-gradient(ellipse at 50% 40%,#F1E2BC 0%,#E3CB98 60%,#C9A86B 100%);box-shadow:0 14px 30px rgba(0,0,0,.55),inset 0 0 40px rgba(110,70,20,.35)}
+.tab-hero::before,.tab-hero::after{content:"";position:absolute;left:-8px;right:-8px;height:18px;border-radius:9px;background:linear-gradient(#8A6A35,#C9A86B 40%,#7A5A28);box-shadow:0 3px 6px rgba(0,0,0,.4)}
+.tab-hero::before{top:-9px}.tab-hero::after{bottom:-9px}
+.tab-hero h2{font-family:'Cinzel Decorative',Georgia,serif;font-weight:700;font-size:clamp(26px,8vw,40px);line-height:1.05;color:#3B2A14;text-shadow:0 1px 0 rgba(255,255,255,.4)}
+.tab-hero p{font-family:'IM Fell English',Georgia,serif;font-style:italic;font-size:17px;margin:10px auto 0;max-width:34ch;color:#5A4220}
+.tab-hero .compass{width:64px;height:64px;margin:0 auto 6px;display:block;animation:spinSlow 30s linear infinite}
+@keyframes spinSlow{to{transform:rotate(360deg)}}
+.tab-hero .tally{margin-top:14px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap;font-family:'IM Fell English',Georgia,serif;font-size:16px;color:#3B2A14}
+.tab-hero .tally b{font-family:'Cinzel Decorative',Georgia,serif;font-size:22px;display:block;line-height:1}
+.realm-sub{font-family:'IM Fell English',Georgia,serif;font-style:italic;color:var(--ink-2);font-size:16px;margin-top:-8px}
+.places{display:grid;gap:12px}
+.place{border-radius:6px;color:#3B2A14;background:radial-gradient(ellipse at 30% 20%,#F1E2BC,#E2C995 70%,#D2B178);border:1px solid #8A6A35;
+  box-shadow:0 8px 18px rgba(0,0,0,.45),inset 0 0 24px rgba(110,70,20,.25);animation:slideUp .45s ease both}
+.place summary{list-style:none;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:12px 14px;cursor:pointer}
+.place summary::-webkit-details-marker{display:none}
+.seal{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;flex:none;position:relative;color:#FFF6E0;
+  background:radial-gradient(circle at 35% 30%,color-mix(in srgb,var(--rk) 70%,#fff),var(--rk) 55%,color-mix(in srgb,var(--rk) 60%,#000));
+  box-shadow:0 3px 0 rgba(0,0,0,.35),inset 0 -3px 6px rgba(0,0,0,.3)}
+.seal::before{content:"";position:absolute;inset:-5px;border-radius:50%;background:inherit;opacity:.55;z-index:-1;clip-path:polygon(50% 0,60% 8%,72% 3%,78% 14%,91% 13%,90% 26%,100% 33%,94% 44%,100% 56%,91% 63%,92% 77%,79% 80%,73% 92%,61% 89%,50% 100%,39% 89%,27% 92%,21% 80%,8% 77%,9% 63%,0 56%,6% 44%,0 33%,10% 26%,9% 13%,22% 14%,28% 3%,40% 8%)}
+.seal b{font-family:'Cinzel Decorative',Georgia,serif;font-size:21px;line-height:1;text-shadow:0 1px 2px rgba(0,0,0,.4)}
+.seal.none b{font-size:24px}
+.pl-body{min-width:0;display:grid;gap:3px}
+.pl-name{font-family:'Cinzel Decorative',Georgia,serif;font-weight:700;font-size:17px;line-height:1.15;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pl-rank{font-family:'IM Fell English',Georgia,serif;font-style:italic;font-size:15px;color:var(--rkd)}
+.pl-meta{font-size:12.5px;color:#6A5230}
+.pl-who{display:flex;gap:2px;font-size:20px}
+.pl-who .avx{font-size:22px}
+.pl-chev{width:10px;height:10px;border-right:2px solid #6A5230;border-bottom:2px solid #6A5230;transform:rotate(45deg);transition:transform .25s;margin-right:4px}
+.place[open] .pl-chev{transform:rotate(225deg)}
+.pl-votes{padding:0 14px 12px;display:grid;gap:4px;border-top:1px dashed #8A6A35;padding-top:10px;margin:0 14px 0;padding-left:0;padding-right:0}
+.pl-vote{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;font-size:14px}
+.pl-vote .avx{font-size:22px}
+.pl-vote .n{font-family:'Cinzel Decorative',Georgia,serif;font-weight:700;font-size:16px}
+.pl-vote small{color:#6A5230}
+.ranks{display:flex;flex-wrap:wrap;gap:8px}
+.ranks span{display:inline-flex;align-items:center;gap:6px;font-family:'IM Fell English',Georgia,serif;font-size:15px;color:var(--ink-2)}
+.ranks i{width:12px;height:12px;border-radius:50%;background:var(--rk)}
+.realm-empty{font-family:'IM Fell English',Georgia,serif;font-style:italic;font-size:16px;color:var(--ink-2);text-align:center;padding:16px;border:1px dashed var(--line);border-radius:8px}
+/* nota al desfichar */
+#rateModal{z-index:76}
+.rate-card .tbody{text-align:center;justify-items:center}
+.rate-card h2{font-size:26px}
+.rate-ico{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:var(--fc);color:#14100A;animation:wobble 2s ease-in-out infinite}
+.rate-ico svg{width:32px;height:32px}
+.rate-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;width:100%;margin-top:4px}
+.rate-grid button{aspect-ratio:1;border-radius:14px;font-family:var(--font-display);font-size:24px;color:#14100A;background:var(--nc);box-shadow:0 4px 0 color-mix(in srgb,var(--nc) 55%,#000);transition:transform .12s}
+.rate-grid button:active{transform:translateY(3px) scale(.94);box-shadow:0 1px 0 color-mix(in srgb,var(--nc) 55%,#000)}
+.rate-sugg{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.rate-card .txt{text-align:center}
+.nota-chip{min-width:34px;padding:5px 9px;border-radius:999px;font-family:var(--font-display);font-size:15px;color:#14100A;background:var(--nc)}
+.t-scroll{width:min(250px,86%);display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;padding:12px;border-radius:6px;color:#3B2A14;background:radial-gradient(ellipse at 30% 20%,#F1E2BC,#E2C995 70%,#D2B178);box-shadow:0 8px 18px rgba(0,0,0,.45)}
 /* ---------- TOAST + STAMP ---------- */
 #toasts{position:fixed;left:0;right:0;bottom:calc(86px + env(safe-area-inset-bottom,0px));z-index:40;display:grid;justify-items:center;gap:8px;padding-inline:16px;pointer-events:none}
 .toast{pointer-events:auto;display:flex;align-items:center;gap:12px;background:var(--foam);color:var(--on-accent);border-radius:999px;padding:10px 12px 10px 18px;font-weight:700;
@@ -723,12 +780,16 @@ body.neon .toast{background:#FFE1F2;box-shadow:0 0 24px rgba(255,60,172,.6)}
     <button class="tab" role="tab" data-v="fotos" aria-selected="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.5"/></svg>
       <span>Pruebas</span></button>
+    <button class="tab" role="tab" data-v="tabernia" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V9l2-1V4h2v2h2V4h4v2h2V4h2v4l2 1v12z"/><path d="M10 21v-4a2 2 0 0 1 4 0v4"/></svg>
+      <span>Tabernia</span></button>
     <button class="tab" role="tab" data-v="burdel" aria-selected="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7.5-4.6-7.5-10A4 4 0 0 1 12 7.6 4 4 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/></svg>
       <span>El Burdel</span></button>
   </div>
 </nav>
 
+<div id="rateModal" hidden role="dialog" aria-modal="true" aria-label="Puntuar sitio"></div>
 <div id="fotoModal" hidden role="dialog" aria-modal="true" aria-label="Prueba"></div>
 <div id="cropModal" hidden role="dialog" aria-modal="true" aria-label="Encuadrar foto"></div>
 <div id="avModal" hidden role="dialog" aria-modal="true" aria-label="Mi perfil"></div>
@@ -984,6 +1045,7 @@ function show(id){
   ['gate','who','app'].forEach(s => $('#'+s).hidden = s !== id);
   $('#tabs').hidden = id !== 'app';
   document.body.classList.toggle('neon', id === 'app' && view === 'burdel');
+  document.body.classList.toggle('fantasy', id === 'app' && view === 'tabernia');
   window.scrollTo(0,0);
 }
 function pourTo(next){ const p = $('#pour'); p.classList.remove('go'); void p.offsetWidth; p.classList.add('go'); setTimeout(next, 560); }
@@ -1186,8 +1248,10 @@ function checkIn(t){
   if (!canWrite()) return;
   const place = ($('#placeName')?.value || '').trim().slice(0, 40);
   const open = openSession(me);
-  if (open) setOut(open, Date.now());
+  const outAt = Date.now();
+  if (open) setOut(open, outAt);
   addItem('fichajes', t, place ? {place} : {});
+  if (open) setTimeout(() => askRating({...open, out:outAt}), 1700);
   try { navigator.vibrate && navigator.vibrate([40,60,40]); } catch(e){}
   render();
   stamp(t === 'disco' ? 'A la pista' : 'Dentro', open ? `Sales ${PLACES[open.t].de} y fichas` : 'Fichado', t === 'disco');
@@ -1198,6 +1262,7 @@ function checkOut(at){
   const out = Math.max(s.ts + 60000, Math.min(at, Date.now()));
   setOut(s, out); render();
   toast(`Desfichado: ${fmtDur(out - s.ts)} ${PLACES[s.t].en}`, {label:'Deshacer', fn:() => { setOut(s, null); render(); }});
+  setTimeout(() => askRating({...s, out}), 350);
 }
 function checkOutAt(hhmm){
   const s = openSession(me); if (!s || !/^\d{1,2}:\d{2}$/.test(hhmm)) { toast('Pon una hora válida, por ejemplo 04:30.'); return; }
@@ -1245,6 +1310,7 @@ function setView(v){
   view = v;
   document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', t.dataset.v === v));
   document.body.classList.toggle('neon', v === 'burdel');
+  document.body.classList.toggle('fantasy', v === 'tabernia');
   const el = $('#view'); el.classList.remove('view'); void el.offsetWidth; el.classList.add('view');
   render(); window.scrollTo({top:0});
 }
@@ -1257,7 +1323,7 @@ function render(){
   $('#dbBanner').innerHTML = dbBannerHtml();
   const keep = {}; ['placeName','outTime'].forEach(id => { const e = document.getElementById(id); if (e && e.value) keep[id] = e.value; });
   const focused = document.activeElement && document.activeElement.id;
-  ({mine:renderMine, stats:renderStats, group:renderGroup, top:renderTop, fotos:renderFotos, burdel:renderBurdel})[view]();
+  ({mine:renderMine, stats:renderStats, group:renderGroup, top:renderTop, fotos:renderFotos, tabernia:renderTabernia, burdel:renderBurdel})[view]();
   Object.entries(keep).forEach(([id, v]) => { const e = document.getElementById(id); if (e) e.value = v; });
   if (focused && (focused === 'placeName' || focused === 'outTime')) document.getElementById(focused)?.focus({preventScroll:true});
 }
@@ -1350,6 +1416,7 @@ function renderMine(){
   el.querySelectorAll('.del[data-n]').forEach(b => b.onclick = () => removeItem('nights', b.dataset.n, Number(b.dataset.ts)));
   el.querySelectorAll('.del[data-fts]').forEach(b => b.onclick = () => removeItem('fichajes', b.dataset.fn, Number(b.dataset.fts)));
   el.querySelectorAll('[data-in]').forEach(b => b.onclick = () => checkIn(b.dataset.in));
+  el.querySelectorAll('[data-rate]').forEach(b => b.onclick = () => askRating(allFich().find(x => x.pid === me && x.ts === Number(b.dataset.rate))));
   const fo = $('#fOut'); if (fo) fo.onclick = () => checkOut(Date.now());
   const foa = $('#fOutAt'); if (foa) foa.onclick = () => checkOutAt($('#outTime').value);
   $('#toStats').onclick = () => setView('stats');
@@ -1376,12 +1443,12 @@ function fichHtml(key){
   } else {
     body = `<div class="fich">
       <div class="fich-btns">${Object.values(PLACES).map(P => `<button class="fbtn" data-in="${P.k}" style="--fc:${P.hi}"><span class="fi">${svgI(P.k)}</span><span><b>Fichar ${P.k === 'bar' ? 'en bar' : 'en discoteca'}</b><span>${P.k === 'bar' ? 'Arranca el reloj de barra' : 'Arranca el reloj de pista'}</span></span></button>`).join('')}</div>
-      <input class="txt" id="placeName" maxlength="40" aria-label="Nombre del sitio" placeholder="Nombre del sitio (opcional): La Bodeguita, Kapital…">
+      <input class="txt" id="placeName" list="placesList" maxlength="40" aria-label="Nombre del sitio" placeholder="Nombre del sitio (opcional): La Bodeguita, Kapital…"><datalist id="placesList">${knownPlaces().map(n => `<option value="${esc(n)}">`).join('')}</datalist>
     </div>`;
   }
   const list = done.length ? `<div class="card" style="padding:2px 16px">${done.map(x => `<div class="sess"><span class="dot" style="background:${PLACES[x.t].hi}">${svgI(x.t)}</span>
     <div><div style="font-weight:600">${PLACES[x.t].n}${x.place ? ' · ' + esc(x.place) : ''}</div><div class="when">${fmtTime(x.ts)} → ${fmtTime(x.out)}</div></div>
-    <span class="d">${shortDur(sessDur(x))}</span><button class="del" data-fn="${x.night}" data-fts="${x.ts}">Quitar</button></div>`).join('')}</div>` : '';
+    <span class="d">${shortDur(sessDur(x))}</span>${x.nota ? `<button class="nota-chip" style="--nc:${notaColor(x.nota)}" data-rate="${x.ts}" aria-label="Nota ${x.nota}, cambiar">${x.nota}</button>` : `<button class="seg" data-rate="${x.ts}">Puntuar</button>`}<button class="del" data-fn="${x.night}" data-fts="${x.ts}">Quitar</button></div>`).join('')}</div>` : '';
   const totTxt = [tot.bar && `bar ${shortDur(tot.bar)}`, tot.disco && `disco ${shortDur(tot.disco)}`].filter(Boolean).join(' · ');
   return `<div class="sec" style="margin-top:8px"><div class="sec-h"><div><div class="eyebrow">Fichaje</div><h2>¿Dónde estás?</h2></div>${totTxt ? `<span class="eyebrow">Esta noche: ${totTxt}</span>` : ''}</div>${body}${list}</div>`;
 }
@@ -1737,6 +1804,102 @@ function openFoto(id){
   draw();
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#fotoModal').hidden){ $('#fotoModal').hidden = true; $('#fotoModal').innerHTML = ''; } });
+
+/* ================= LAS CRÓNICAS DE TABERNIA ================= */
+const RANKS = [[9,'Legendaria','#D9A21B','#8A5E00'],[7.5,'Épica','#8E5BD8','#5B2E9E'],[6,'Rara','#2F86C4','#1D5A86'],[4.5,'Común','#8C8470','#5A5446'],[0,'Maldita','#B5382A','#8A2418']];
+const rankFor = avg => RANKS.find(r => avg >= r[0]) || RANKS[RANKS.length - 1];
+const notaColor = n => `hsl(${Math.round((n - 1) * 13)},72%,52%)`;
+const placeKey = n => String(n || '').trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ');
+const QUIPS = n => n >= 9 ? 'Nivel leyenda.' : n >= 7 ? 'Buen sitio, sí señor.' : n >= 5 ? 'Ni fu ni fa.' : n >= 3 ? 'Mejorable…' : 'Que lo cierren.';
+function knownPlaces(t){
+  const m = {};
+  allFich().filter(x => (!t || x.t === t) && x.place).forEach(x => { const k = placeKey(x.place); (m[k] = m[k] || {name:x.place, n:0}).n++; });
+  return Object.values(m).sort((a,b) => b.n - a.n).map(x => x.name);
+}
+function setFields(s, fields){
+  const id = `${s.pid}__${s.night}`;
+  writeArr('fichajes', id, itemsOf('fichajes', id).map(it => it.ts === s.ts ? {...it, ...fields} : it));
+}
+function askRating(s){
+  if (!s || !PLACES[s.t]) return;
+  const P = PLACES[s.t]; const box = $('#rateModal'); box.hidden = false;
+  const sugg = knownPlaces(s.t).slice(0, 8);
+  box.innerHTML = `<div class="tcard rate-card">
+    <div class="ttop"><span class="tstep">${s.t === 'disco' ? 'Mazmorra' : 'Taberna'} visitada</span><button class="tskip" data-x>Ahora no</button></div>
+    <div class="tbody">
+      <div class="rate-ico" style="--fc:${P.hi}">${svgI(s.t)}</div>
+      <h2>¿Qué nota le das ${s.place ? 'a ' + esc(s.place) : 'al sitio'}?</h2>
+      ${s.place ? '' : `<input class="txt" id="rateName" maxlength="40" placeholder="¿Cómo se llama el sitio?" aria-label="Nombre del sitio">
+        ${sugg.length ? `<div class="rate-sugg">${sugg.map(n => `<button type="button" class="seg" data-name="${esc(n)}">${esc(n)}</button>`).join('')}</div>` : ''}`}
+      <div class="rate-grid">${Array.from({length:10}, (_, i) => `<button type="button" data-n="${i+1}" style="--nc:${notaColor(i+1)}" aria-label="Nota ${i+1}">${i+1}</button>`).join('')}</div>
+      <div class="err" id="rateErr" role="alert"></div>
+      <div class="hint">${s.out ? fmtDur(Math.max(0, s.out - s.ts)) + ' ' + P.en + '. ' : ''}Un toque y listo.</div>
+    </div></div>`;
+  const close = () => { box.hidden = true; box.innerHTML = ''; };
+  box.querySelector('[data-x]').onclick = close;
+  box.onclick = e => { if (e.target === box) close(); };
+  box.querySelectorAll('[data-name]').forEach(b => b.onclick = () => { $('#rateName').value = b.dataset.name; });
+  box.querySelectorAll('[data-n]').forEach(b => b.onclick = () => {
+    const n = Number(b.dataset.n);
+    const name = (s.place || ($('#rateName')?.value || '')).trim().slice(0, 40);
+    if (!name){ $('#rateErr').textContent = 'Dinos cómo se llama, que si no no cuenta.'; $('#rateName').focus(); return; }
+    if (!canWrite()) return;
+    setFields(s, {nota:n, place:name}); close(); render();
+    toast(`${n}/10 para ${name}. ${QUIPS(n)}`);
+  });
+  setTimeout(() => { const i = $('#rateName'); if (i) i.focus({preventScroll:true}); }, 60);
+}
+function realm(t){
+  const m = {};
+  allFich().filter(s => s.t === t && s.place).forEach(s => {
+    const k = placeKey(s.place); const e = m[k] = m[k] || {names:{}, visits:[], notas:[]};
+    e.names[s.place] = (e.names[s.place] || 0) + 1; e.visits.push(s); if (s.nota) e.notas.push(s);
+  });
+  return Object.values(m).map(e => ({
+    name: Object.entries(e.names).sort((a,b) => b[1] - a[1])[0][0],
+    visits: e.visits, notas: e.notas.sort((a,b) => b.ts - a.ts),
+    avg: e.notas.length ? e.notas.reduce((a,s) => a + s.nota, 0) / e.notas.length : null,
+    last: Math.max(...e.visits.map(v => v.ts)),
+    who: [...new Set(e.visits.map(v => v.pid))].filter(person)
+  })).sort((a,b) => (b.avg ?? -1) - (a.avg ?? -1) || b.visits.length - a.visits.length);
+}
+const COMPASS = '<svg class="compass" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="29" fill="none" stroke="#7A5A28" stroke-width="2"/><circle cx="32" cy="32" r="22" fill="none" stroke="#7A5A28" stroke-width="1" stroke-dasharray="2 3"/><path d="M32 4l5 28-5 28-5-28z" fill="#8A2418"/><path d="M32 4l5 28h-10z" fill="#B5382A"/><path d="M4 32l28-5 28 5-28 5z" fill="#5A4220"/><circle cx="32" cy="32" r="3" fill="#F1E2BC" stroke="#5A4220"/></svg>';
+function placeCard(p, i){
+  const r = p.avg != null ? rankFor(p.avg) : null;
+  return `<details class="place" style="animation-delay:${Math.min(i, 10) * 50}ms;--rk:${r ? r[2] : '#8C7A55'};--rkd:${r ? r[3] : '#6A5230'}">
+    <summary>
+      <span class="seal ${r ? '' : 'none'}"><b>${p.avg != null ? fmtPts(p.avg) : '?'}</b></span>
+      <span class="pl-body"><span class="pl-name">${esc(p.name)}</span>
+        <span class="pl-rank">${r ? esc(r[1]) : 'Sin juzgar todavía'}</span>
+        <span class="pl-meta">${plural(p.notas.length, 'nota', 'notas')} · ${plural(p.visits.length, 'visita', 'visitas')} · última: ${fmtNight(nightKey(p.last))}</span>
+        <span class="pl-who">${p.who.slice(0, 8).map(pid => av(person(pid))).join('')}</span></span>
+      <span class="pl-chev" aria-hidden="true"></span>
+    </summary>
+    <div class="pl-votes">${p.notas.length ? p.notas.map(s => `<div class="pl-vote">${av(person(s.pid))}<span>${esc(person(s.pid)?.name || '¿?')} <small>· ${fmtNight(s.night)}</small></span><span class="n">${s.nota}</span></div>`).join('')
+      : '<div class="pl-vote"><span></span><span><small>Nadie le ha puesto nota todavía.</small></span><span></span></div>'}</div>
+  </details>`;
+}
+function renderTabernia(){
+  const el = $('#view');
+  const bars = realm('bar'), discos = realm('disco');
+  const nNotas = allFich().filter(s => s.nota && s.place).length;
+  const section = (list, title, sub, empty) => `<div class="sec"><div class="sec-h"><h2>${title}</h2><span class="eyebrow">${plural(list.length, 'sitio', 'sitios')}</span></div>
+    <div class="realm-sub">${sub}</div>
+    ${list.length ? `<div class="places">${list.map(placeCard).join('')}</div>` : `<div class="realm-empty">${empty}</div>`}</div>`;
+  el.innerHTML = `
+    <div class="sec" style="margin-top:14px">
+      <div class="tab-hero">${COMPASS}
+        <h2>Las Crónicas<br>de Tabernia</h2>
+        <p>Mapa oficial de los antros conquistados por la cuadrilla. Que los dioses del vermut nos protejan.</p>
+        <div class="tally"><span><b>${bars.length}</b>tabernas</span><span><b>${discos.length}</b>mazmorras</span><span><b>${nNotas}</b>${nNotas === 1 ? 'veredicto' : 'veredictos'}</span></div>
+      </div>
+    </div>
+    ${section(bars, 'Las Tabernas', 'Donde los aventureros reponen fuerzas antes de la batalla.', 'Ningún aventurero ha juzgado una taberna todavía. Ficha en un bar, ponle nombre y dale nota al salir.')}
+    ${section(discos, 'Las Mazmorras del Baile', 'Entras con dignidad, sales sin ella.', 'Ninguna mazmorra explorada. Ficha en una discoteca y puntúala al desfichar.')}
+    <div class="sec card"><div class="sec-h"><h3 style="font-family:'Cinzel Decorative',Georgia,serif;font-size:16px">Escala de los sabios</h3></div>
+      <div class="ranks">${RANKS.map(r => `<span style="--rk:${r[2]}"><i></i>${r[1]} · ${r[0] ? fmtPts(r[0]) + '+' : 'menos de 4,5'}</span>`).join('')}</div>
+      <div class="hint" style="margin-top:8px">La nota de cada sitio es la media de todas las notas que le ha puesto la cuadrilla. Toca un sitio para ver quién le puso qué.</div></div>`;
+}
 
 /* ================= LA CUADRILLA ================= */
 const FRASES = [
@@ -2162,13 +2325,14 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#avMod
 
 /* ================= TUTORIAL ================= */
 const TUTO = [
-  {ill:'glass',   t:'Bienvenido a La Ronda', p:'La app oficial para contar lo que bebe la cuadrilla. Como Strava, pero con resaca. Abajo tienes las pestañas; te las enseñamos en un momento.', joke:'Son 8 pantallas. Menos que una ronda.'},
+  {ill:'glass',   t:'Bienvenido a La Ronda', p:'La app oficial para contar lo que bebe la cuadrilla. Como Strava, pero con resaca. Abajo tienes las pestañas; te las enseñamos en un momento.', joke:'Son 9 pantallas. Menos que una ronda.'},
   {ill:'stepper', tab:'mine', t:'Apunta lo que bebes', p:'Pides algo, le das al +. Te has colado, le das al −. Tu caña se va llenando y subes de nivel.', joke:'De "Sobrio como un juez" a "Leyenda del bar". Tú verás.'},
   {ill:'fichar',  tab:'mine', t:'Ficha al entrar', p:'En Mi barra, arriba: fichas al entrar en un bar o en la disco y desfichas al salir. Si cambias de sitio, "Me muevo a la disco". Si se te olvida, pon la hora a mano.', joke:'Como en el curro, pero aquí vas con ganas.'},
   {ill:'points',  tab:'top', t:'Puntos de pedo', p:'Cuanto más fuerte lo que pides, más puntos. El agua no suma. En El top está el ranking de la noche, del mes y de siempre, con premios.', joke:'Pero tu hígado te manda un abrazo.'},
   {ill:'perfil',  tab:'stats', t:'Tú y tus stats', p:'En Mis stats ves tus mejores fiestas, tus horas de bar y tus récords. Toca tu nombre arriba para cambiar la foto, el nombre o si estás soltero o en pareja.', joke:'Si te pusiste un nombre absurdo, aún estás a tiempo.'},
   {ill:'podium',  tab:'group', t:'El grupo', p:'Gráficas de todos, quién está fichado ahora mismo, la crónica con quién hizo qué y a qué hora, y la cuadrilla con la frase de cada uno.', joke:'Spoiler: el problema del grupo eres tú.'},
   {ill:'fotos',   tab:'fotos', t:'Pruebas del Delito', p:'Sube las fotos de la noche con marcos de broma y dales pulgar arriba. Las más votadas suben al podio de la vergüenza.', joke:'Lo que se sube, no se olvida.'},
+  {ill:'tabernia', tab:'tabernia', t:'Las Crónicas de Tabernia', p:'Al desfichar, ponle nota del 1 al 10 al bar o a la disco. Aquí ves la media de cada sitio y su rango, de Maldita a Legendaria.', joke:'Que los dioses del vermut nos protejan.'},
   {ill:'neon',    tab:'burdel', t:'El Burdel', p:'Solteros puntúan ligando: +20 el lío y +10 si hay koito. En pareja, ayudando a otro: +25. Si quieres repasar esto, el botón ? de arriba.', joke:'Lo que pasa en el burdel, se queda en el burdel.'}
 ];
 let tutoI = 0, tutoTick = null;
@@ -2197,6 +2361,7 @@ function tutoIll(k){
       <div class="me-chip" style="pointer-events:none;font-size:15px"><span class="e">${emo}</span><span class="n">${esc(person(me)?.name || 'Tu nombre')}</span></div>
       <div class="t-prof">${['Foto haciendo el tonto','Nombre o mote','Soltero/a o en pareja'].map((x,i) => `<span style="animation-delay:${300 + i*180}ms">✓ ${x}</span>`).join('')}</div>
     </div><span class="t-finger" style="right:calc(50% - 90px);bottom:auto;top:58px" aria-hidden="true">👆</span></div>`;
+  if (k === 'tabernia') return `<div class="till" style="background:radial-gradient(ellipse at 50% 50%,rgba(201,162,74,.2),transparent 70%),#100E12"><div class="t-scroll"><span class="seal" style="--rk:#D9A21B"><b>8,7</b></span><span style="display:grid;gap:2px;text-align:left"><b style="font-family:'Cinzel Decorative',Georgia,serif;font-size:15px">La Taberna del Pirata</b><i style="font-family:'IM Fell English',Georgia,serif;color:#8A5E00">Legendaria</i><small>5 notas · 7 visitas</small></span></div></div>`;
   if (k === 'fotos') return `<div class="till"><div style="width:130px;transform:rotate(-5deg)"><div class="frame f-polaroid" style="cursor:default"><span class="ph" style="display:grid;place-items:center;font-size:54px;background:#2B3C34">${emo}</span><span class="fcap">Esto no pasó.</span></div></div></div>`;
   return `<div class="till neon"><div class="t-sign"><span class="el">EL</span><span class="bd">BU<span class="flick">R</span>DEL</span></div></div>`;
 }
