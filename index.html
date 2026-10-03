@@ -679,6 +679,26 @@ body.fantasy .tab[aria-selected="true"]{background:#C9A24A;color:#241805}
 .rate-card .txt{text-align:center}
 .nota-chip{min-width:34px;padding:5px 9px;border-radius:999px;font-family:var(--font-display);font-size:15px;color:#14100A;background:var(--nc)}
 .t-scroll{width:min(250px,86%);display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;padding:12px;border-radius:6px;color:#3B2A14;background:radial-gradient(ellipse at 30% 20%,#F1E2BC,#E2C995 70%,#D2B178);box-shadow:0 8px 18px rgba(0,0,0,.45)}
+/* ---------- LOS OKUPAS ---------- */
+.okupa{display:grid;gap:12px;border-color:color-mix(in srgb,var(--fc) 45%,var(--line))}
+.ok-head{display:flex;gap:12px;align-items:center}
+.ok-head h3{font-size:16px;font-weight:800}
+.ok-ico{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--fc);color:#14100A;flex:none}
+.ok-ico svg{width:24px;height:24px}
+.ok-hero{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;padding:12px;border-radius:14px;background:color-mix(in srgb,var(--fc) 12%,var(--bg));font-size:14.5px;line-height:1.35}
+.ok-av{font-size:44px;line-height:1}
+.ok-big{font-family:var(--font-display);font-weight:400;font-size:20px;color:var(--fc)}
+.ok-quip{font-family:var(--font-chalk);font-size:18px;color:var(--amber);margin-top:2px}
+.ok-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.ok-list li{display:grid;grid-template-columns:22px auto 1fr auto;gap:10px;align-items:center}
+.ok-av2{font-size:24px;line-height:1}
+.ok-list li.me .ok-name b{color:var(--amber)}
+.ok-pos{font-family:var(--font-display);font-size:17px;color:var(--muted);text-align:center}
+.ok-name{display:grid;gap:4px;min-width:0;font-size:14px}
+.ok-name b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ok-bar{height:6px;border-radius:9px;background:var(--surface-2);overflow:hidden}
+.ok-bar i{display:block;height:100%;border-radius:9px;background:var(--fc)}
+.ok-t{font-family:var(--font-mono);font-size:12.5px;font-weight:700;text-align:right;white-space:nowrap}
 /* ---------- TOAST + STAMP ---------- */
 #toasts{position:fixed;left:0;right:0;bottom:calc(86px + env(safe-area-inset-bottom,0px));z-index:40;display:grid;justify-items:center;gap:8px;padding-inline:16px;pointer-events:none}
 .toast{pointer-events:auto;display:flex;align-items:center;gap:12px;background:var(--foam);color:var(--on-accent);border-radius:999px;padding:10px 12px 10px 18px;font-weight:700;
@@ -1969,6 +1989,37 @@ function crewHtml(){
   </div>`;
 }
 
+/* ================= LOS OKUPAS (top de tiempo) ================= */
+let okupaRange = 'year';
+function fmtLong(ms){
+  const m = Math.floor(ms / 60000), d = Math.floor(m / 1440), h = Math.floor((m % 1440) / 60), mi = m % 60;
+  const p = (n, a, b) => `${n} ${n === 1 ? a : b}`;
+  if (d) return h ? `${p(d,'día','días')} y ${p(h,'hora','horas')}` : p(d,'día','días');
+  if (h) return mi ? `${p(h,'hora','horas')} y ${mi} min` : p(h,'hora','horas');
+  return `${mi} min`;
+}
+function okupasHtml(){
+  const year = tonightKey().slice(0, 4);
+  const fs = allFich().filter(s => okupaRange === 'all' || s.night.slice(0, 4) === year);
+  const top = t => people.map(p => [p, fs.filter(s => s.pid === p.id && s.t === t).reduce((a, s) => a + sessDur(s), 0)])
+    .filter(x => x[1] > 0).sort((a,b) => b[1] - a[1]).slice(0, 5);
+  const when = okupaRange === 'all' ? 'desde siempre' : `en ${year}`;
+  const block = (t, title, quip) => {
+    const list = top(t); const P = PLACES[t]; const max = list[0]?.[1] || 1;
+    return `<div class="card okupa" style="--fc:${P.hi}">
+      <div class="ok-head"><span class="ok-ico">${svgI(t)}</span><div><h3>${title}</h3><span class="hint">Horas fichadas ${t === 'bar' ? 'en bares' : 'en discotecas'}</span></div></div>
+      ${list.length ? `<div class="ok-hero"><span class="ok-av">${av(list[0][0])}</span><div><b>${esc(list[0][0].name)}</b> ha pasado <b class="ok-big">${fmtLong(list[0][1])}</b> ${t === 'bar' ? 'en bares' : 'en discotecas'} ${when}.<div class="ok-quip">${quip}</div></div></div>
+      <ol class="ok-list">${list.map(([p, ms], i) => `<li class="${p.id === me ? 'me' : ''}"><span class="ok-pos">${i + 1}</span><span class="ok-av2">${av(p)}</span><span class="ok-name"><b>${esc(p.name)}</b><span class="ok-bar"><i style="width:${Math.max(4, Math.round(ms / max * 100))}%"></i></span></span><span class="ok-t">${fmtLong(ms)}</span></li>`).join('')}</ol>`
+      : `<p class="empty" style="padding:8px 0">Nadie ha fichado ${t === 'bar' ? 'en un bar' : 'en una discoteca'} ${when}. Sospechoso.</p>`}
+    </div>`;
+  };
+  return `<div class="sec">
+    <div class="sec-h"><h2>Los okupas</h2>
+      <div class="filters" role="group" aria-label="Periodo de los okupas"><button class="seg" data-ok="year" aria-pressed="${okupaRange === 'year'}">Este año</button><button class="seg" data-ok="all" aria-pressed="${okupaRange === 'all'}">Siempre</button></div></div>
+    <div class="two">${block('bar', 'Top 5 en bares', 'Ya le cobran alquiler.')}${block('disco', 'Top 5 en discotecas', 'Vive en la pista. El DJ le llama por su nombre.')}</div>
+  </div>`;
+}
+
 let chronLimit = 60;
 function chronEvents(range){
   const ev = [];
@@ -2059,10 +2110,12 @@ function renderGroup(){
       </table></div>
     </div>` : `<div class="sec card"><p class="empty">${dbState === 'connecting' ? 'Cargando la barra…' : 'Nadie ha apuntado nada en este periodo. Las gráficas aparecerán en cuanto caiga la primera.'}</p></div>`}
     ${timeHtml}
+    ${okupasHtml()}
     ${chronHtml}
     ${crewHtml()}`;
   el.querySelectorAll('.seg[data-r]').forEach(b => b.onclick = () => { groupRange = b.dataset.r; chronLimit = 60; render(); });
   const cm = $('#chronMore'); if (cm) cm.onclick = () => { chronLimit += 60; render(); };
+  el.querySelectorAll('.seg[data-ok]').forEach(b => b.onclick = () => { okupaRange = b.dataset.ok; render(); });
   el.querySelectorAll('.mate').forEach(b => b.onclick = () => { statsPid = b.dataset.p; setView('stats'); });
   if (!window.Chart) return;
   const T = chartTheme();
