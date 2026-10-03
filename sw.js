@@ -1,5 +1,5 @@
 // La Ronda: primero la red (para que cada actualización llegue al momento) y, sin conexión, lo último guardado.
-const CACHE = 'la-ronda-v1';
+const CACHE = 'la-ronda-v2';
 self.addEventListener('install', e => { self.skipWaiting(); });
 self.addEventListener('activate', e => { e.waitUntil(self.clients.claim()); });
 self.addEventListener('fetch', e => {
