@@ -1,0 +1,9 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{coll}/{id} {
+      allow read, create, update: if coll in ['people', 'nights', 'burdel', 'fichajes', 'fotos', 'fotoimg', 'likes'];
+      allow delete: if coll in ['fotos', 'fotoimg', 'likes'];
+    }
+  }
+}
