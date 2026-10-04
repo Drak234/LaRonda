@@ -2816,16 +2816,15 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#avMod
 
 /* ================= TUTORIAL ================= */
 const TUTO = [
-  {ill:'glass',   t:'Bienvenido a La Ronda', p:'La app oficial para contar lo que bebe la cuadrilla. Como Strava, pero con resaca. Abajo tienes las pestañas; te las enseñamos en un momento.', joke:'Son 10 pantallas. Menos que una ronda.'},
-  {ill:'stepper', tab:'mine', t:'Apunta lo que bebes', p:'Pides algo, le das al +. Te has colado, le das al −. Tu caña se va llenando y subes de nivel. Cada noche va de 17:00 a 17:00: lo de madrugada cuenta para la noche de antes.', joke:'De "Sobrio como un juez" a "Leyenda del bar". Tú verás.'},
-  {ill:'fichar',  tab:'mine', t:'Ficha al entrar', p:'En Mi barra, arriba: fichas al entrar en un bar o en la disco y desfichas al salir. Si cambias de sitio, "Me muevo a la disco". Si se te olvida, pon la hora a mano.', joke:'Como en el curro, pero aquí vas con ganas.'},
-  {ill:'points',  tab:'top', t:'Puntos de pedo', p:'Cuanto más fuerte lo que pides, más puntos. El agua no suma. En El top está el ranking de la noche, del mes y de siempre, con premios.', joke:'Pero tu hígado te manda un abrazo.'},
-  {ill:'perfil',  tab:'stats', t:'Tú y tus stats', p:'En Mis stats ves tus mejores fiestas, tus horas de bar y tus récords. Toca tu nombre arriba para cambiar la foto, el nombre o si estás soltero o en pareja.', joke:'Si te pusiste un nombre absurdo, aún estás a tiempo.'},
-  {ill:'podium',  tab:'group', t:'El grupo', p:'Gráficas de todos, quién está fichado ahora mismo, la crónica con quién hizo qué y a qué hora, y la cuadrilla con la frase de cada uno.', joke:'Spoiler: el problema del grupo eres tú.'},
-  {ill:'fotos',   tab:'fotos', t:'Pruebas del Delito', p:'Sube las fotos de la noche con marcos de broma y dales pulgar arriba. Las más votadas suben al podio de la vergüenza.', joke:'Lo que se sube, no se olvida.'},
-  {ill:'casino', tab:'casino', t:'Gran Casino Resaca', p:'Ruleta, blackjack, más alta o más baja y dados. Saca el móvil en la mesa y que la suerte decida quién bebe.', joke:'La banca siempre gana. Tú, a veces bebes.'},
-  {ill:'tabernia', tab:'tabernia', t:'Las Crónicas de Tabernia', p:'Al desfichar, ponle nota del 1 al 10 al bar o a la disco. Aquí ves la media de cada sitio y su rango, de Maldita a Legendaria.', joke:'Que los dioses del vermut nos protejan.'},
-  {ill:'neon',    tab:'burdel', t:'El Burdel', p:'Solteros puntúan ligando: +20 el lío y +10 si hay koito. En pareja, ayudando a otro: +25. Si quieres repasar esto, el botón ? de arriba.', joke:'Lo que pasa en el burdel, se queda en el burdel.'}
+  {ill:'glass',   t:'Bienvenido a La Ronda', p:'La app para contar lo que bebe la cuadrilla. Como Strava, pero con resaca. Abajo tienes las pestañas; te las enseñamos rapidito.', joke:'Son 9 pantallas. Menos que una ronda.'},
+  {ill:'stepper', tab:'mine', t:'Apunta lo que bebes', p:'Le das al + cuando pides y al − si te has colado. Cuanto más fuerte, más puntos. La noche va de 17:00 a 17:00.', joke:'De "Sobrio como un juez" a "Leyenda del bar". Tú verás.'},
+  {ill:'fichar',  tab:'mine', t:'Ficha al entrar', p:'Fichas al entrar en un bar o en la disco y desfichas al salir. Al desfichar, le pones nota al sitio con un toque.', joke:'Como en el curro, pero aquí vas con ganas.'},
+  {ill:'perfil',  tab:'stats', t:'Tú y tus stats', p:'Tus mejores fiestas, tus horas de bar y tus récords. Toca tu nombre arriba para cambiar foto, nombre o si estás soltero o en pareja.', joke:'Si te pusiste un nombre absurdo, aún estás a tiempo.'},
+  {ill:'podium',  tab:'group', t:'El grupo y El top', p:'En El grupo, las gráficas, quién está fichado ahora y quién hizo qué. En El top, el ranking del pedo con premios.', joke:'Spoiler: el problema del grupo eres tú.'},
+  {ill:'fotos',   tab:'fotos', t:'Pruebas del Delito', p:'Sube las fotos de la noche con un marco de broma y dales pulgar arriba. Las más votadas van al podio.', joke:'Lo que se sube, no se olvida.'},
+  {ill:'casino',  tab:'casino', t:'Gran Casino Resaca', p:'Ruleta, blackjack, más alta o más baja y dados. Saca el móvil en la mesa y que la suerte decida quién bebe.', joke:'La banca siempre gana. Tú, a veces bebes.'},
+  {ill:'tabernia', tab:'tabernia', t:'Las Crónicas de Tabernia', p:'Todos los bares y discotecas donde habéis estado, con la nota media de la cuadrilla.', joke:'Que los dioses del vermut nos protejan.'},
+  {ill:'neon',    tab:'burdel', t:'El Burdel', p:'Solteros: +20 por lío y +10 si hay koito. En pareja: +25 por ayudar a otro. ¿Dudas? El botón ? de arriba.', joke:'Lo que pasa en el burdel, se queda en el burdel.'}
 ];
 let tutoI = 0, tutoTick = null;
 function tutoIll(k){
