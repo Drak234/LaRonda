@@ -2805,9 +2805,10 @@ function pkActiveSeats(){
 function pkPresentSeats(){
   return Object.values(pk.seats).filter(s => s.pid && !s.leave && person(s.pid) && Date.now() - (s.beat || s.ts || 0) < 600e3).sort((a, b) => a.ts - b.ts);
 }
-// mesa vacía: partida nueva (se conserva el contador de manos y lo visto para no reaplicar jugadas viejas)
+// mesa vacía: partida nueva desde cero. Solo se guardan las fichas de cada uno.
+// (internamente el contador de manos sigue subiendo para no reaplicar jugadas viejas; se muestra desde handBase)
 function pkFreshState(old, msg){
-  return {phase:'lobby', leader:null, chips:{}, rebuys:{}, hand:old?.hand || 0, seen:old?.seen || {}, rebuySeen:old?.rebuySeen || {}, log:[msg], msg};
+  return {phase:'lobby', leader:null, chips:{...(old?.chips || {})}, rebuys:{}, hand:old?.hand || 0, handBase:old?.hand || 0, seen:old?.seen || {}, rebuySeen:old?.rebuySeen || {}, log:[msg], msg};
 }
 // quien se levanta en mitad de una mano la pierde
 function pkFoldLeaver(st, p){
@@ -2863,7 +2864,7 @@ function pkSit(){
   if (!st || !leaderAlive){
     let base;
     if (!st) base = {chips:{}, rebuys:{}, hand:0, log:[]};
-    else if (!present.length) base = pkFreshState(st, 'Mesa vacía. Empieza una partida nueva.');
+    else if (!present.length) base = pkFreshState(st, 'Mesa vacía. Partida nueva: cada uno conserva sus fichas.');
     else {
       base = JSON.parse(JSON.stringify(st));
       // si había una mano a medias sin líder, se devuelve lo apostado
@@ -2881,7 +2882,7 @@ function pkStand(){
   const wasLeader = pkIsLeader(), eng = pk.eng;
   const others = pkPresentSeats().filter(s => s.pid !== me);
   pkWriteSeat({leave:true, act:null});
-  if (!others.length && pk.st) pkWriteState(pkFreshState(pk.st, 'Se han levantado todos. Partida reiniciada: el primero que se siente manda.'));
+  if (!others.length && pk.st) pkWriteState(pkFreshState(pk.st, 'Se han levantado todos. Partida nueva: cada uno conserva sus fichas y el primero que se siente manda.'));
   else if (wasLeader && eng){
     const st = JSON.parse(JSON.stringify(eng));
     pkFoldLeaver(st, me);
@@ -2942,7 +2943,7 @@ function pkNewHand(st){
   st.currentBet = Math.max(st.bets[sb], st.bets[bb]); st.minRaise = PK_BB; st.phase = 'preflop';
   st.toAct = pkNext(st, bb, p => !st.allin[p]);
   st.turnAt = Date.now();
-  pkLog(st, `Mano ${st.hand}. Reparto cartas. Ciegas: ${pkNm(sb)} pone ${PK_SB} y ${pkNm(bb)} pone ${PK_BB}. Habla ${pkNm(st.toAct)}.`);
+  pkLog(st, `Mano ${st.hand - (st.handBase || 0)}. Reparto cartas. Ciegas: ${pkNm(sb)} pone ${PK_SB} y ${pkNm(bb)} pone ${PK_BB}. Habla ${pkNm(st.toAct)}.`);
   pkAdvance(st, true);
 }
 function pkPut(st, p, x){ const a = Math.max(0, Math.min(x, st.chips[p])); st.chips[p] -= a; st.bets[p] += a; st.contrib[p] += a; if (!st.chips[p]) st.allin[p] = true; return a; }
@@ -3761,7 +3762,7 @@ const TUTO = [
 ];
 const PK_TUTO = [
   {ill:'pk-sit',   t:'Siéntate a la mesa', p:'Pulsa «Sentarme a la mesa». La primera vez te damos 100 fichas y lo que ganes o pierdas se queda contigo. Si llegas a cero, recompras otras 100.', joke:'Las fichas no son euros. El Banco no se entera.'},
-  {ill:'pk-start', t:'El primero manda', p:'El primero que se sienta es el líder (lleva la corona ♛). Cuando haya al menos dos, pulsa «Iniciar partida» y el croupier reparte. Las siguientes manos salen solas. Si el líder se levanta, manda el siguiente; si os levantáis todos, partida nueva.', joke:'Ser líder no te da mejores cartas. Lo hemos comprobado.'},
+  {ill:'pk-start', t:'El primero manda', p:'El primero que se sienta es el líder (lleva la corona ♛). Cuando haya al menos dos, pulsa «Iniciar partida» y el croupier reparte. Las siguientes manos salen solas. Si el líder se levanta, manda el siguiente; si os levantáis todos, partida nueva (las fichas se guardan).', joke:'Ser líder no te da mejores cartas. Lo hemos comprobado.'},
   {ill:'pk-turn',  t:'Cuando te toque', p:'Sale «Te toca» y eliges: Retirarte (tiras tus cartas), Pasar si nadie ha apostado, Igualar lo que hay, Apostar o Subir, o All-in con todo. El croupier te va contando qué hace cada uno.', joke:'Pensarlo mucho también es una estrategia. Mala, pero estrategia.'},
   {ill:'pk-rules', t:'Reglas en 20 segundos', p:'Tienes 2 cartas tuyas y salen 5 comunes en el centro (3, luego 1 y luego 1), con una ronda de apuestas entre cada tanda. Gana la mejor jugada de 5 cartas, o el último que no se haya retirado.', joke:'Debajo de tus cartas te decimos qué llevas. De nada.'}
 ];
