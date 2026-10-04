@@ -730,7 +730,8 @@ body.casino .tab[aria-selected="true"]{background:var(--gold);color:#1E1404}
 .cas-deco.d1{left:12px;bottom:24px;width:32px;animation:tumble 6s ease-in-out infinite}
 .cas-deco.d2{right:12px;bottom:24px;width:28px;animation:tumble 7s ease-in-out infinite reverse}
 @keyframes tumble{50%{transform:rotate(25deg) translateY(-6px)}}
-.game-pick{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.game-pick{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px}
+@media (max-width:420px){.game-pick{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 8px}}
 .gchip{display:grid;justify-items:center;align-content:start;gap:6px;font-weight:700;font-size:12px;line-height:1.15;text-align:center;color:var(--ink-2)}
 .gchip .cp{width:min(68px,100%);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;position:relative;transition:transform .25s;
   background:repeating-conic-gradient(var(--cc) 0 22.5deg,#F5EFE0 22.5deg 45deg);box-shadow:0 5px 0 rgba(0,0,0,.45),0 0 0 2px rgba(0,0,0,.25)}
@@ -1013,6 +1014,70 @@ body.bank .kpi b{color:#F3EEE2}
 .edit-card .tbody > *{max-width:100%}
 .ef-total{font-size:14.5px;color:var(--ink-2)}
 .ef-total b{color:var(--amber);font-family:var(--font-mono)}
+/* póker */
+.pk-wrap{gap:12px}
+.pk-croupier{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center}
+.pk-cr-av{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:28px;background:#0A2A18;border:2px solid var(--gold);box-shadow:0 0 12px rgba(231,196,106,.35)}
+.pk-bubble{position:relative;background:#FBF8F1;color:#1E1408;border-radius:14px;padding:9px 12px;font-size:13.5px;line-height:1.35;box-shadow:0 4px 10px rgba(0,0,0,.35);animation:vpop .35s ease}
+.pk-bubble::before{content:"";position:absolute;left:-6px;top:50%;width:12px;height:12px;background:#FBF8F1;transform:translateY(-50%) rotate(45deg)}
+.pk-table{position:relative;width:100%;aspect-ratio:.92;max-width:460px;margin:0 auto;padding:10px;border-radius:50%/46%;
+  background:linear-gradient(145deg,#6A3E1C,#3E2410 60%,#5A3418);box-shadow:inset 0 0 0 3px var(--gold-d),0 16px 34px rgba(0,0,0,.55)}
+@media (min-width:560px){.pk-table{aspect-ratio:1.35}}
+.pk-table{margin-bottom:58px}
+@media (max-width:559px){.pk-board .pk-c,.pk-board .pk-slot{width:28px;height:40px}.pk-board .pk-c b{font-size:13px}.pk-board .pk-c i{font-size:12px}.pk-board{gap:2px}}
+.pk-felt{position:relative;width:100%;height:100%;border-radius:50%/46%;background:radial-gradient(ellipse at 50% 40%,#2A9460,#13643C 60%,#0C4A2C);box-shadow:inset 0 0 40px rgba(0,0,0,.5),inset 0 0 0 2px rgba(231,196,106,.35)}
+.pk-center{position:absolute;left:50%;top:47%;transform:translate(-50%,-50%);display:grid;justify-items:center;gap:8px;width:76%}
+.pk-logo{font-family:'Limelight',Georgia,serif;color:rgba(231,196,106,.55);text-align:center;font-size:20px;line-height:1.1;letter-spacing:.1em}
+.pk-logo small{font-size:11px;letter-spacing:.3em}
+.pk-board{display:flex;gap:4px}
+.pk-board > span{display:block}
+.pk-board .deal{animation:deal .45s cubic-bezier(.2,1.2,.4,1) both}
+.pk-slot{display:block;width:34px;height:48px;border-radius:5px;border:1.5px dashed rgba(255,255,255,.25)}
+.pk-c{display:grid;place-items:center;align-content:center;width:34px;height:48px;border-radius:5px;background:#FBF8F1;color:#16120E;font-family:Georgia,serif;line-height:1;box-shadow:0 2px 5px rgba(0,0,0,.4);border:1px solid #D8D0BC}
+.pk-c b{font-size:15px}.pk-c i{font-style:normal;font-size:14px}
+.pk-c.red{color:#C4182C}
+.pk-c.back{background:repeating-linear-gradient(45deg,#8A1426 0 4px,#A51E33 4px 8px);border:2px solid #FBF8F1}
+.pk-c.sm{width:22px;height:31px;border-radius:3px}.pk-c.sm b{font-size:10px}.pk-c.sm i{font-size:9px}
+.pk-c.lg{width:58px;height:82px;border-radius:7px}.pk-c.lg b{font-size:24px}.pk-c.lg i{font-size:22px}
+.pk-c.win{box-shadow:0 0 0 2px #FFE27A,0 0 12px rgba(255,226,122,.8)}
+.pk-pot{display:flex;align-items:center;gap:6px;color:#FFF6E0;font-weight:800;font-size:13px;background:rgba(0,0,0,.3);padding:3px 10px 3px 8px;border-radius:99px}
+.pk-seat{position:absolute;transform:translate(-50%,-24px);display:grid;justify-items:center;gap:2px;width:78px;transition:opacity .3s}
+.pk-chair{position:absolute;top:-6px;width:56px;height:46px;border-radius:16px 16px 10px 10px;background:linear-gradient(#5A1A22,#3A0E14);box-shadow:0 3px 6px rgba(0,0,0,.45),inset 0 0 0 2px rgba(231,196,106,.4);z-index:0}
+.pk-av{position:relative;z-index:1;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:28px;background:#123A26;border:2px solid #E3D5B0;box-shadow:0 3px 8px rgba(0,0,0,.45)}
+.pk-av .avx{font-size:40px}
+.pk-seat.ghost .pk-av{background:transparent;border:2px dashed rgba(255,255,255,.25);box-shadow:none}
+.pk-seat.ghost .pk-chair{opacity:.45}
+.pk-d{position:absolute;right:-8px;bottom:-4px;width:18px;height:18px;border-radius:50%;background:#FBF8F1;color:#1E1408;font:800 10px/18px var(--font-body);text-align:center;font-style:normal;box-shadow:0 1px 3px rgba(0,0,0,.5)}
+.pk-crown{position:absolute;left:-8px;top:-10px;font-style:normal;font-size:16px;color:#FFD54A;text-shadow:0 1px 2px #000}
+.pk-cards{position:relative;z-index:2;display:flex;gap:2px;margin-top:-10px;min-height:0}
+.pk-cards.deal .pk-c{animation:deal .45s cubic-bezier(.2,1.2,.4,1) both}
+.pk-tag{position:relative;z-index:2;display:grid;justify-items:center;background:rgba(0,0,0,.55);border-radius:8px;padding:2px 7px;max-width:84px}
+.pk-tag b{font-size:11.5px;color:#FFF6E0;max-width:76px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pk-tag small{font-family:var(--font-mono);font-size:10.5px;color:var(--gold-l, #E6CC8F)}
+.pk-seat.turn .pk-av{border-color:#FFE27A;box-shadow:0 0 0 3px rgba(255,226,122,.35),0 0 18px rgba(255,226,122,.8);animation:hop 1.2s ease-in-out infinite}
+.pk-seat.folded{opacity:.45}
+.pk-seat.winner .pk-av{border-color:#FFE27A;box-shadow:0 0 22px rgba(255,226,122,.9)}
+.pk-bet{position:absolute;transform:translate(-50%,-50%);z-index:3}
+.pk-stack{position:relative;display:inline-flex;align-items:flex-end;gap:4px;height:24px;padding-left:22px}
+.pk-stack i{position:absolute;left:0;width:20px;height:8px;border-radius:50%;background:var(--cc);border:1.5px dashed rgba(0,0,0,.35);box-shadow:0 1px 0 rgba(0,0,0,.45)}
+.pk-stack b{font-family:var(--font-mono);font-size:12px;color:#FFF6E0;text-shadow:0 1px 2px #000;line-height:1}
+.pk-me{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;background:rgba(0,0,0,.25);border-radius:14px;padding:10px 12px}
+.pk-hand{display:flex;gap:5px}
+.pk-info{display:grid;gap:2px;color:#E3F0E7}
+.pk-info b{font-size:15.5px;color:#FFF6E0}
+.pk-info span{font-size:13px}
+.pk-turn{justify-self:center;font-family:'Limelight',Georgia,serif;font-size:22px;color:#FFE27A;text-shadow:0 0 12px rgba(255,226,122,.6);animation:vpop .4s ease}
+.pk-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pk-acts .cbtn{padding:12px 8px;font-size:14px}
+.pk-wait{text-align:center;color:#E3F0E7;font-size:14px;margin:0}
+.pk-rank{display:grid;gap:4px;background:rgba(0,0,0,.22);border-radius:12px;padding:10px 12px}
+.pk-rank > div{display:flex;justify-content:space-between;gap:8px;font-size:13.5px;color:#E3F0E7}
+.pk-rank > div .avx{font-size:18px}
+.pk-rank b{font-family:var(--font-mono);color:var(--gold)}
+.pk-rank small{color:var(--muted)}
+.pk-log{color:#E3F0E7;font-size:13px}
+.pk-log summary{cursor:pointer;font-weight:700;color:var(--gold)}
+.pk-log div{padding:3px 0;border-bottom:1px dashed rgba(255,255,255,.12)}
 /* ---------- TOAST + STAMP ---------- */
 #toasts{position:fixed;left:0;right:0;bottom:calc(86px + env(safe-area-inset-bottom,0px));z-index:40;display:grid;justify-items:center;gap:8px;padding-inline:16px;pointer-events:none}
 .toast{pointer-events:auto;display:flex;align-items:center;gap:12px;background:var(--foam);color:var(--on-accent);border-radius:999px;padding:10px 12px 10px 18px;font-weight:700;
@@ -1518,7 +1583,7 @@ function subscribe(coll){
     people = snap.docs.map(d => ({id:d.id, ...d.data()})).filter(p => p.name);
     dbState = 'ok'; refresh();
   }, () => { dbState = 'off'; refresh(); });
-  subscribe('nights'); subscribe('burdel'); subscribe('fichajes'); subscribeFotos();
+  subscribe('nights'); subscribe('burdel'); subscribe('fichajes'); subscribeFotos(); pkSubscribe();
   if (!window.RONDA_FIREBASE) checkWrite();
   setTimeout(() => { if (dbState === 'connecting'){ dbState = 'off'; refresh(); } }, 12000);
 })();
@@ -2356,6 +2421,7 @@ function verdictHtml(v, id){ return `<div class="verdict ${v ? v.cls + ' pop' : 
 const DIE_SVG = '<svg viewBox="0 0 48 48"><rect x="3" y="3" width="42" height="42" rx="9" fill="#FBF8F1" stroke="#CFC6B0" stroke-width="2"/><circle cx="14" cy="14" r="4.2" fill="#1A1410"/><circle cx="24" cy="24" r="4.2" fill="#C4182C"/><circle cx="34" cy="34" r="4.2" fill="#1A1410"/></svg>';
 const GAMES = {
   ruleta:   {n:'Ruleta', cc:'#B3202A', ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M12 3v5.5M12 15.5V21M3 12h5.5M15.5 12H21"/></svg>'},
+  poker:    {n:'Póker', cc:'#0E7A3E', ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="10" height="14" rx="2" transform="rotate(-10 8 12)"/><rect x="11" y="5" width="10" height="14" rx="2" transform="rotate(10 16 12)"/><path d="M16 10.5c.8 1 2 1.6 2 2.6a1.2 1.2 0 0 1-2 .8l.3 1.6h-1.2l.3-1.6a1.2 1.2 0 0 1-2-.8c0-1 1.2-1.6 2-2.6z" fill="currentColor"/></svg>'},
   blackjack:{n:'Blackjack', cc:'#15120F', ico:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c3 4 7 6 7 10a4 4 0 0 1-6.3 3.3L14 21h-4l1.3-4.7A4 4 0 0 1 5 13c0-4 4-6 7-10z"/></svg>'},
   hilo:     {n:'Más o menos', cc:'#1F5FA8', ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5-5 5 5M7 14l5 5 5-5"/></svg>'},
   verdad:   {n:'La Verdad', cc:'#C2407F', ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M10 9.5a2 2 0 1 1 2.8 1.8c-.5.3-.8.7-.8 1.2V13"/><circle cx="12" cy="16.5" r=".6" fill="currentColor"/></svg>'},
@@ -2381,7 +2447,7 @@ function renderCasino(force){
   el.querySelectorAll('.gchip').forEach(b => b.onclick = () => { if (rl.spinning || dc.rolling) return; casGame = b.dataset.g; el.querySelectorAll('.gchip').forEach(x => x.setAttribute('aria-pressed', x === b)); mountGame(); });
   mountGame();
 }
-function mountGame(){ ({ruleta:mountRuleta, blackjack:mountBJ, hilo:mountHL, verdad:mountVerdad, dados:mountDados})[casGame](); }
+function mountGame(){ ({ruleta:mountRuleta, poker:mountPoker, blackjack:mountBJ, hilo:mountHL, verdad:mountVerdad, dados:mountDados})[casGame](); }
 
 /* ---- Ruleta ---- */
 function mountRuleta(){
@@ -2650,6 +2716,373 @@ function vdDraw(){
     setTimeout(() => { btn.disabled = false; }, 700);
   };
   if (old){ old.classList.remove('draw'); old.classList.add('out'); setTimeout(go, 380); } else go();
+}
+
+/* ---- Póker (Texas Hold'em de mesa compartida) ---- */
+const PK_SB = 1, PK_BB = 2, PK_START = 100, PK_STALE = 90e3;
+const PK_RN = {11:'J', 12:'Q', 13:'K', 14:'A'};
+const pkR = c => Math.floor(c / 4), pkS = c => c % 4;
+const pkRank = r => PK_RN[r] || String(r);
+const PK_SUIT = ['♠','♥','♦','♣'];
+const PK_PLURAL = {2:'doses',3:'treses',4:'cuatros',5:'cincos',6:'seises',7:'sietes',8:'ochos',9:'nueves',10:'dieces',11:'jotas',12:'reinas',13:'reyes',14:'ases'};
+let pk = {st:null, seats:{}, eng:null, mySeat:null, lastTurn:null, timer:null, beat:null, subscribed:false, err:null};
+
+/* evaluación de manos */
+function pkEval5(cs){
+  const rs = cs.map(pkR).sort((a, b) => b - a), ss = cs.map(pkS);
+  const cnt = {}; rs.forEach(r => cnt[r] = (cnt[r] || 0) + 1);
+  const groups = Object.entries(cnt).map(([r, n]) => [n, +r]).sort((a, b) => b[0] - a[0] || b[1] - a[1]);
+  const flush = ss.every(s => s === ss[0]);
+  const uniq = [...new Set(rs)];
+  let straight = 0;
+  if (uniq.length === 5){ if (uniq[0] - uniq[4] === 4) straight = uniq[0]; else if (uniq.join() === '14,5,4,3,2') straight = 5; }
+  if (straight && flush) return [8, straight];
+  if (groups[0][0] === 4) return [7, groups[0][1], groups[1][1]];
+  if (groups[0][0] === 3 && groups[1][0] === 2) return [6, groups[0][1], groups[1][1]];
+  if (flush) return [5, ...rs];
+  if (straight) return [4, straight];
+  if (groups[0][0] === 3) return [3, groups[0][1], ...groups.slice(1).map(g => g[1])];
+  if (groups[0][0] === 2 && groups[1][0] === 2) return [2, groups[0][1], groups[1][1], groups[2][1]];
+  if (groups[0][0] === 2) return [1, groups[0][1], ...groups.slice(1).map(g => g[1])];
+  return [0, ...rs];
+}
+const pkCmp = (a, b) => { for (let i = 0; i < Math.max(a.length, b.length); i++){ const d = (a[i] || 0) - (b[i] || 0); if (d) return d; } return 0; };
+function pkBest(cards){
+  if (cards.length < 5) return null;
+  let best = null;
+  const pick = (start, acc) => {
+    if (acc.length === 5){ const sc = pkEval5(acc); if (!best || pkCmp(sc, best) > 0) best = sc; return; }
+    for (let i = start; i <= cards.length - (5 - acc.length); i++) pick(i + 1, [...acc, cards[i]]);
+  };
+  pick(0, []);
+  return best;
+}
+function pkName(sc){
+  if (!sc) return '';
+  const R = pkRank, P = r => PK_PLURAL[r];
+  switch (sc[0]){
+    case 8: return sc[1] === 14 ? 'Escalera real' : `Escalera de color al ${R(sc[1])}`;
+    case 7: return `Póker de ${P(sc[1])}`;
+    case 6: return `Full de ${P(sc[1])} con ${P(sc[2])}`;
+    case 5: return `Color al ${R(sc[1])}`;
+    case 4: return `Escalera al ${R(sc[1])}`;
+    case 3: return `Trío de ${P(sc[1])}`;
+    case 2: return `Doble pareja de ${P(sc[1])} y ${P(sc[2])}`;
+    case 1: return `Pareja de ${P(sc[1])}`;
+    default: return `Carta alta: ${R(sc[1])}`;
+  }
+}
+// mejor mano parcial (con 2–4 cartas sobre la mesa)
+function pkHint(cards){
+  if (cards.length >= 5) return pkName(pkBest(cards));
+  const rs = cards.map(pkR); const cnt = {}; rs.forEach(r => cnt[r] = (cnt[r] || 0) + 1);
+  const g = Object.entries(cnt).map(([r, n]) => [n, +r]).sort((a, b) => b[0] - a[0] || b[1] - a[1]);
+  if (g[0][0] === 2 && cards.length === 2) return `Pareja de ${PK_PLURAL[g[0][1]]} servida`;
+  if (g[0][0] >= 2) return `Pareja de ${PK_PLURAL[g[0][1]]}`;
+  return `Carta alta: ${pkRank(Math.max(...rs))}`;
+}
+
+/* datos compartidos */
+function pkActiveSeats(){
+  return Object.values(pk.seats).filter(s => s.pid && !s.leave && person(s.pid) && Date.now() - (s.beat || s.ts || 0) < PK_STALE).sort((a, b) => a.ts - b.ts);
+}
+const pkIsLeader = () => pk.st && pk.st.leader === me && !!pk.mySeat && !pk.mySeat.leave;
+function pkSubscribe(){
+  if (pk.subscribed || !db) return; pk.subscribed = true;
+  db.collection('poker').onSnapshot(snap => {
+    const seats = {}; let st = null;
+    snap.docs.forEach(d => { const v = d.data(); if (!v) return; if (d.id === 'mesa') st = v; else if (v.pid) seats[v.pid] = v; });
+    pk.seats = seats; pk.mySeat = seats[me] && !seats[me].leave ? seats[me] : (pk.mySeat && pk.mySeat._local ? pk.mySeat : null);
+    if (!pkIsLeader() || !pk.eng) pk.st = st;
+    if (pk.st && pk.st.leader === me && pk.mySeat && !pk.eng) pk.eng = JSON.parse(JSON.stringify(pk.st));
+    if (pk.st && pk.st.leader !== me) pk.eng = null;
+    pkEngineTick();
+    pkPaint();
+  }, e => { pk.err = e; pkPaint(); });
+  clearInterval(pk.beat);
+  pk.beat = setInterval(() => { if (pk.mySeat && !pk.mySeat.leave && document.visibilityState === 'visible') pkWriteSeat({beat:Date.now()}); pkEngineTick(); pkPaint(true); }, 20000);
+}
+function pkWriteSeat(patch){
+  const base = pk.mySeat && pk.mySeat.pid ? pk.mySeat : {pid:me, ts:Date.now(), seq:0, act:null, rebuySeq:0, leave:false};
+  const next = JSON.parse(JSON.stringify({...base, ...patch, pid:me, beat:Date.now()}));
+  delete next._local;
+  pk.mySeat = {...next, _local:true}; pk.seats[me] = next;
+  return db.collection('poker').doc('s_' + me).set(next).catch(e => { pk.err = e; toast(pkErrMsg(e)); pkPaint(); });
+}
+function pkWriteState(st){
+  st.updatedAt = Date.now();
+  const clean = JSON.parse(JSON.stringify(st));
+  pk.eng = clean; pk.st = clean;
+  return db.collection('poker').doc('mesa').set(clean).catch(e => { pk.err = e; toast(pkErrMsg(e)); });
+}
+function pkErrMsg(e){
+  const c = e && e.code;
+  if (c === 'permission-denied' || c === 'permission_denied') return 'La mesa de póker aún no está activada en la base de datos. Hay que añadir "poker" a las reglas de Firebase.';
+  return writeErrMsg(e);
+}
+
+/* acciones del jugador */
+function pkSit(){
+  if (!canWrite()) return;
+  pkWriteSeat({ts:Date.now(), leave:false, seq:(pk.mySeat?.seq || 0), act:null});
+  const st = pk.st, act = pkActiveSeats().filter(s => s.pid !== me);
+  const leaderAlive = st && st.leader && act.some(s => s.pid === st.leader);
+  if (!st || !leaderAlive){
+    const base = st ? JSON.parse(JSON.stringify(st)) : {chips:{}, rebuys:{}, hand:0, log:[]};
+    Object.assign(base, {leader:me, phase:'lobby', seen:base.seen || {}, rebuySeen:base.rebuySeen || {}});
+    if (base.chips[me] == null) base.chips[me] = PK_START;
+    pkLog(base, `${person(me)?.name || 'Alguien'} se sienta y lleva la batuta.`);
+    pkWriteState(base);
+  }
+  toast('Te has sentado a la mesa. Empiezas con tus fichas.');
+}
+function pkStand(){ if (!canWrite()) return; pkWriteSeat({leave:true}); pk.eng = null; toast('Te levantas de la mesa.'); }
+function pkAct(t, to){
+  if (!canWrite() || !pk.mySeat) return;
+  pkWriteSeat({seq:(pk.mySeat.seq || 0) + 1, act:{t, to:to || 0, h:pk.st?.hand || 0}});
+  try { navigator.vibrate && navigator.vibrate(15); } catch(e){}
+  pkPaint();
+}
+function pkTakeOver(){
+  if (!canWrite() || !pk.mySeat) return;
+  const st = pk.st ? JSON.parse(JSON.stringify(pk.st)) : {chips:{}, rebuys:{}, hand:0, log:[], seen:{}, rebuySeen:{}};
+  st.leader = me; pkLog(st, `${person(me)?.name} toma el mando de la mesa.`);
+  pkWriteState(st); pkEngineTick();
+}
+function pkStart(){
+  if (!pkIsLeader()) return;
+  const st = JSON.parse(JSON.stringify(pk.eng || pk.st));
+  pkNewHand(st); pkWriteState(st);
+}
+
+/* motor: solo lo ejecuta el móvil del líder */
+function pkLog(st, msg){ st.log = [...(st.log || []), msg].slice(-8); st.msg = msg; }
+const pkNm = pid => person(pid)?.name || '¿?';
+function pkNext(st, from, ok){
+  const o = st.order; let i = o.indexOf(from);
+  for (let k = 0; k < o.length; k++){ i = (i + 1) % o.length; if (ok(o[i])) return o[i]; }
+  return null;
+}
+function pkShuffle(){ const d = []; for (let r = 2; r <= 14; r++) for (let s = 0; s < 4; s++) d.push(r * 4 + s); for (let i = d.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [d[i], d[j]] = [d[j], d[i]]; } return d; }
+function pkNewHand(st){
+  const seats = pkActiveSeats();
+  seats.forEach(s => { if (st.chips[s.pid] == null) st.chips[s.pid] = PK_START; });
+  const players = seats.map(s => s.pid).filter(pid => st.chips[pid] > 0);
+  if (players.length < 2){ st.phase = 'lobby'; pkLog(st, 'Hacen falta al menos dos jugadores con fichas.'); return; }
+  const prevD = st.dealer;
+  st.order = players; st.hand = (st.hand || 0) + 1;
+  st.dealer = prevD && players.includes(prevD) ? pkNext(st, prevD, () => true) : players[0];
+  st.deck = pkShuffle(); st.board = []; st.hole = {}; st.bets = {}; st.contrib = {}; st.folded = {}; st.allin = {}; st.acted = {}; st.winners = null; st.reveal = null;
+  players.forEach(p => { st.hole[p] = [st.deck.pop(), st.deck.pop()]; st.bets[p] = 0; st.contrib[p] = 0; });
+  const heads = players.length === 2;
+  const sb = heads ? st.dealer : pkNext(st, st.dealer, () => true);
+  const bb = pkNext(st, sb, () => true);
+  const post = (p, x) => { const a = Math.min(x, st.chips[p]); st.chips[p] -= a; st.bets[p] += a; st.contrib[p] += a; if (!st.chips[p]) st.allin[p] = true; };
+  post(sb, PK_SB); post(bb, PK_BB);
+  st.currentBet = Math.max(st.bets[sb], st.bets[bb]); st.minRaise = PK_BB; st.phase = 'preflop';
+  st.toAct = pkNext(st, bb, p => !st.allin[p]);
+  st.turnAt = Date.now();
+  pkLog(st, `Mano ${st.hand}. Reparto cartas. Ciegas: ${pkNm(sb)} pone ${PK_SB} y ${pkNm(bb)} pone ${PK_BB}. Habla ${pkNm(st.toAct)}.`);
+  pkAdvance(st, true);
+}
+function pkPut(st, p, x){ const a = Math.max(0, Math.min(x, st.chips[p])); st.chips[p] -= a; st.bets[p] += a; st.contrib[p] += a; if (!st.chips[p]) st.allin[p] = true; return a; }
+function pkApply(st, p, act){
+  const toCall = st.currentBet - st.bets[p];
+  const nm = pkNm(p);
+  if (act.t === 'fold'){ st.folded[p] = true; pkLog(st, `${nm} se retira.`); }
+  else if (act.t === 'check' && toCall <= 0){ pkLog(st, `${nm} pasa.`); }
+  else if (act.t === 'call' || act.t === 'check'){ const a = pkPut(st, p, toCall); pkLog(st, st.allin[p] ? `${nm} va con todo (${a}).` : `${nm} iguala ${a}.`); }
+  else if (act.t === 'raise' || act.t === 'allin'){
+    const maxTo = st.bets[p] + st.chips[p];
+    let to = act.t === 'allin' ? maxTo : Math.min(maxTo, Math.max(act.to || 0, st.currentBet + st.minRaise));
+    if (to <= st.currentBet){ const a = pkPut(st, p, to - st.bets[p]); pkLog(st, `${nm} va con todo (${a}).`); }
+    else {
+      const inc = to - st.currentBet, open = !st.currentBet;
+      pkPut(st, p, to - st.bets[p]);
+      if (inc >= st.minRaise) st.minRaise = inc;
+      st.currentBet = to; st.acted = {};
+      pkLog(st, st.allin[p] ? `${nm} va con todo: ${to}.` : open ? `${nm} apuesta ${to}.` : `${nm} sube a ${to}.`);
+    }
+  }
+  st.acted[p] = true;
+  pkAdvance(st);
+}
+function pkAdvance(st, justDealt){
+  const live = st.order.filter(p => !st.folded[p]);
+  if (live.length === 1){ pkAward(st, live, true); return; }
+  const canAct = live.filter(p => !st.allin[p]);
+  const pending = canAct.filter(p => !st.acted[p] || st.bets[p] < st.currentBet);
+  const onlyOneCanActMatched = canAct.length <= 1 && canAct.every(p => st.bets[p] >= st.currentBet);
+  if (pending.length && !onlyOneCanActMatched){
+    if (!justDealt || !pending.includes(st.toAct)) st.toAct = pkNext(st, st.toAct || st.dealer, p => pending.includes(p));
+    st.turnAt = Date.now();
+    if (!justDealt) st.msg = `${st.msg} Le toca a ${pkNm(st.toAct)}.`;
+    return;
+  }
+  // fin de la ronda de apuestas
+  st.order.forEach(p => st.bets[p] = 0); st.currentBet = 0; st.minRaise = PK_BB; st.acted = {};
+  const deal = n => { st.deck.pop(); for (let i = 0; i < n; i++) st.board.push(st.deck.pop()); };
+  const runOut = canAct.length <= 1;
+  const names = {preflop:'el flop', flop:'el turn', turn:'el river'};
+  if (st.phase === 'river' || (runOut && st.board.length === 5)){ pkAward(st, live, false); return; }
+  if (runOut){ while (st.board.length < 5) deal(st.board.length ? 1 : 3); pkLog(st, 'Todos con todo. Saco las cartas que faltan.'); pkAward(st, live, false); return; }
+  const was = st.phase;
+  if (was === 'preflop'){ deal(3); st.phase = 'flop'; } else if (was === 'flop'){ deal(1); st.phase = 'turn'; } else { deal(1); st.phase = 'river'; }
+  st.toAct = pkNext(st, st.dealer, p => !st.folded[p] && !st.allin[p]);
+  st.turnAt = Date.now();
+  pkLog(st, `Saco ${names[was]}. Habla ${pkNm(st.toAct)}.`);
+}
+function pkAward(st, live, byFold){
+  const pot = st.order.reduce((a, p) => a + (st.contrib[p] || 0), 0);
+  st.winners = [];
+  if (byFold){ const w = live[0]; st.chips[w] += pot; st.winners.push({pid:w, amt:pot, hand:''}); pkLog(st, `Todos se retiran. ${pkNm(w)} se lleva ${pot} fichas.`); }
+  else {
+    const scores = {}; live.forEach(p => scores[p] = pkBest([...st.hole[p], ...st.board]));
+    const levels = [...new Set(st.order.map(p => st.contrib[p]).filter(x => x > 0))].sort((a, b) => a - b);
+    let prev = 0; const won = {};
+    levels.forEach(L => {
+      const slice = st.order.reduce((a, p) => a + Math.max(0, Math.min(st.contrib[p], L) - prev), 0);
+      const elig = live.filter(p => st.contrib[p] >= L);
+      if (slice && elig.length){
+        let best = null, ws = [];
+        elig.forEach(p => { const c = best ? pkCmp(scores[p], best) : 1; if (c > 0){ best = scores[p]; ws = [p]; } else if (c === 0) ws.push(p); });
+        const share = Math.floor(slice / ws.length); let rest = slice - share * ws.length;
+        ws.forEach(p => { won[p] = (won[p] || 0) + share + (rest > 0 ? 1 : 0); rest--; });
+      } else if (slice){ const p = live[0]; won[p] = (won[p] || 0) + slice; }
+      prev = L;
+    });
+    Object.entries(won).forEach(([p, a]) => { st.chips[p] += a; st.winners.push({pid:p, amt:a, hand:pkName(scores[p])}); });
+    st.reveal = live;
+    const top = [...st.winners].sort((a, b) => b.amt - a.amt)[0];
+    pkLog(st, st.winners.length > 1 ? `Bote repartido. ${st.winners.map(w => `${pkNm(w.pid)} (${w.amt})`).join(', ')}.` : `${pkNm(top.pid)} gana ${top.amt} fichas con ${top.hand.toLowerCase()}.`);
+  }
+  st.phase = 'showdown'; st.toAct = null; st.endAt = Date.now();
+}
+function pkEngineTick(){
+  if (!pkIsLeader() || !pk.eng) return;
+  const st = pk.eng; let changed = false;
+  // recompras
+  Object.values(pk.seats).forEach(s => {
+    if ((s.rebuySeq || 0) > (st.rebuySeen?.[s.pid] || 0)){
+      st.rebuySeen = st.rebuySeen || {}; st.rebuySeen[s.pid] = s.rebuySeq;
+      const inHand = st.phase !== 'lobby' && st.phase !== 'showdown' && st.order?.includes(s.pid) && !st.folded?.[s.pid];
+      if (!inHand && (st.chips[s.pid] || 0) <= 0){ st.chips[s.pid] = PK_START; st.rebuys = st.rebuys || {}; st.rebuys[s.pid] = (st.rebuys[s.pid] || 0) + 1; pkLog(st, `${pkNm(s.pid)} recompra ${PK_START} fichas. Ánimo, campeón.`); changed = true; }
+    }
+  });
+  if (st.phase === 'lobby' || st.phase === 'showdown'){
+    pkActiveSeats().forEach(s => { if (st.chips[s.pid] == null){ st.chips[s.pid] = PK_START; changed = true; } });
+  }
+  // acción del jugador al que le toca
+  if (st.toAct && st.phase !== 'lobby' && st.phase !== 'showdown'){
+    const s = pk.seats[st.toAct]; st.seen = st.seen || {};
+    const stale = !s || s.leave || Date.now() - (s.beat || 0) > PK_STALE;
+    if (s && (s.seq || 0) > (st.seen[st.toAct] || 0) && s.act && s.act.h === st.hand){ st.seen[st.toAct] = s.seq; pkApply(st, st.toAct, s.act); changed = true; }
+    else if (stale){ pkLog(st, `${pkNm(st.toAct)} no está. Le retiro la mano.`); pkApply(st, st.toAct, {t:'fold'}); changed = true; }
+    Object.values(pk.seats).forEach(x => { if ((x.seq || 0) > (st.seen[x.pid] || 0) && x.pid !== st.toAct){ st.seen[x.pid] = x.seq; changed = true; } });
+  }
+  if (changed) pkWriteState(st);
+  // siguiente mano automática
+  clearTimeout(pk.timer);
+  if (st.phase === 'showdown'){
+    const wait = Math.max(0, 9000 - (Date.now() - (st.endAt || 0)));
+    pk.timer = setTimeout(() => { if (!pkIsLeader() || pk.eng?.phase !== 'showdown') return; const n = JSON.parse(JSON.stringify(pk.eng)); pkNewHand(n); pkWriteState(n); pkPaint(); }, wait);
+  }
+}
+
+/* interfaz */
+function pkChipStack(n){
+  if (!n) return '';
+  const den = [[25,'#2E8B57'],[10,'#1F5FA8'],[5,'#C4182C'],[1,'#F3EEE2']]; let left = n; const discs = [];
+  den.forEach(([v, c]) => { let k = Math.floor(left / v); left -= k * v; while (k-- > 0 && discs.length < 7) discs.push(c); });
+  return `<span class="pk-stack">${discs.reverse().map((c, i) => `<i style="--cc:${c};bottom:${i * 3}px"></i>`).join('')}<b>${n}</b></span>`;
+}
+const pkCard = (c, o = {}) => c == null ? `<span class="pk-c ${o.cls || ''} back"></span>` :
+  `<span class="pk-c ${o.cls || ''} ${[1, 2].includes(pkS(c)) ? 'red' : ''} ${o.win ? 'win' : ''}"><b>${pkRank(pkR(c))}</b><i>${PK_SUIT[pkS(c)]}</i></span>`;
+let pkSeen = {hand:0, board:0};
+function mountPoker(){
+  pkSubscribe();
+  const box = $('#casGame');
+  box.innerHTML = `<div class="ctable pk-wrap" id="pkRoot"><h3>Póker</h3><p class="crule">Texas Hold'em entre la cuadrilla. Siéntate, el primero que se sienta manda y reparte.</p><div id="pkBody"></div></div>`;
+  pkPaint();
+}
+function pkPaint(soft){
+  const body = document.getElementById('pkBody'); if (!body) return;
+  const st = pk.st, seats = pkActiveSeats(), seated = !!(pk.mySeat && !pk.mySeat.leave);
+  const playing = st && st.phase !== 'lobby';
+  const inHand = playing && st.order?.includes(me);
+  // jugadores visibles: los de la mano (si hay mano) y los sentados
+  const ids = [...new Set([...(playing ? st.order : []), ...seats.map(s => s.pid)])].filter(person);
+  const meIdx = ids.indexOf(me); const ring = meIdx >= 0 ? [...ids.slice(meIdx), ...ids.slice(0, meIdx)] : ids;
+  const n = Math.max(ring.length, 1), slots = Math.max(6, n);
+  const leaderAlive = st && seats.some(s => s.pid === st.leader);
+  const animate = st && (st.hand !== pkSeen.hand || (st.board?.length || 0) !== pkSeen.board);
+  const seatHtml = ring.map((pid, i) => {
+    const ang = Math.PI / 2 + (i / slots) * Math.PI * 2;  // yo abajo
+    const x = 50 + Math.cos(ang) * 45, y = 50 + Math.sin(ang) * 40;
+    const bx = 50 + Math.cos(ang) * 24, by = 50 + Math.sin(ang) * 22;
+    const p = person(pid); const chips = st?.chips?.[pid] ?? PK_START;
+    const folded = playing && st.folded?.[pid], allin = playing && st.allin?.[pid], turn = playing && st.toAct === pid;
+    const win = st?.phase === 'showdown' && st.winners?.find(w => w.pid === pid);
+    const showCards = playing && st.order?.includes(pid) && !folded;
+    const reveal = st?.phase === 'showdown' && st.reveal?.includes(pid);
+    const cards = showCards ? (pid === me || reveal ? st.hole[pid].map(c => pkCard(c, {cls:'sm', win:!!win})) : [null, null].map(() => pkCard(null, {cls:'sm'}))).join('') : '';
+    const bet = playing && st.bets?.[pid] ? `<span class="pk-bet" style="left:${bx}%;top:${by}%">${pkChipStack(st.bets[pid])}</span>` : '';
+    return `${bet}<div class="pk-seat ${turn ? 'turn' : ''} ${folded ? 'folded' : ''} ${win ? 'winner' : ''} ${pid === me ? 'me' : ''}" style="left:${x}%;top:${y}%">
+      <span class="pk-chair"></span>
+      <span class="pk-av">${av(p)}${st?.dealer === pid && playing ? '<em class="pk-d">D</em>' : ''}${st?.leader === pid ? '<em class="pk-crown" title="Líder">♛</em>' : ''}</span>
+      <span class="pk-cards ${animate ? 'deal' : ''}">${cards}</span>
+      <span class="pk-tag"><b>${esc(p?.name || '¿?')}</b><small>${folded ? 'Retirado' : allin ? 'All-in' : win ? `+${win.amt}` : chips + ' fichas'}</small></span></div>`;
+  }).join('');
+  const empty = Array.from({length:slots - n}, (_, k) => { const ang = Math.PI / 2 + ((n + k) / slots) * Math.PI * 2; return `<div class="pk-seat ghost" style="left:${50 + Math.cos(ang) * 45}%;top:${50 + Math.sin(ang) * 40}%"><span class="pk-chair"></span><span class="pk-av"></span></div>`; }).join('');
+  const pot = playing ? st.order.reduce((a, p) => a + (st.contrib?.[p] || 0), 0) : 0;
+  const board = playing ? `<div class="pk-board">${[0, 1, 2, 3, 4].map(i => st.board[i] != null ? `<span class="${animate && i >= pkSeen.board ? 'deal' : ''}" style="animation-delay:${(i - pkSeen.board) * 120}ms">${pkCard(st.board[i], {win:false})}</span>` : '<span class="pk-slot"></span>').join('')}</div>` : '';
+  const crMsg = !st ? '¡Bienvenidos! Sentaos a la mesa. El primero que se siente manda.' : st.phase === 'lobby' ? (seats.length < 2 ? `Necesito al menos dos jugadores. ${seats.length ? 'Que se siente alguien más.' : 'Sentaos.'}` : `Cuando quiera, ${pkNm(st.leader)} puede iniciar la partida.`) : st.msg;
+  const felt = `<div class="pk-croupier"><span class="pk-cr-av">🤵</span><span class="pk-bubble">${esc(crMsg || '')}</span></div>
+    <div class="pk-table"><div class="pk-felt">
+      <div class="pk-center">${board}${playing ? `<div class="pk-pot">Bote ${pkChipStack(pot)}</div>` : '<div class="pk-logo">LA RONDA<br><small>POKER CLUB</small></div>'}</div>
+      ${empty}${seatHtml}
+    </div></div>`;
+  // controles
+  let ctrl = '';
+  if (pk.err && pkErrMsg(pk.err).includes('reglas')) ctrl += `<div class="warn">${esc(pkErrMsg(pk.err))}</div>`;
+  if (!seated){ ctrl += `<div class="cbtns"><button class="cbtn" id="pkSit">Sentarme a la mesa</button></div>`; }
+  else {
+    const myChips = st?.chips?.[me] ?? PK_START;
+    if (inHand && st.phase !== 'showdown'){
+      const mine = st.hole[me] || [], toCall = Math.max(0, st.currentBet - st.bets[me]);
+      const myTurn = st.toAct === me && !st.folded[me] && !st.allin[me];
+      const waiting = pk.mySeat && (pk.mySeat.seq || 0) > (st.seen?.[me] || 0);
+      const stack = st.chips[me], maxTo = st.bets[me] + stack;
+      const minTo = Math.min(maxTo, st.currentBet + st.minRaise), halfPot = Math.min(maxTo, st.currentBet + Math.max(st.minRaise, Math.ceil(pot / 2)));
+      ctrl += `<div class="pk-me"><div class="pk-hand">${mine.map(c => pkCard(c, {cls:'lg'})).join('')}</div>
+        <div class="pk-info"><b>${st.folded[me] ? 'Te has retirado' : esc(pkHint([...mine, ...st.board]))}</b><span>${stack} fichas${toCall && !st.folded[me] ? ` · para igualar: ${Math.min(toCall, stack)}` : ''}</span></div></div>`;
+      if (myTurn && !waiting){
+        ctrl += `<div class="pk-turn">Te toca</div><div class="pk-acts">
+          <button class="cbtn ghost" data-pk="fold">Retirarme</button>
+          ${toCall <= 0 ? `<button class="cbtn" data-pk="check">Pasar</button>` : `<button class="cbtn" data-pk="call">${toCall >= stack ? 'Igualar con todo' : `Igualar ${toCall}`}</button>`}
+          ${maxTo > st.currentBet ? `${minTo < maxTo ? `<button class="cbtn alt" data-pk="raise" data-to="${minTo}">${st.currentBet ? `Subir a ${minTo}` : `Apostar ${minTo}`}</button>` : ''}
+          ${halfPot > minTo && halfPot < maxTo ? `<button class="cbtn alt" data-pk="raise" data-to="${halfPot}">${st.currentBet ? `Subir a ${halfPot}` : `Apostar ${halfPot}`}</button>` : ''}
+          <button class="cbtn alt" data-pk="allin">All-in (${maxTo})</button>` : ''}</div>`;
+      } else if (waiting) ctrl += `<p class="pk-wait">El croupier está apuntando tu jugada…</p>`;
+      else if (!st.folded[me]) ctrl += `<p class="pk-wait">Esperando a ${esc(pkNm(st.toAct))}…</p>`;
+    } else if (st && st.phase === 'showdown') ctrl += `<p class="pk-wait">${pkIsLeader() ? 'La siguiente mano se reparte en unos segundos.' : 'Esperando a la siguiente mano…'}</p>`;
+    if (pkIsLeader() && st.phase === 'lobby') ctrl += `<div class="cbtns"><button class="cbtn" id="pkStart" ${seats.length < 2 ? 'disabled' : ''}>Iniciar partida</button></div>`;
+    else if (st?.phase === 'lobby') ctrl += `<p class="pk-wait">Esperando a que ${esc(pkNm(st.leader))} inicie la partida.</p>`;
+    if (!leaderAlive || !st) ctrl += `<div class="cbtns"><button class="cbtn" id="pkTake">Tomar el mando de la mesa</button></div>`;
+    if (myChips <= 0 && !(inHand && st.phase !== 'showdown')) ctrl += `<div class="cbtns"><button class="cbtn" id="pkRebuy">Recomprar ${PK_START} fichas</button></div>`;
+    ctrl += `<div class="cbtns"><button class="seg" id="pkStand">Levantarme de la mesa</button></div>`;
+  }
+  const chips = st?.chips ? Object.entries(st.chips).filter(([pid]) => person(pid)).sort((a, b) => b[1] - a[1]) : [];
+  const table = chips.length ? `<div class="pk-rank"><span class="hand-l">Fichas de la cuadrilla</span>${chips.map(([pid, c], i) => `<div><span>${i + 1}. ${av(person(pid))} ${esc(pkNm(pid))}${st.rebuys?.[pid] ? ` <small>(${st.rebuys[pid]} recompra${st.rebuys[pid] > 1 ? 's' : ''})</small>` : ''}</span><b>${c}</b></div>`).join('')}</div>` : '';
+  const log = st?.log?.length ? `<details class="pk-log"><summary>Lo que ha pasado</summary>${[...st.log].reverse().map(l => `<div>${esc(l)}</div>`).join('')}</details>` : '';
+  body.innerHTML = felt + ctrl + table + log;
+  if (st){ pkSeen = {hand:st.hand, board:st.board?.length || 0}; }
+  // aviso de turno
+  if (st && st.toAct === me && pk.lastTurn !== `${st.hand}-${st.phase}-${st.currentBet}`){ pk.lastTurn = `${st.hand}-${st.phase}-${st.currentBet}`; try { navigator.vibrate && navigator.vibrate([30, 40, 30]); } catch(e){} }
+  const on = (id, fn) => { const e = document.getElementById(id); if (e) e.onclick = fn; };
+  on('pkSit', pkSit); on('pkStand', pkStand); on('pkStart', pkStart); on('pkTake', pkTakeOver);
+  on('pkRebuy', () => { if (!canWrite()) return; pkWriteSeat({rebuySeq:(pk.mySeat?.rebuySeq || 0) + 1}); toast('Pides fichas al croupier.'); });
+  body.querySelectorAll('[data-pk]').forEach(b => b.onclick = () => pkAct(b.dataset.pk, Number(b.dataset.to || 0)));
 }
 
 /* ---- Dados ---- */
@@ -3258,7 +3691,7 @@ const TUTO = [
   {ill:'perfil',  tab:'stats', t:'Tus stats y El Banco', p:'Tus mejores fiestas y récords, y en El Banco lo que llevas fundido en euros. Toca tu nombre arriba para cambiar foto, nombre o estado.', joke:'Si te pusiste un nombre absurdo, aún estás a tiempo.'},
   {ill:'podium',  tab:'group', t:'El grupo y El top', p:'En El grupo, las gráficas, quién está fichado ahora y quién hizo qué. En El top, el podio de barriles de la taberna.', joke:'Spoiler: el problema del grupo eres tú.'},
   {ill:'fotos',   tab:'fotos', t:'Pruebas del Delito', p:'Sube las fotos de la noche con un marco de broma y dales pulgar arriba. Las más votadas van al podio.', joke:'Lo que se sube, no se olvida.'},
-  {ill:'casino',  tab:'casino', t:'Gran Casino Resaca', p:'Ruleta, blackjack, más alta o más baja, dados y La Verdad, con 500 preguntas picantes. Saca el móvil en la mesa y a jugar.', joke:'La banca siempre gana. Tú, a veces bebes.'},
+  {ill:'casino',  tab:'casino', t:'Gran Casino Resaca', p:'Póker en mesa compartida, ruleta, blackjack, más o menos, dados y La Verdad con 500 preguntas picantes. Saca el móvil y a jugar.', joke:'La banca siempre gana. Tú, a veces bebes.'},
   {ill:'tabernia', tab:'tabernia', t:'Las Crónicas de Tabernia', p:'Todos los bares y discotecas donde habéis estado, con la nota media de la cuadrilla.', joke:'Que los dioses del vermut nos protejan.'},
   {ill:'neon',    tab:'burdel', t:'El Burdel', p:'Solteros: +20 por lío y +10 si hay koito. En pareja: +25 por ayudar a otro. ¿Dudas? El botón ? de arriba.', joke:'Lo que pasa en el burdel, se queda en el burdel.'}
 ];
