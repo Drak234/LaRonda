@@ -1682,7 +1682,7 @@ function checkIn(t, join){
   const outAt = Date.now();
   if (open) setOut(open, outAt);
   addItem('fichajes', t, {...(place ? {place} : {}), ...(join ? {con:join.pid} : {})});
-  if (open) setTimeout(() => askRating({...open, out:outAt}), 1700);
+  if (open) setTimeout(() => maybeRate({...open, out:outAt}), 1700);
   try { navigator.vibrate && navigator.vibrate([40,60,40]); } catch(e){}
   render();
   stamp(t === 'disco' ? 'A la pista' : 'Dentro', join ? `Con ${person(join.pid)?.name || 'la cuadrilla'}` : open ? `Sales ${PLACES[open.t].de} y fichas` : 'Fichado', t === 'disco');
@@ -1707,7 +1707,7 @@ function checkOut(at){
   const out = Math.max(s.ts + 60000, Math.min(at, Date.now()));
   setOut(s, out); render();
   toast(`Desfichado: ${fmtDur(out - s.ts)} ${PLACES[s.t].en}`, {label:'Deshacer', fn:() => { setOut(s, null); render(); }});
-  setTimeout(() => askRating({...s, out}), 350);
+  setTimeout(() => maybeRate({...s, out}), 350);
 }
 function checkOutAt(hhmm){
   const s = openSession(me); if (!s || !/^\d{1,2}:\d{2}$/.test(hhmm)) { toast('Pon una hora válida, por ejemplo 04:30.'); return; }
@@ -1901,7 +1901,7 @@ function fichHtml(key){
   }
   const list = done.length ? `<div class="card" style="padding:2px 16px">${done.map(x => `<div class="sess"><span class="dot" style="background:${PLACES[x.t].hi}">${svgI(x.t)}</span>
     <div><div style="font-weight:600">${PLACES[x.t].n}${x.place ? ' · ' + esc(x.place) : ''}</div><div class="when">${fmtTime(x.ts)} → ${fmtTime(x.out)}</div></div>
-    <span class="d">${shortDur(sessDur(x))}</span>${x.nota ? `<button class="nota-chip" style="--nc:${notaColor(x.nota)}" data-rate="${x.ts}" aria-label="Nota ${x.nota}, cambiar">${x.nota}</button>` : `<button class="seg" data-rate="${x.ts}">Puntuar</button>`}<button class="del" data-fn="${x.doc}" data-fts="${x.ts}">Quitar</button></div>`).join('')}</div>` : '';
+    <span class="d">${shortDur(sessDur(x))}</span>${(nn => nn ? `<button class="nota-chip" style="--nc:${notaColor(nn)}" data-rate="${x.ts}" aria-label="Nota ${nn}, cambiar">${nn}</button>` : `<button class="seg" data-rate="${x.ts}">Puntuar</button>`)(x.nota || myNota(x.t, x.place)?.nota)}<button class="del" data-fn="${x.doc}" data-fts="${x.ts}">Quitar</button></div>`).join('')}</div>` : '';
   const totTxt = [tot.bar && `bar ${shortDur(tot.bar)}`, tot.disco && `disco ${shortDur(tot.disco)}`].filter(Boolean).join(' · ');
   const last = lastSession();
   const edit = last ? `<button class="edit-fich" id="fEdit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg><span><b>Quiero modificar mi último fichaje</b><small>${PLACES[last.t].n}${last.place ? ' · ' + esc(last.place) : ''} · ${fmtNight(last.night)} · ${last.out ? shortDur(sessDur(last)) : 'sigues dentro'}</small></span></button>` : '';
@@ -2327,6 +2327,10 @@ function setFields(s, fields){
   const id = `${s.pid}__${s.doc || s.night}`;
   writeArr('fichajes', id, itemsOf('fichajes', id).map(it => it.ts === s.ts ? {...it, ...fields} : it));
 }
+// mi última nota a un sitio (la nota se pone una vez por sitio; vale la última)
+const myNota = (t, place, pid = me) => place ? allFich().filter(x => x.pid === pid && x.t === t && x.nota && placeKey(x.place) === placeKey(place)).sort((a, b) => b.ts - a.ts)[0] : null;
+// al desfichar solo se pregunta la nota si aún no has puntuado ese sitio
+function maybeRate(s){ if (s && s.place && myNota(s.t, s.place)) return; askRating(s); }
 function askRating(s){
   if (!s || !PLACES[s.t]) return;
   const P = PLACES[s.t]; const box = $('#rateModal'); box.hidden = false;
@@ -2364,11 +2368,12 @@ function realm(t){
   });
   return Object.values(m).map(e => ({
     name: Object.entries(e.names).sort((a,b) => b[1] - a[1])[0][0],
-    visits: e.visits, notas: e.notas.sort((a,b) => b.ts - a.ts),
-    avg: e.notas.length ? e.notas.reduce((a,s) => a + s.nota, 0) / e.notas.length : null,
+    // una nota por persona: la última que puso
+    visits: e.visits, notas: (ns => ns.filter((s, i) => ns.findIndex(o => o.pid === s.pid) === i))(e.notas.sort((a,b) => b.ts - a.ts)),
+    avg: null,
     last: Math.max(...e.visits.map(v => v.ts)),
     who: [...new Set(e.visits.map(v => v.pid))].filter(person)
-  })).sort((a,b) => (b.avg ?? -1) - (a.avg ?? -1) || b.visits.length - a.visits.length);
+  })).map(p => ({...p, avg: p.notas.length ? p.notas.reduce((a, s) => a + s.nota, 0) / p.notas.length : null})).sort((a,b) => (b.avg ?? -1) - (a.avg ?? -1) || b.visits.length - a.visits.length);
 }
 const COMPASS = '<svg class="compass" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="29" fill="none" stroke="#7A5A28" stroke-width="2"/><circle cx="32" cy="32" r="22" fill="none" stroke="#7A5A28" stroke-width="1" stroke-dasharray="2 3"/><path d="M32 4l5 28-5 28-5-28z" fill="#8A2418"/><path d="M32 4l5 28h-10z" fill="#B5382A"/><path d="M4 32l28-5 28 5-28 5z" fill="#5A4220"/><circle cx="32" cy="32" r="3" fill="#F1E2BC" stroke="#5A4220"/></svg>';
 function placeCard(p, i){
@@ -2389,7 +2394,7 @@ function placeCard(p, i){
 function renderTabernia(){
   const el = $('#view');
   const bars = realm('bar'), discos = realm('disco');
-  const nNotas = allFich().filter(s => s.nota && s.place).length;
+  const nNotas = [...bars, ...discos].reduce((a, p) => a + p.notas.length, 0);
   const section = (list, title, sub, empty) => `<div class="sec"><div class="sec-h"><h2>${title}</h2><span class="eyebrow">${plural(list.length, 'sitio', 'sitios')}</span></div>
     <div class="realm-sub">${sub}</div>
     ${list.length ? `<div class="places">${list.map(placeCard).join('')}</div>` : `<div class="realm-empty">${empty}</div>`}</div>`;
@@ -2405,7 +2410,7 @@ function renderTabernia(){
     ${section(discos, 'Las Mazmorras del Baile', 'Entras con dignidad, sales sin ella.', 'Ninguna mazmorra explorada. Ficha en una discoteca y puntúala al desfichar.')}
     <div class="sec card"><div class="sec-h"><h3 style="font-family:'Cinzel Decorative',Georgia,serif;font-size:16px">Escala de los sabios</h3></div>
       <div class="ranks">${RANKS.map(r => `<span style="--rk:${r[2]}"><i></i>${r[1]} · ${r[0] ? fmtPts(r[0]) + '+' : 'menos de 4,5'}</span>`).join('')}</div>
-      <div class="hint" style="margin-top:8px">La nota de cada sitio es la media de todas las notas que le ha puesto la cuadrilla. Toca un sitio para ver quién le puso qué.</div></div>`;
+      <div class="hint" style="margin-top:8px">La nota de cada sitio es la media de la cuadrilla: cada uno lo puntúa una vez (si lo cambias, vale la última). Toca un sitio para ver quién le puso qué.</div></div>`;
 }
 
 let casinoForce = true;
@@ -3759,7 +3764,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#avMod
 const TUTO = [
   {ill:'glass',   t:'Bienvenido a La Ronda', p:'La app para contar lo que bebe la cuadrilla. Como Strava, pero con resaca. Abajo tienes las pestañas; te las enseñamos rapidito.', joke:'Son 9 pantallas. Menos que una ronda.'},
   {ill:'stepper', tab:'mine', t:'Apunta lo que bebes', p:'Le das al + cuando pides y al − si te has colado. Cuanto más fuerte, más puntos. La noche va de 17:00 a 17:00.', joke:'De "Sobrio como un juez" a "Leyenda del bar". Tú verás.'},
-  {ill:'fichar',  tab:'mine', t:'Ficha al entrar', p:'Fichas al entrar en un bar o en la disco, o tocas "Estoy con…" para unirte a un amigo. Al salir, desfichas y le pones nota. ¿Se te olvidó? Lo corriges abajo.', joke:'Como en el curro, pero aquí vas con ganas.'},
+  {ill:'fichar',  tab:'mine', t:'Ficha al entrar', p:'Fichas al entrar en un bar o en la disco, o tocas "Estoy con…" para unirte a un amigo. Al salir, desfichas y le pones nota (solo la primera vez). ¿Se te olvidó? Lo corriges abajo.', joke:'Como en el curro, pero aquí vas con ganas.'},
   {ill:'perfil',  tab:'stats', t:'Tus stats y El Banco', p:'Tus mejores fiestas y récords, y en El Banco lo que llevas fundido en euros. Toca tu nombre arriba para cambiar foto, nombre o estado.', joke:'Si te pusiste un nombre absurdo, aún estás a tiempo.'},
   {ill:'podium',  tab:'group', t:'El grupo y El top', p:'En El grupo, las gráficas, quién está fichado ahora y quién hizo qué. En El top, el podio de barriles de la taberna.', joke:'Spoiler: el problema del grupo eres tú.'},
   {ill:'fotos',   tab:'fotos', t:'Pruebas del Delito', p:'Sube las fotos de la noche con un marco de broma y dales pulgar arriba. Las más votadas van al podio.', joke:'Lo que se sube, no se olvida.'},
