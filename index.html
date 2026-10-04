@@ -734,7 +734,7 @@ body.casino .tab[aria-selected="true"]{background:var(--gold);color:#1E1404}
 .cas-deco.d1{left:12px;bottom:24px;width:32px;animation:tumble 6s ease-in-out infinite}
 .cas-deco.d2{right:12px;bottom:24px;width:28px;animation:tumble 7s ease-in-out infinite reverse}
 @keyframes tumble{50%{transform:rotate(25deg) translateY(-6px)}}
-.game-pick{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.game-pick{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px}
 @media (max-width:520px){.game-pick{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 8px}}
 .gchip{display:grid;justify-items:center;align-content:start;gap:6px;font-weight:700;font-size:12px;line-height:1.15;text-align:center;color:var(--ink-2)}
 .gchip .cp{width:min(68px,100%);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;position:relative;transition:transform .25s;
@@ -1110,6 +1110,79 @@ body.bank .kpi b{color:#F3EEE2}
 .sl-note{font-size:12.5px;color:#D6E6EE;line-height:1.45;margin-top:8px}
 .sl-lmap{display:flex;gap:6px;justify-content:center;margin-top:8px}
 .sl-lmap svg{width:48px;height:29px}
+/* ajedrez · salón de té */
+.ch-wrap{gap:12px;background:radial-gradient(ellipse at 50% -10%,rgba(255,214,150,.28),transparent 60%),repeating-linear-gradient(90deg,#4B2D26 0 18px,#553429 18px 20px,#4B2D26 20px 38px),#4B2D26}
+.ch-wrap h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:30px;color:#F6E7C8;letter-spacing:.04em}
+.ch-wrap .crule{color:#EBD9C0}
+.ch-tea{background:#F6EEDF;border-color:#C9A24A;font-size:26px}
+.ch-room{position:relative;display:grid;gap:8px;padding:12px 10px;border-radius:20px;max-width:460px;width:100%;margin:0 auto;
+  background:radial-gradient(ellipse at 50% 40%,rgba(255,255,255,.07),transparent 65%),linear-gradient(160deg,#6E4426,#4A2B16 60%,#5E3A20);box-shadow:inset 0 0 0 2px rgba(231,196,106,.35),0 14px 28px rgba(0,0,0,.5)}
+.ch-cup{position:absolute;width:62px;height:54px;right:-6px;top:-22px;z-index:3;filter:drop-shadow(0 4px 4px rgba(0,0,0,.4))}
+.ch-cup.b{right:auto;left:-8px;top:auto;bottom:-20px;transform:scaleX(-1) rotate(-6deg)}
+.ch-steam path{animation:chsteam 3s ease-in-out infinite;opacity:0}
+.ch-steam path:nth-child(2){animation-delay:1s}.ch-steam path:nth-child(3){animation-delay:2s}
+@keyframes chsteam{0%{opacity:0;transform:translateY(6px)}40%{opacity:.9}100%{opacity:0;transform:translateY(-8px)}}
+.ch-frame{padding:9px;border-radius:8px;background:linear-gradient(135deg,#3B220F,#24140A);box-shadow:inset 0 0 0 1.5px #C9A24A,0 6px 14px rgba(0,0,0,.5)}
+.ch-board{position:relative;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));border-radius:3px;overflow:hidden;box-shadow:0 0 0 1px rgba(0,0,0,.5)}
+.ch-sq{position:relative;aspect-ratio:1;padding:0;display:grid;place-items:center;border:0;border-radius:0}
+.ch-sq.l{background:#F0DDB7}
+.ch-sq.d{background:#B07B4F}
+.ch-sq.l::before,.ch-sq.d::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(100deg,rgba(255,255,255,.035) 0 3px,rgba(0,0,0,.035) 3px 7px)}
+.ch-sq.last.l{background:#F3E08F}.ch-sq.last.d{background:#CDA651}
+.ch-sq.sel{box-shadow:inset 0 0 0 3px #3E7F4A}
+.ch-sq.sel.l{background:#C9DCA0}.ch-sq.sel.d{background:#8FA75A}
+.ch-sq.ch-tgt::after{content:"";position:absolute;width:30%;height:30%;border-radius:50%;background:rgba(40,70,40,.38);pointer-events:none}
+.ch-sq.ch-cap::after{content:"";position:absolute;inset:5%;border-radius:50%;box-shadow:inset 0 0 0 4px rgba(40,70,40,.45);pointer-events:none}
+.ch-sq.chk{background:radial-gradient(circle,#FF5A4A 0,#E0392B 35%,rgba(224,57,43,0) 75%),#B07B4F}
+.ch-sq.chk.l{background:radial-gradient(circle,#FF5A4A 0,#E0392B 35%,rgba(224,57,43,0) 75%),#F0DDB7}
+.ch-pw{position:relative;z-index:1;width:100%;height:100%;display:grid;place-items:center;pointer-events:none}
+.ch-pw.mv{animation:chslide .32s cubic-bezier(.3,.8,.3,1)}
+@keyframes chslide{from{transform:translate(var(--dx),var(--dy))}}
+.ch-pc{width:92%;height:92%;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;filter:drop-shadow(0 2px 1.5px rgba(0,0,0,.35))}
+.ch-pc.w{fill:#FBF6EA;stroke:#2A1E14}
+.ch-pc.b{fill:#2B2320;stroke:#0D0907}
+.ch-pc .ln{fill:none}
+.ch-pc.b .ln{stroke:#A8957F}
+.ch-pc .ey{stroke:none}.ch-pc.w .ey{fill:#2A1E14}.ch-pc.b .ey{fill:#E8DCC6}
+.ch-rk,.ch-fl{position:absolute;font:700 9.5px/1 var(--font-body);font-style:normal;pointer-events:none;z-index:2}
+.ch-rk{left:2px;top:2px}.ch-fl{right:3px;bottom:2px}
+.ch-sq.l .ch-rk,.ch-sq.l .ch-fl{color:#9A6A40}.ch-sq.d .ch-rk,.ch-sq.d .ch-fl{color:#F0DDB7}
+.ch-board.ch-live .ch-sq{cursor:pointer}
+.ch-promo{position:absolute;inset:0;z-index:5;display:grid;place-items:center;align-content:center;gap:10px;background:rgba(20,12,6,.72);animation:fadeIn .2s ease}
+.ch-promo span{font-family:'Cormorant Garamond',Georgia,serif;font-size:24px;font-weight:700;color:#F6E7C8}
+.ch-promo div{display:flex;gap:8px}
+.ch-promo [data-promo]{width:58px;height:58px;border-radius:12px;background:#F0DDB7;box-shadow:0 0 0 2px #C9A24A,0 4px 10px rgba(0,0,0,.5);display:grid;place-items:center}
+.ch-promo .ch-promo-x{width:auto;height:auto;padding:6px 14px;background:none;box-shadow:none;color:#EBD9C0;font-weight:700}
+.ch-plate{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;padding:6px 10px;border-radius:12px;background:rgba(0,0,0,.28);transition:box-shadow .3s}
+.ch-plate.turn{box-shadow:0 0 0 2px #E7C46A,0 0 14px rgba(231,196,106,.45)}
+.ch-av{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:22px;background:#F6EEDF;box-shadow:0 0 0 2px #C9A24A;overflow:hidden}
+.ch-av:empty{background:rgba(255,255,255,.08);box-shadow:0 0 0 2px dashed rgba(255,255,255,.2)}
+.ch-av .avx{font-size:34px}
+.ch-pn{display:grid;min-width:0}
+.ch-pn b{font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;color:#F6E7C8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ch-pn small{font-size:11.5px;color:#E3CFB0;display:flex;align-items:center;gap:4px}
+.ch-dot{width:10px;height:10px;border-radius:50%;display:inline-block;box-shadow:0 0 0 1px rgba(0,0,0,.6)}
+.ch-dot.w{background:#FBF6EA}.ch-dot.b{background:#2B2320;box-shadow:0 0 0 1px #E3CFB0}
+.ch-capt{display:flex;align-items:center;flex-wrap:wrap;justify-content:flex-end;max-width:120px}
+.ch-capt .ch-pc{width:15px;height:15px;margin-left:-3px;filter:none;stroke-width:5}
+.ch-capt em{font-style:normal;font:700 11px/1 var(--font-mono);color:#E7C46A;margin-left:4px}
+.ch-turn{justify-self:center;font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:24px;color:#FFE9B0;text-shadow:0 0 12px rgba(255,226,122,.5);animation:vpop .4s ease}
+.ch-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ch-acts .cbtn{padding:11px 8px;font-size:14px}
+.cbtn.warnb,.seg.warnb{background:#B3202A;color:#fff;border-color:#B3202A}
+.ch-offer{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px;border-radius:14px;background:rgba(246,238,223,.12);box-shadow:inset 0 0 0 1.5px #C9A24A;animation:vpop .35s ease}
+.ch-offer span{grid-column:1/-1;text-align:center;color:#F6E7C8;font-weight:700}
+.ch-result{display:grid;justify-items:center;gap:2px;padding:10px 12px;border-radius:14px;text-align:center;background:linear-gradient(#F6EEDF,#E9DCC2);color:#3A2414;box-shadow:0 0 0 2px #C9A24A,0 8px 18px rgba(0,0,0,.4);animation:vpop .45s cubic-bezier(.2,1.5,.4,1)}
+.ch-result b{font-family:'Cormorant Garamond',Georgia,serif;font-size:32px;line-height:1}
+.ch-result span{font-size:14px}
+.ch-rank{display:grid;gap:4px;padding:10px 12px;border-radius:14px;background:rgba(0,0,0,.25)}
+.ch-rh,.ch-rr{display:grid;grid-template-columns:1fr repeat(4,34px);gap:4px;align-items:center;text-align:center}
+.ch-rh{font-size:11px;color:#E3CFB0;letter-spacing:.08em}
+.ch-rr span{text-align:left;display:flex;align-items:center;gap:6px;color:#F6E7C8;font-size:14px;min-width:0}
+.ch-rr b{font-family:var(--font-mono);font-size:14px;color:#F6E7C8}
+.ch-rr b.pts{color:#E7C46A}
+.ch-ml{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:8px;font-family:var(--font-mono);font-size:12.5px;color:#F6E7C8}
+.ch-ml i{font-style:normal;color:#C9A98A}
 /* póker */
 .pk-wrap{gap:12px}
 .pk-head{display:flex;align-items:center;justify-content:center;gap:10px;position:relative}
@@ -2539,6 +2612,7 @@ const GAMES = {
   ruleta:   {n:'Ruleta', cc:'#B3202A', ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M12 3v5.5M12 15.5V21M3 12h5.5M15.5 12H21"/></svg>'},
   poker:    {n:'Póker', cc:'#0E7A3E', ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="10" height="14" rx="2" transform="rotate(-10 8 12)"/><rect x="11" y="5" width="10" height="14" rx="2" transform="rotate(10 16 12)"/><path d="M16 10.5c.8 1 2 1.6 2 2.6a1.2 1.2 0 0 1-2 .8l.3 1.6h-1.2l.3-1.6a1.2 1.2 0 0 1-2-.8c0-1 1.2-1.6 2-2.6z" fill="currentColor"/></svg>'},
   slots:    {n:'Tragaperras', cc:'#B07A10', ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="15" height="13" rx="2.5"/><path d="M7 10v5M10.5 10v5M14 10v5"/><path d="M21 7v7h-3"/><circle cx="21" cy="5.5" r="1.5" fill="currentColor"/></svg>'},
+  ajedrez:  {n:'Ajedrez', cc:'#5A3A22', ico:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 20c-.4-3 .5-5 2.3-6.4-1.5.2-2.7 1-3.6.4-1-.7-1-1.9-.2-2.9l3.4-4.1c.3-1.4 1.2-2.4 2.4-2.9l.5 1.4c2.7.8 4.6 3.6 4.4 7.5-.2 2.6-1.2 4.6-1.2 7z"/><rect x="5.5" y="20" width="13" height="2.2" rx="1"/></svg>'},
   blackjack:{n:'Blackjack', cc:'#15120F', ico:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c3 4 7 6 7 10a4 4 0 0 1-6.3 3.3L14 21h-4l1.3-4.7A4 4 0 0 1 5 13c0-4 4-6 7-10z"/></svg>'},
   hilo:     {n:'Más o menos', cc:'#1F5FA8', ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5-5 5 5M7 14l5 5 5-5"/></svg>'},
   verdad:   {n:'La Verdad', cc:'#C2407F', ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M10 9.5a2 2 0 1 1 2.8 1.8c-.5.3-.8.7-.8 1.2V13"/><circle cx="12" cy="16.5" r=".6" fill="currentColor"/></svg>'},
@@ -2564,7 +2638,7 @@ function renderCasino(force){
   el.querySelectorAll('.gchip').forEach(b => b.onclick = () => { if (rl.spinning || dc.rolling || sl.spinning) return; casGame = b.dataset.g; el.querySelectorAll('.gchip').forEach(x => x.setAttribute('aria-pressed', x === b)); mountGame(); });
   mountGame();
 }
-function mountGame(){ ({ruleta:mountRuleta, poker:mountPoker, slots:mountSlots, blackjack:mountBJ, hilo:mountHL, verdad:mountVerdad, dados:mountDados})[casGame](); }
+function mountGame(){ ({ruleta:mountRuleta, poker:mountPoker, slots:mountSlots, ajedrez:mountChess, blackjack:mountBJ, hilo:mountHL, verdad:mountVerdad, dados:mountDados})[casGame](); }
 
 /* ---- Ruleta ---- */
 function mountRuleta(){
@@ -2928,8 +3002,15 @@ const pkIsLeader = () => pk.st && pk.st.leader === me && !!pk.mySeat && !pk.mySe
 function pkSubscribe(){
   if (pk.subscribed || !db) return; pk.subscribed = true;
   db.collection('poker').onSnapshot(snap => {
-    const seats = {}, slots = {}; let st = null;
-    snap.docs.forEach(d => { const v = d.data(); if (!v) return; if (d.id === 'mesa') st = v; else if (d.id.startsWith('slot_')){ if (v.who) slots[v.who] = v; } else if (v.pid) seats[v.pid] = v; });
+    const seats = {}, slots = {}, chGames = []; let st = null, chs = null;
+    snap.docs.forEach(d => { const v = d.data(); if (!v) return;
+      if (d.id === 'mesa') st = v;
+      else if (d.id === 'chess') chs = v;
+      else if (d.id.startsWith('chessg_')) chGames.push(v);
+      else if (d.id.startsWith('slot_')){ if (v.who) slots[v.who] = v; }
+      else if (d.id.startsWith('s_') && v.pid) seats[v.pid] = v; });
+    ch.st = chs; ch.games = chGames;
+    if (document.getElementById('chRoot')) chPaint();
     pk.slots = slots;
     if (document.getElementById('slRoot') && !sl.spinning) slPaintSide();
     // mi asiento solo cuenta si no me levanté y he dado señales en los últimos 10 min (si no, estoy fuera)
@@ -3525,6 +3606,420 @@ function slParty(win, gold){
   document.body.appendChild(o);
   const close = () => o.remove(); o.onclick = close; setTimeout(close, gold ? 7000 : 5000);
 }
+
+/* ---- Ajedrez: reglas completas ----
+   Tablero de 64 casillas (0 = a8 … 63 = h1). Piezas: PNBRQK blancas, pnbrqk negras.
+   Incluye enroque, al paso, coronación, jaque mate, ahogado, material insuficiente,
+   regla de los 50 movimientos y triple repetición. */
+const CH_START = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+const chFile = i => i & 7, chRank = i => 7 - (i >> 3);           // rango 0 = fila 1
+const chSqName = i => 'abcdefgh'[chFile(i)] + (chRank(i) + 1);
+const chSqIdx = s => (8 - Number(s[1])) * 8 + 'abcdefgh'.indexOf(s[0]);
+const chIsW = p => p && p === p.toUpperCase();
+const chColor = p => p ? (chIsW(p) ? 'w' : 'b') : null;
+function chParse(fen){
+  const [pos, turn, castle, ep, half, full] = fen.split(' ');
+  const b = []; pos.split('/').forEach(row => { for (const c of row){ if (/\d/.test(c)) for (let k = 0; k < +c; k++) b.push(null); else b.push(c); } });
+  return {b, turn, castle:castle === '-' ? '' : castle, ep:ep === '-' ? -1 : chSqIdx(ep), half:+half || 0, full:+full || 1};
+}
+function chFen(s){
+  let out = '';
+  for (let r = 0; r < 8; r++){
+    let e = 0;
+    for (let f = 0; f < 8; f++){ const p = s.b[r * 8 + f]; if (!p) e++; else { if (e){ out += e; e = 0; } out += p; } }
+    if (e) out += e; if (r < 7) out += '/';
+  }
+  return `${out} ${s.turn} ${s.castle || '-'} ${s.ep >= 0 ? chSqName(s.ep) : '-'} ${s.half} ${s.full}`;
+}
+const CH_N = [[1,2],[2,1],[2,-1],[1,-2],[-1,-2],[-2,-1],[-2,1],[-1,2]];
+const CH_K = [[1,0],[1,1],[0,1],[-1,1],[-1,0],[-1,-1],[0,-1],[1,-1]];
+const CH_DIAG = [[1,1],[1,-1],[-1,1],[-1,-1]], CH_ORTH = [[1,0],[-1,0],[0,1],[0,-1]];
+// ¿está la casilla sq atacada por el color "by"?
+function chAttacked(b, sq, by){
+  const f = chFile(sq), r = chRank(sq);
+  const at = (ff, rr) => (ff < 0 || ff > 7 || rr < 0 || rr > 7) ? undefined : b[(7 - rr) * 8 + ff];
+  const own = p => p && chColor(p) === by;
+  // peones
+  const pr = by === 'w' ? r - 1 : r + 1, pp = by === 'w' ? 'P' : 'p';
+  if (at(f - 1, pr) === pp || at(f + 1, pr) === pp) return true;
+  for (const [df, dr] of CH_N){ const p = at(f + df, r + dr); if (own(p) && p.toLowerCase() === 'n') return true; }
+  for (const [df, dr] of CH_K){ const p = at(f + df, r + dr); if (own(p) && p.toLowerCase() === 'k') return true; }
+  for (const [dirs, kinds] of [[CH_DIAG, 'bq'], [CH_ORTH, 'rq']]){
+    for (const [df, dr] of dirs){
+      let ff = f + df, rr = r + dr;
+      while (ff >= 0 && ff < 8 && rr >= 0 && rr < 8){
+        const p = b[(7 - rr) * 8 + ff];
+        if (p){ if (own(p) && kinds.includes(p.toLowerCase())) return true; break; }
+        ff += df; rr += dr;
+      }
+    }
+  }
+  return false;
+}
+const chKingSq = (b, c) => b.indexOf(c === 'w' ? 'K' : 'k');
+const chInCheck = s => chAttacked(s.b, chKingSq(s.b, s.turn), s.turn === 'w' ? 'b' : 'w');
+function chPseudo(s){
+  const {b, turn} = s, moves = [], opp = turn === 'w' ? 'b' : 'w';
+  const add = (from, to, extra = {}) => moves.push({from, to, piece:b[from], cap:b[to] || null, ...extra});
+  for (let i = 0; i < 64; i++){
+    const p = b[i]; if (!p || chColor(p) !== turn) continue;
+    const f = chFile(i), r = chRank(i), t = p.toLowerCase();
+    const idx = (ff, rr) => (ff < 0 || ff > 7 || rr < 0 || rr > 7) ? -1 : (7 - rr) * 8 + ff;
+    if (t === 'p'){
+      const dir = turn === 'w' ? 1 : -1, start = turn === 'w' ? 1 : 6, last = turn === 'w' ? 7 : 0;
+      const pushP = (to, extra) => { if (chRank(to) === last) for (const pr of 'qrbn') add(i, to, {...extra, promo:turn === 'w' ? pr.toUpperCase() : pr}); else add(i, to, extra); };
+      const one = idx(f, r + dir);
+      if (one >= 0 && !b[one]){
+        pushP(one, {});
+        const two = idx(f, r + 2 * dir);
+        if (r === start && !b[two]) add(i, two, {dbl:true});
+      }
+      for (const df of [-1, 1]){
+        const to = idx(f + df, r + dir); if (to < 0) continue;
+        if (b[to] && chColor(b[to]) === opp) pushP(to, {});
+        else if (to === s.ep) add(i, to, {ep:true, cap:turn === 'w' ? 'p' : 'P'});
+      }
+    } else if (t === 'n' || t === 'k'){
+      for (const [df, dr] of (t === 'n' ? CH_N : CH_K)){ const to = idx(f + df, r + dr); if (to >= 0 && (!b[to] || chColor(b[to]) === opp)) add(i, to); }
+      if (t === 'k'){
+        const home = turn === 'w' ? 60 : 4, cr = s.castle;
+        if (i === home && !chAttacked(b, i, opp)){
+          const K = turn === 'w' ? 'K' : 'k', Q = turn === 'w' ? 'Q' : 'q', R = turn === 'w' ? 'R' : 'r';
+          if (cr.includes(K) && b[home + 3] === R && !b[home + 1] && !b[home + 2] && !chAttacked(b, home + 1, opp) && !chAttacked(b, home + 2, opp)) add(i, home + 2, {castle:'k'});
+          if (cr.includes(Q) && b[home - 4] === R && !b[home - 1] && !b[home - 2] && !b[home - 3] && !chAttacked(b, home - 1, opp) && !chAttacked(b, home - 2, opp)) add(i, home - 2, {castle:'q'});
+        }
+      }
+    } else {
+      const dirs = t === 'b' ? CH_DIAG : t === 'r' ? CH_ORTH : [...CH_DIAG, ...CH_ORTH];
+      for (const [df, dr] of dirs){
+        let ff = f + df, rr = r + dr;
+        while (ff >= 0 && ff < 8 && rr >= 0 && rr < 8){
+          const to = (7 - rr) * 8 + ff;
+          if (!b[to]) add(i, to); else { if (chColor(b[to]) === opp) add(i, to); break; }
+          ff += df; rr += dr;
+        }
+      }
+    }
+  }
+  return moves;
+}
+function chApply(s, m){
+  const b = s.b.slice(), turn = s.turn, opp = turn === 'w' ? 'b' : 'w';
+  b[m.to] = m.promo || b[m.from]; b[m.from] = null;
+  if (m.ep) b[m.to + (turn === 'w' ? 8 : -8)] = null;
+  if (m.castle === 'k'){ b[m.to - 1] = b[m.to + 1]; b[m.to + 1] = null; }
+  if (m.castle === 'q'){ b[m.to + 1] = b[m.to - 2]; b[m.to - 2] = null; }
+  let castle = s.castle;
+  const strip = (sq, ch) => { if (m.from === sq || m.to === sq) castle = castle.replace(ch, ''); };
+  if (m.piece === 'K') castle = castle.replace('K', '').replace('Q', '');
+  if (m.piece === 'k') castle = castle.replace('k', '').replace('q', '');
+  strip(63, 'K'); strip(56, 'Q'); strip(7, 'k'); strip(0, 'q');
+  const pawn = m.piece.toLowerCase() === 'p';
+  return {b, turn:opp, castle, ep:m.dbl ? (m.from + m.to) / 2 : -1, half:(pawn || m.cap) ? 0 : s.half + 1, full:s.full + (turn === 'b' ? 1 : 0)};
+}
+function chLegal(s){
+  return chPseudo(s).filter(m => { const n = chApply(s, m); return !chAttacked(n.b, chKingSq(n.b, s.turn), n.turn); });
+}
+function chSan(s, m, legal){
+  legal = legal || chLegal(s);
+  let san;
+  if (m.castle) san = m.castle === 'k' ? 'O-O' : 'O-O-O';
+  else {
+    const t = m.piece.toUpperCase(), to = chSqName(m.to);
+    if (t === 'P') san = (m.cap ? 'abcdefgh'[chFile(m.from)] + 'x' : '') + to + (m.promo ? '=' + m.promo.toUpperCase() : '');
+    else {
+      const twins = legal.filter(o => o.piece === m.piece && o.to === m.to && o.from !== m.from);
+      let dis = '';
+      if (twins.length){
+        const sameF = twins.some(o => chFile(o.from) === chFile(m.from)), sameR = twins.some(o => chRank(o.from) === chRank(m.from));
+        dis = !sameF ? 'abcdefgh'[chFile(m.from)] : !sameR ? String(chRank(m.from) + 1) : chSqName(m.from);
+      }
+      san = t + dis + (m.cap ? 'x' : '') + to;
+    }
+  }
+  const n = chApply(s, m);
+  if (chInCheck(n)) san += chLegal(n).length ? '+' : '#';
+  return san;
+}
+// clave de posición para la triple repetición (al paso solo cuenta si se puede capturar de verdad)
+function chKey(s){
+  const epOk = s.ep >= 0 && chLegal(s).some(m => m.ep);
+  return chFen({...s, ep:epOk ? s.ep : -1, half:0, full:0}).split(' ').slice(0, 4).join(' ');
+}
+function chInsufficient(b){
+  const ps = b.map((p, i) => p && p.toLowerCase() !== 'k' ? [p.toLowerCase(), i] : null).filter(Boolean);
+  if (!ps.length) return true;
+  if (ps.some(([t]) => 'pqr'.includes(t))) return false;
+  if (ps.length === 1) return true;                          // rey + alfil o rey + caballo
+  if (ps.every(([t]) => t === 'b')){                          // solo alfiles, todos del mismo color de casilla
+    const col = i => (chFile(i) + chRank(i)) & 1;
+    return ps.every(([, i]) => col(i) === col(ps[0][1]));
+  }
+  return false;
+}
+// estado de la partida tras el último movimiento
+function chStatus(s, keys){
+  const legal = chLegal(s);
+  if (!legal.length) return chInCheck(s) ? {over:true, result:s.turn === 'w' ? '0-1' : '1-0', reason:'mate'} : {over:true, result:'1/2-1/2', reason:'stalemate'};
+  if (chInsufficient(s.b)) return {over:true, result:'1/2-1/2', reason:'material'};
+  if (s.half >= 100) return {over:true, result:'1/2-1/2', reason:'fifty'};
+  if (keys && keys.length){ const k = keys[keys.length - 1]; if (keys.filter(x => x === k).length >= 3) return {over:true, result:'1/2-1/2', reason:'repetition'}; }
+  return {over:false, check:chInCheck(s)};
+}
+/* piezas propias de estilo Staunton, dibujadas en 100×100 */
+const CH_BASE = '<path d="M24 92c0-4 3-6 7-6h38c4 0 7 2 7 6z"/><path d="M29 86c0-4 3-6 6-6h30c3 0 6 2 6 6z"/>';
+const CH_SHAPES = {
+  p: `<circle cx="50" cy="27" r="11"/><path d="M38 42c0-3 5-5 12-5s12 2 12 5-5 4-12 4-12-1-12-4z"/><path d="M42 46c0 12-4 22-10 34h36c-6-12-10-22-10-34z"/>${CH_BASE}`,
+  r: `<path d="M30 18h9v7h6v-7h10v7h6v-7h9v17c0 3-2 5-5 6H35c-3-1-5-3-5-6z"/><path d="M36 41h28l3 39H33z"/><path d="M33 46h34" class="ln"/>${CH_BASE}`,
+  b: `<circle cx="50" cy="11" r="4.5"/><path d="M50 16c10 7 15 16 12 26H38c-3-10 2-19 12-26z"/><path d="M53 23l-7 11" class="ln"/><path d="M37 46c0-3 6-4 13-4s13 1 13 4-6 4-13 4-13-1-13-4z"/><path d="M41 50c0 12-3 21-9 30h36c-6-9-9-18-9-30z"/>${CH_BASE}`,
+  n: `<path d="M34 80c-2-12 2-20 9-26-6 1-11 4-15 2-4-3-4-8-1-12l14-17c1-6 5-10 10-12l2 6c11 3 19 15 18 31-1 11-5 20-5 28z"/><circle cx="43" cy="32" r="2.6" class="ey"/><path d="M58 22c6 5 10 13 10 22" class="ln"/><path d="M29 47l4-1" class="ln"/>${CH_BASE}`,
+  q: `<circle cx="27" cy="27" r="4"/><circle cx="38.5" cy="20" r="4"/><circle cx="50" cy="16" r="4.5"/><circle cx="61.5" cy="20" r="4"/><circle cx="73" cy="27" r="4"/><path d="M27 30l9 22 3-28 11 26 11-26 3 28 9-22-5 28H32z"/><path d="M33 59c0-2 7-3 17-3s17 1 17 3-7 4-17 4-17-2-17-4z"/><path d="M38 63c0 7-2 12-6 17h36c-4-5-6-10-6-17z"/>${CH_BASE}`,
+  k: `<path d="M46 6h8v7h7v7h-7v8h-8v-8h-7v-7h7z"/><path d="M50 28c12 0 21 5 21 12 0 6-5 11-7 18H36c-2-7-7-12-7-18 0-7 9-12 21-12z"/><path d="M38 46c8-3 16-3 24 0" class="ln"/><path d="M33 61c0-2 7-4 17-4s17 2 17 4-7 4-17 4-17-2-17-4z"/><path d="M38 65c0 6-2 11-6 15h36c-4-4-6-9-6-15z"/>${CH_BASE}`
+};
+const chPieceSvg = p => `<svg class="ch-pc ${chIsW(p) ? 'w' : 'b'}" viewBox="0 0 100 100" aria-hidden="true">${CH_SHAPES[p.toLowerCase()]}</svg>`;
+/* ---- Ajedrez: mesa compartida del salón de té ----
+   Doc "chess" (colección del casino): estado de la mesa. Docs "chessg_<id>": partidas terminadas (para el ranking).
+   Cada jugador escribe solo su jugada con update(), así nunca se pisan. */
+let ch = {st:null, games:[], sel:null, promo:null, seenLast:null, confirm:null, lastTurnKey:null};
+const CH_STALE = 600e3, CH_AFK = 180e3;
+const chRef = () => db.collection('poker').doc('chess');
+const chPresent = pid => !!(ch.st && pid && Date.now() - (ch.st['beat_' + pid] || 0) < CH_STALE);
+const chSeated = () => !!(ch.st && (ch.st.host === me || ch.st.guest === me));
+const chMyColor = () => { const st = ch.st; if (!st || st.phase === 'lobby') return null; return st.white === me ? 'w' : st.black === me ? 'b' : null; };
+const chOther = () => ch.st ? (ch.st.host === me ? ch.st.guest : ch.st.guest === me ? ch.st.host : null) : null;
+const chNm = pid => esc(person(pid)?.name || '¿?');
+function chUpd(patch){
+  ch.st = {...(ch.st || {}), ...patch}; chPaint();
+  return chRef().update(patch).catch(e => { if (e && (e.code === 'not-found' || e.code === 'not_found')) return chRef().set(ch.st); toast(pkErrMsg(e)); });
+}
+function chSetDoc(full){ ch.st = full; chPaint(); return chRef().set(full).catch(e => toast(pkErrMsg(e))); }
+function chFresh(extra){
+  return {phase:'lobby', host:null, guest:null, white:null, black:null, fen:CH_START, moves:[], keys:[], last:null, result:null, reason:null, drawOffer:null, gid:null, games:0, msg:'', ...extra};
+}
+const CH_REASON = {
+  mate:(w, l) => `¡Jaque mate! ${w} gana la partida.`,
+  resign:(w, l) => `${l} se rinde. Gana ${w}.`,
+  leave:(w, l) => `${l} se levanta de la mesa y pierde. Gana ${w}.`,
+  abandon:(w, l) => `${l} no responde. Victoria para ${w} por abandono.`,
+  stalemate:() => 'Rey ahogado: tablas.',
+  repetition:() => 'La misma posición tres veces: tablas.',
+  fifty:() => 'Cincuenta jugadas sin capturas ni peones: tablas.',
+  material:() => 'No queda material para dar mate: tablas.',
+  agreement:() => 'Tablas de mutuo acuerdo. Que se sirva más té.'
+};
+function chEndPatch(st, result, reason){
+  const w = result === '1-0' ? st.white : result === '0-1' ? st.black : null;
+  const l = result === '1-0' ? st.black : result === '0-1' ? st.white : null;
+  const msg = CH_REASON[reason](w ? person(w)?.name || '¿?' : '', l ? person(l)?.name || '¿?' : '');
+  return {phase:'over', result, reason, endAt:Date.now(), drawOffer:null, msg};
+}
+function chRecord(st, result, reason){
+  if (!st.gid || !st.white || !st.black) return;
+  db.collection('poker').doc('chessg_' + st.gid).set({gid:st.gid, w:st.white, b:st.black, result, reason, plies:(st.moves || []).length, ts:Date.now()}).catch(() => {});
+}
+function chEnd(result, reason, extra = {}){
+  const st = ch.st; const patch = {...chEndPatch(st, result, reason), ...extra};
+  chRecord(st, result, reason); chUpd(patch);
+}
+
+/* acciones */
+function chSit(){
+  if (!canWrite()) return;
+  const st = ch.st, now = Date.now(), nm = person(me)?.name || 'Alguien';
+  const hostOk = st && st.host && st.host !== me && chPresent(st.host);
+  const guestOk = st && st.guest && st.guest !== me && chPresent(st.guest);
+  if (!hostOk && !guestOk) return chSetDoc(chFresh({host:me, games:0, ['beat_' + me]:now, msg:`${nm} se sienta y espera rival.`}));
+  if (hostOk && !guestOk) return chUpd({guest:me, ['beat_' + me]:now, msg:`${nm} acepta el reto. ${person(st.host)?.name}, cuando quieras empezáis.`});
+  if (!hostOk && guestOk && st.phase !== 'play') return chUpd({host:st.guest, guest:me, ['beat_' + me]:now, msg:`${nm} se sienta frente a ${person(st.guest)?.name}.`});
+  toast('La mesa está completa. Puedes mirar la partida.');
+}
+function chStart(swap){
+  if (!canWrite()) return;
+  const st = ch.st, other = chOther(); if (!other || !chPresent(other)) return;
+  let white = st.host, black = st.guest;
+  if (swap && st.white && st.black && [st.white, st.black].includes(me) && [st.white, st.black].includes(other)){ white = st.black; black = st.white; }
+  ch.sel = null; ch.promo = null;
+  chUpd({phase:'play', white, black, fen:CH_START, moves:[], keys:[chKey(chParse(CH_START))], last:null, result:null, reason:null, drawOffer:null, endAt:null,
+    gid:Date.now().toString(36) + Math.random().toString(36).slice(2, 6), startAt:Date.now(), games:(st.games || 0) + 1, ['beat_' + me]:Date.now(),
+    msg:`Empieza la partida. Blancas: ${person(white)?.name}. Negras: ${person(black)?.name}. Mueven las blancas.`});
+}
+function chMove(m){
+  if (!canWrite()) return;
+  const st = ch.st, s = chParse(st.fen), legal = chLegal(s);
+  const mv = legal.find(x => x.from === m.from && x.to === m.to && (x.promo || null) === (m.promo || null)); if (!mv) return;
+  const san = chSan(s, mv, legal), n = chApply(s, mv), keys = [...(st.keys || []), chKey(n)];
+  const stat = chStatus(n, keys);
+  ch.sel = null; ch.promo = null;
+  const patch = {fen:chFen(n), moves:[...(st.moves || []), san], keys, last:chSqName(mv.from) + chSqName(mv.to), drawOffer:null, ['beat_' + me]:Date.now(),
+    msg:`${person(me)?.name}: ${san}.${stat.check ? ' ¡Jaque!' : ''} Le toca a ${person(n.turn === 'w' ? st.white : st.black)?.name}.`};
+  if (stat.over){ const after = {...st, ...patch}; Object.assign(patch, chEndPatch(after, stat.result, stat.reason)); chRecord(after, stat.result, stat.reason); }
+  chUpd(patch);
+  try { navigator.vibrate && navigator.vibrate(12); } catch(e){}
+}
+function chResign(){
+  if (ch.confirm !== 'resign'){ ch.confirm = 'resign'; chPaint(); setTimeout(() => { if (ch.confirm === 'resign'){ ch.confirm = null; chPaint(); } }, 3500); return; }
+  ch.confirm = null; if (!canWrite()) return;
+  const c = chMyColor(); if (!c) return;
+  chEnd(c === 'w' ? '0-1' : '1-0', 'resign');
+}
+function chStand(){
+  if (!canWrite()) return;
+  const st = ch.st; if (!st) return;
+  const c = chMyColor();
+  if (st.phase === 'play' && c && ch.confirm !== 'leave'){ ch.confirm = 'leave'; chPaint(); setTimeout(() => { if (ch.confirm === 'leave'){ ch.confirm = null; chPaint(); } }, 3500); return; }
+  ch.confirm = null;
+  const other = chOther(), stays = other && chPresent(other);
+  let patch = {};
+  if (st.phase === 'play' && c){ const result = c === 'w' ? '0-1' : '1-0'; patch = chEndPatch(st, result, 'leave'); chRecord(st, result, 'leave'); }
+  if (stays) chUpd({...patch, host:other, guest:null, ...(patch.msg ? {} : {msg:`${person(me)?.name} se levanta de la mesa. ${person(other)?.name} espera rival.`})});
+  else chSetDoc(chFresh({msg:'La mesa se ha quedado vacía. El primero que se siente, espera rival.'}));
+  ch.sel = null;
+  toast('Te levantas de la mesa del salón.');
+  casGame = 'ruleta';
+  document.querySelectorAll('.gchip').forEach(x => x.setAttribute('aria-pressed', x.dataset.g === casGame));
+  mountGame();
+  document.querySelector('.game-pick')?.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+/* interfaz */
+const CH_CUP = '<svg class="ch-cup" viewBox="0 0 80 70" aria-hidden="true"><g class="ch-steam" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="2.4" stroke-linecap="round"><path d="M30 20c-4-5 4-8 0-14"/><path d="M40 22c-4-6 4-9 0-16"/><path d="M50 20c-4-5 4-8 0-14"/></g><ellipse cx="40" cy="60" rx="34" ry="7" fill="#F4EFE6" stroke="#C9A24A" stroke-width="1.6"/><ellipse cx="40" cy="59" rx="22" ry="4" fill="#E2D9C8"/><path d="M18 30h44c0 16-8 28-22 28S18 46 18 30z" fill="#FBF8F2" stroke="#C9A24A" stroke-width="1.8"/><ellipse cx="40" cy="30" rx="22" ry="5" fill="#9A5B2A"/><ellipse cx="40" cy="30" rx="22" ry="5" fill="none" stroke="#C9A24A" stroke-width="1.8"/><path d="M62 36c10 0 10 13 0 13" fill="none" stroke="#FBF8F2" stroke-width="5"/><path d="M62 36c10 0 10 13 0 13" fill="none" stroke="#C9A24A" stroke-width="1.4"/><circle cx="32" cy="44" r="3" fill="#D46A7E"/><circle cx="37" cy="47" r="2" fill="#7FA36B"/><circle cx="46" cy="44" r="3" fill="#D46A7E"/></svg>';
+function mountChess(){
+  pkSubscribe();
+  $('#casGame').innerHTML = `<div class="ctable ch-wrap" id="chRoot"><h3>Ajedrez</h3><p class="crule">Salón de té · uno contra uno. El primero que se sienta espera rival e inicia la partida.</p><div id="chBody"></div></div>`;
+  chPaint();
+}
+function chCaptured(b){
+  const init = {p:8, n:2, b:2, r:2, q:1}, val = {p:1, n:3, b:3, r:5, q:9};
+  const cnt = {w:{}, b:{}}; b.forEach(p => { if (p && p.toLowerCase() !== 'k'){ const c = chColor(p); cnt[c][p.toLowerCase()] = (cnt[c][p.toLowerCase()] || 0) + 1; } });
+  const out = {w:[], b:[], mat:{w:0, b:0}};
+  for (const t of 'qrbnp'){
+    // lo que ha capturado cada bando: piezas que le faltan al rival
+    for (let k = 0; k < Math.max(0, init[t] - (cnt.b[t] || 0)); k++) out.w.push(t);
+    for (let k = 0; k < Math.max(0, init[t] - (cnt.w[t] || 0)); k++) out.b.push(t.toUpperCase());
+  }
+  for (const c of ['w', 'b']) for (const t in cnt[c]) out.mat[c] += val[t] * cnt[c][t];
+  return out;
+}
+function chPlate(pid, color, s, st, cap){
+  const playing = st.phase === 'play';
+  const turn = playing && s.turn === color;
+  const mine = color ? cap[color] : [], diff = color ? cap.mat[color] - cap.mat[color === 'w' ? 'b' : 'w'] : 0;
+  const away = pid && playing && !chPresent(pid);
+  return `<div class="ch-plate ${turn ? 'turn' : ''}">
+    <span class="ch-av">${pid ? av(person(pid)) : ''}</span>
+    <span class="ch-pn"><b>${pid ? chNm(pid) : 'Silla libre'}</b><small>${color ? `<i class="ch-dot ${color}"></i>${color === 'w' ? 'Blancas' : 'Negras'}` : ''}${turn ? ' · piensa…' : ''}${away ? ' · no está' : ''}${st.drawOffer === pid && playing ? ' · ofrece tablas' : ''}</small></span>
+    <span class="ch-capt">${mine.map(p => chPieceSvg(p)).join('')}${diff > 0 ? `<em>+${diff}</em>` : ''}</span></div>`;
+}
+function chPaint(){
+  const body = document.getElementById('chBody'); if (!body) return;
+  const st = ch.st || chFresh(), col = chMyColor(), seated = chSeated(), playing = st.phase === 'play';
+  const s = chParse(st.fen || CH_START);
+  const flip = col === 'b';
+  const myTurn = playing && col === s.turn;
+  const legal = myTurn ? chLegal(s) : [];
+  if (ch.sel != null && !legal.some(m => m.from === ch.sel)) ch.sel = null;
+  const targets = ch.sel != null ? legal.filter(m => m.from === ch.sel) : [];
+  const lf = st.last ? chSqIdx(st.last.slice(0, 2)) : -1, lt = st.last ? chSqIdx(st.last.slice(2, 4)) : -1;
+  const chk = (playing || st.reason === 'mate') && chInCheck(s) ? chKingSq(s.b, s.turn) : -1;
+  const lastKey = `${st.gid}-${(st.moves || []).length}`;
+  const animate = st.last && ch.seenLast && ch.seenLast !== lastKey;
+  let cells = '';
+  for (let k = 0; k < 64; k++){
+    const i = flip ? 63 - k : k, light = ((i >> 3) + (i & 7)) % 2 === 0, p = s.b[i];
+    const tg = targets.some(m => m.to === i);
+    let pc = '';
+    if (p){
+      const mv = animate && i === lt && lf >= 0;
+      const dx = mv ? (chFile(lf) - chFile(i)) * (flip ? -1 : 1) : 0, dy = mv ? (chRank(i) - chRank(lf)) * (flip ? -1 : 1) : 0;
+      pc = `<span class="ch-pw ${mv ? 'mv' : ''}" ${mv ? `style="--dx:${dx * 100}%;--dy:${dy * 100}%"` : ''}>${chPieceSvg(p)}</span>`;
+    }
+    const row = k >> 3, colI = k & 7;
+    const coord = `${colI === 0 ? `<i class="ch-rk">${chRank(i) + 1}</i>` : ''}${row === 7 ? `<i class="ch-fl">${'abcdefgh'[chFile(i)]}</i>` : ''}`;
+    cells += `<button class="ch-sq ${light ? 'l' : 'd'}${i === lf || i === lt ? ' last' : ''}${i === ch.sel ? ' sel' : ''}${tg ? (p || targets.some(m => m.to === i && m.ep) ? ' ch-cap' : ' ch-tgt') : ''}${i === chk ? ' chk' : ''}" data-sq="${i}" aria-label="${chSqName(i)}${p ? ' ' + p : ''}">${pc}${coord}</button>`;
+  }
+  const promo = ch.promo ? `<div class="ch-promo"><span>Corona tu peón</span><div>${'qrbn'.split('').map(t => `<button data-promo="${t}">${chPieceSvg(col === 'w' ? t.toUpperCase() : t)}</button>`).join('')}</div><button class="ch-promo-x" data-promo="x">Cancelar</button></div>` : '';
+  const cap = chCaptured(s.b);
+  const topColor = flip ? 'w' : 'b', botColor = flip ? 'b' : 'w';
+  const pidOf = c => st.phase === 'lobby' ? null : (c === 'w' ? st.white : st.black);
+  const topPid = st.phase === 'lobby' ? (seated ? chOther() : st.guest) : pidOf(topColor);
+  const botPid = st.phase === 'lobby' ? (seated ? me : st.host) : pidOf(botColor);
+  const lobbyMsg = !st.host ? 'Bienvenidos al salón. Siéntate a la mesa y espera a tu rival. Hay té para todos.' : !st.guest ? `${person(st.host)?.name} espera rival. ¿Quién se atreve?` : `${person(st.host)?.name} contra ${person(st.guest)?.name}. Cuando quiera, ${person(st.host)?.name} inicia la partida.`;
+  const bubble = st.phase === 'lobby' && !st.msg ? lobbyMsg : (st.msg || lobbyMsg);
+  const res = st.phase === 'over' && st.result ? `<div class="ch-result"><b>${st.result === '1/2-1/2' ? '½ – ½' : st.result.replace('-', ' – ')}</b><span>${esc(st.msg || '')}</span></div>` : '';
+  // controles
+  let ctrl = '';
+  const other = chOther(), otherHere = other && chPresent(other);
+  const hostOk = st.host && chPresent(st.host), guestOk = st.guest && chPresent(st.guest);
+  if (!seated){
+    if (!hostOk || !guestOk) ctrl += `<div class="cbtns"><button class="cbtn" id="chSit">Sentarme a la mesa</button></div>`;
+    else ctrl += `<p class="pk-wait">Mesa completa. Puedes mirar la partida desde la barra.</p>`;
+  } else {
+    if (st.phase === 'lobby' || (st.phase === 'over' && !otherHere)){
+      if (!otherHere) ctrl += `<p class="pk-wait">Esperando rival… Avisa a alguien de la cuadrilla.</p>`;
+      else if (st.host === me) ctrl += `<div class="cbtns"><button class="cbtn" id="chStart">Iniciar partida</button></div>`;
+      else ctrl += `<p class="pk-wait">Esperando a que ${chNm(st.host)} inicie la partida.</p>`;
+    }
+    if (st.phase === 'over' && otherHere) ctrl += `<div class="cbtns"><button class="cbtn" id="chAgain">${[st.white, st.black].includes(other) ? 'Otra partida (cambiáis de lado)' : 'Iniciar partida'}</button></div>`;
+    if (playing && col){
+      ctrl += myTurn ? `<div class="ch-turn">Te toca${chk >= 0 ? ' · ¡estás en jaque!' : ''}</div>` : `<p class="pk-wait">Piensa ${chNm(s.turn === 'w' ? st.white : st.black)}…</p>`;
+      if (st.drawOffer && st.drawOffer !== me) ctrl += `<div class="ch-offer"><span>${chNm(st.drawOffer)} te ofrece tablas</span><button class="cbtn" id="chDrawYes">Aceptar tablas</button><button class="cbtn ghost" id="chDrawNo">Seguir jugando</button></div>`;
+      const opp = col === 'w' ? st.black : st.white;
+      const afk = opp && Date.now() - (st['beat_' + opp] || 0) > CH_AFK;
+      ctrl += `<div class="ch-acts">
+        <button class="cbtn ghost" id="chDraw" ${st.drawOffer === me ? 'disabled' : ''}>${st.drawOffer === me ? 'Tablas ofrecidas' : 'Ofrecer tablas'}</button>
+        <button class="cbtn ghost ${ch.confirm === 'resign' ? 'warnb' : ''}" id="chResign">${ch.confirm === 'resign' ? '¿Seguro? Toca otra vez' : 'Rendirme'}</button></div>`;
+      if (afk) ctrl += `<div class="cbtns"><button class="cbtn" id="chClaim">${chNm(opp)} no responde: reclamar la victoria</button></div>`;
+    }
+    ctrl += `<div class="cbtns"><button class="seg ${ch.confirm === 'leave' ? 'warnb' : ''}" id="chStand">${ch.confirm === 'leave' ? 'Si te levantas pierdes. ¿Seguro?' : 'Levantarme de la mesa'}</button></div>`;
+  }
+  // ranking
+  const tally = {};
+  ch.games.forEach(g => {
+    [['w', g.w], ['b', g.b]].forEach(([c, pid]) => {
+      if (!person(pid)) return; const t = tally[pid] = tally[pid] || {pid, w:0, d:0, l:0};
+      if (g.result === '1/2-1/2') t.d++; else if ((g.result === '1-0') === (c === 'w')) t.w++; else t.l++;
+    });
+  });
+  const rank = Object.values(tally).sort((a, b) => (b.w + b.d / 2) - (a.w + a.d / 2) || b.w - a.w || a.l - b.l);
+  const rankHtml = rank.length ? `<div class="ch-rank"><span class="hand-l">Ranking del salón</span><div class="ch-rh"><span></span><span>V</span><span>T</span><span>D</span><span>Pts</span></div>${rank.map((t, i) => `<div class="ch-rr"><span>${i < 3 ? ['🥇', '🥈', '🥉'][i] : (i + 1) + '.'} ${av(person(t.pid))} ${chNm(t.pid)}</span><b>${t.w}</b><b>${t.d}</b><b>${t.l}</b><b class="pts">${String(t.w + t.d / 2).replace('.', ',')}</b></div>`).join('')}</div>`
+    : `<div class="ch-rank"><span class="hand-l">Ranking del salón</span><p class="pk-wait" style="margin:4px 0 0">Aún no se ha jugado ninguna partida. La primera victoria, a la historia.</p></div>`;
+  const mv = st.moves || [];
+  const moves = mv.length ? `<details class="pk-log ch-moves"><summary>Jugadas (${Math.ceil(mv.length / 2)})</summary><div class="ch-ml">${Array.from({length:Math.ceil(mv.length / 2)}, (_, k) => `<span><i>${k + 1}.</i> ${esc(mv[2 * k])} ${esc(mv[2 * k + 1] || '')}</span>`).join('')}</div></details>` : '';
+  body.innerHTML = `<div class="pk-croupier ch-but"><span class="pk-cr-av ch-tea">🫖</span><span class="pk-bubble">${esc(bubble)}</span></div>
+    <div class="ch-room">
+      ${CH_CUP}${CH_CUP.replace('class="ch-cup"', 'class="ch-cup b"')}
+      ${chPlate(topPid, st.phase === 'lobby' ? null : topColor, s, st, cap)}
+      <div class="ch-frame"><div class="ch-board ${myTurn ? 'ch-live' : ''}" id="chBoard">${cells}${promo}</div></div>
+      ${chPlate(botPid, st.phase === 'lobby' ? null : botColor, s, st, cap)}
+    </div>${res}${ctrl}${rankHtml}${moves}`;
+  ch.seenLast = lastKey;
+  // aviso al tocarte
+  const tk = `${st.gid}-${mv.length}`;
+  if (myTurn && ch.lastTurnKey !== tk){ ch.lastTurnKey = tk; if (mv.length) try { navigator.vibrate && navigator.vibrate([25, 40, 25]); } catch(e){} }
+  const on = (id, fn) => { const e = document.getElementById(id); if (e) e.onclick = fn; };
+  on('chSit', chSit); on('chStart', () => chStart(false)); on('chAgain', () => chStart(true)); on('chStand', chStand); on('chResign', chResign);
+  on('chDraw', () => { if (!canWrite()) return; chUpd({drawOffer:me, msg:`${person(me)?.name} ofrece tablas. ¿Se acepta?`}); });
+  on('chDrawYes', () => { if (!canWrite()) return; chEnd('1/2-1/2', 'agreement'); });
+  on('chDrawNo', () => { if (!canWrite()) return; chUpd({drawOffer:null, msg:`${person(me)?.name} rechaza las tablas. Seguimos.`}); });
+  on('chClaim', () => { if (!canWrite()) return; const c = chMyColor(); if (c) chEnd(c === 'w' ? '1-0' : '0-1', 'abandon'); });
+  const board = document.getElementById('chBoard');
+  if (board) board.onclick = e => {
+    const pb = e.target.closest('[data-promo]');
+    if (pb){ const t = pb.dataset.promo; const pr = ch.promo; ch.promo = null; if (t !== 'x' && pr) chMove({...pr, promo:col === 'w' ? t.toUpperCase() : t}); else chPaint(); return; }
+    const b = e.target.closest('[data-sq]'); if (!b || !myTurn || ch.promo) return;
+    const sq = Number(b.dataset.sq), p = s.b[sq];
+    if (ch.sel != null){
+      const ms = legal.filter(m => m.from === ch.sel && m.to === sq);
+      if (ms.length){ if (ms[0].promo){ ch.promo = {from:ch.sel, to:sq}; chPaint(); } else chMove(ms[0]); return; }
+    }
+    ch.sel = p && chColor(p) === col && legal.some(m => m.from === sq) && ch.sel !== sq ? sq : null;
+    chPaint();
+  };
+}
+// latido: mientras estés sentado y con la app abierta
+function chBeat(){ if (chSeated() && db && dbState === 'ok' && !readOnly && document.visibilityState === 'visible'){ ch.st['beat_' + me] = Date.now(); chRef().update({['beat_' + me]:Date.now()}).catch(() => {}); } }
+setInterval(chBeat, 25000);
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') chBeat(); });
 
 /* ---- Dados ---- */
 function sumProb(gt){ let c = 0; for (let a = 1; a <= 6; a++) for (let b = 1; b <= 6; b++) if (a + b > gt) c++; return c / 36; }
@@ -4132,7 +4627,7 @@ const TUTO = [
   {ill:'perfil',  tab:'stats', t:'Tus stats y El Banco', p:'Tus mejores fiestas y récords, y en El Banco (la última pestaña) lo que llevas fundido en euros. Toca tu nombre arriba para cambiar foto, nombre o estado.', joke:'Si te pusiste un nombre absurdo, aún estás a tiempo.'},
   {ill:'podium',  tab:'group', t:'El grupo y El top', p:'En El grupo, las gráficas, quién está fichado ahora y quién hizo qué. En El top, el podio de barriles de la taberna.', joke:'Spoiler: el problema del grupo eres tú.'},
   {ill:'fotos',   tab:'fotos', t:'Pruebas del Delito', p:'Sube las fotos de la noche con un marco de broma y dales pulgar arriba. Las más votadas van al podio.', joke:'Lo que se sube, no se olvida.'},
-  {ill:'casino',  tab:'casino', t:'Gran Casino Resaca', p:'Póker en mesa compartida, tragaperras pirata, ruleta, blackjack, más o menos, dados y La Verdad con 500 preguntas picantes.', joke:'La banca siempre gana. Tú, a veces bebes.'},
+  {ill:'casino',  tab:'casino', t:'Gran Casino Resaca', p:'Póker y ajedrez con la cuadrilla, tragaperras pirata, ruleta, blackjack, más o menos, dados y La Verdad con 500 preguntas picantes.', joke:'La banca siempre gana. Tú, a veces bebes.'},
   {ill:'tabernia', tab:'tabernia', t:'Las Crónicas de Tabernia', p:'Todos los bares y discotecas donde habéis estado, con la nota media de la cuadrilla.', joke:'Que los dioses del vermut nos protejan.'},
   {ill:'neon',    tab:'burdel', t:'El Burdel', p:'Solteros: +20 por lío y +10 si hay koito. En pareja: +25 por ayudar a otro. ¿Dudas? El botón ? de arriba.', joke:'Lo que pasa en el burdel, se queda en el burdel.'}
 ];
