@@ -2808,7 +2808,10 @@ function pkPresentSeats(){
 // mesa vacía: partida nueva desde cero. Solo se guardan las fichas de cada uno.
 // (internamente el contador de manos sigue subiendo para no reaplicar jugadas viejas; se muestra desde handBase)
 function pkFreshState(old, msg){
-  return {phase:'lobby', leader:null, chips:{...(old?.chips || {})}, rebuys:{}, hand:old?.hand || 0, handBase:old?.hand || 0, seen:old?.seen || {}, rebuySeen:old?.rebuySeen || {}, log:[msg], msg};
+  const chips = {...(old?.chips || {})};
+  // si quedó una mano a medias, cada uno recupera lo que había puesto
+  if (old && old.phase && old.phase !== 'lobby' && old.phase !== 'showdown') (old.order || []).forEach(p => { chips[p] = (chips[p] || 0) + (old.contrib?.[p] || 0); });
+  return {phase:'lobby', leader:null, chips, rebuys:{}, hand:old?.hand || 0, handBase:old?.hand || 0, seen:old?.seen || {}, rebuySeen:old?.rebuySeen || {}, log:[msg], msg};
 }
 // quien se levanta en mitad de una mano la pierde
 function pkFoldLeaver(st, p){
@@ -2825,13 +2828,16 @@ function pkSubscribe(){
   db.collection('poker').onSnapshot(snap => {
     const seats = {}; let st = null;
     snap.docs.forEach(d => { const v = d.data(); if (!v) return; if (d.id === 'mesa') st = v; else if (v.pid) seats[v.pid] = v; });
-    pk.seats = seats; pk.mySeat = seats[me] && !seats[me].leave ? seats[me] : (pk.mySeat && pk.mySeat._local ? pk.mySeat : null);
+    // mi asiento solo cuenta si no me levanté y he dado señales en los últimos 10 min (si no, estoy fuera)
+    const mine = seats[me], fresh = mine && !mine.leave && Date.now() - (mine.beat || mine.ts || 0) < 600e3;
+    pk.seats = seats; pk.mySeat = fresh ? mine : (pk.mySeat && pk.mySeat._local ? pk.mySeat : null);
     if (!pkIsLeader() || !pk.eng) pk.st = st;
     if (pk.st && pk.st.leader === me && pk.mySeat && !pk.eng) pk.eng = JSON.parse(JSON.stringify(pk.st));
     if (pk.st && pk.st.leader !== me) pk.eng = null;
     pkEngineTick();
     pkPaint();
   }, e => { pk.err = e; pkPaint(); });
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && pk.mySeat && !pk.mySeat.leave && !readOnly && db && dbState === 'ok'){ pkWriteSeat({beat:Date.now()}); pkEngineTick(); pkPaint(true); } });
   clearInterval(pk.beat);
   pk.beat = setInterval(() => { if (pk.mySeat && !pk.mySeat.leave && document.visibilityState === 'visible') pkWriteSeat({beat:Date.now()}); pkEngineTick(); pkPaint(true); }, 20000);
 }
@@ -3073,7 +3079,8 @@ function mountPoker(){
 function pkPaint(soft){
   const body = document.getElementById('pkBody'); if (!body) return;
   const st = pk.st, seats = pkActiveSeats(), seated = !!(pk.mySeat && !pk.mySeat.leave);
-  const playing = st && st.phase !== 'lobby';
+  const emptyTable = !seats.length;   // nadie sentado: lo que hubiera de antes no se enseña
+  const playing = st && st.phase !== 'lobby' && !emptyTable;
   const inHand = playing && st.order?.includes(me);
   // en la mesa solo aparecen los que siguen sentados
   const ids = seats.map(s => s.pid).filter(person);
@@ -3101,7 +3108,7 @@ function pkPaint(soft){
   const empty = Array.from({length:slots - n}, (_, k) => { const ang = Math.PI / 2 + ((n + k) / slots) * Math.PI * 2; return `<div class="pk-seat ghost" style="left:${50 + Math.cos(ang) * 45}%;top:${50 + Math.sin(ang) * 40}%"><span class="pk-chair"></span><span class="pk-av"></span></div>`; }).join('');
   const pot = playing ? st.order.reduce((a, p) => a + (st.contrib?.[p] || 0), 0) : 0;
   const board = playing ? `<div class="pk-board">${[0, 1, 2, 3, 4].map(i => st.board[i] != null ? `<span class="${animate && i >= pkSeen.board ? 'deal' : ''}" style="animation-delay:${(i - pkSeen.board) * 120}ms">${pkCard(st.board[i], {win:false})}</span>` : '<span class="pk-slot"></span>').join('')}</div>` : '';
-  const crMsg = !st ? '¡Bienvenidos! Sentaos a la mesa. El primero que se siente manda.' : st.phase === 'lobby' ? (seats.length < 2 ? `Necesito al menos dos jugadores. ${seats.length ? 'Que se siente alguien más.' : 'Sentaos.'}` : `Cuando quiera, ${pkNm(st.leader)} puede iniciar la partida.`) : st.msg;
+  const crMsg = emptyTable ? (st ? 'La mesa está vacía. Sentaos: el primero que se siente manda y empieza una partida nueva.' : '¡Bienvenidos! Sentaos a la mesa. El primero que se siente manda.') : !st ? '¡Bienvenidos! Sentaos a la mesa. El primero que se siente manda.' : st.phase === 'lobby' ? (seats.length < 2 ? `Necesito al menos dos jugadores. ${seats.length ? 'Que se siente alguien más.' : 'Sentaos.'}` : `Cuando quiera, ${pkNm(st.leader)} puede iniciar la partida.`) : st.msg;
   const felt = `<div class="pk-croupier"><span class="pk-cr-av">🤵</span><span class="pk-bubble">${esc(crMsg || '')}</span></div>
     <div class="pk-table"><div class="pk-felt">
       <div class="pk-center">${board}${playing ? `<div class="pk-pot">Bote ${pkChipStack(pot)}</div>` : '<div class="pk-logo">LA RONDA<br><small>POKER CLUB</small></div>'}</div>
@@ -3139,7 +3146,7 @@ function pkPaint(soft){
   }
   const chips = st?.chips ? Object.entries(st.chips).filter(([pid]) => person(pid) && ids.includes(pid)).sort((a, b) => b[1] - a[1]) : [];
   const table = chips.length ? `<div class="pk-rank"><span class="hand-l">Fichas de la cuadrilla</span>${chips.map(([pid, c], i) => `<div><span>${i + 1}. ${av(person(pid))} ${esc(pkNm(pid))}${st.rebuys?.[pid] ? ` <small>(${st.rebuys[pid]} recompra${st.rebuys[pid] > 1 ? 's' : ''})</small>` : ''}</span><b>${c}</b></div>`).join('')}</div>` : '';
-  const log = st?.log?.length ? `<details class="pk-log"><summary>Lo que ha pasado</summary>${[...st.log].reverse().map(l => `<div>${esc(l)}</div>`).join('')}</details>` : '';
+  const log = st?.log?.length && !emptyTable ? `<details class="pk-log"><summary>Lo que ha pasado</summary>${[...st.log].reverse().map(l => `<div>${esc(l)}</div>`).join('')}</details>` : '';
   body.innerHTML = felt + ctrl + table + log;
   if (st){ pkSeen = {hand:st.hand, board:st.board?.length || 0}; }
   // aviso de turno
