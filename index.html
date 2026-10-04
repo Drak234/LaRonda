@@ -699,6 +699,11 @@ body.fantasy .tab[aria-selected="true"]{background:#C9A24A;color:#241805}
 .ok-bar{height:6px;border-radius:9px;background:var(--surface-2);overflow:hidden}
 .ok-bar i{display:block;height:100%;border-radius:9px;background:var(--fc)}
 .ok-t{font-family:var(--font-mono);font-size:12.5px;font-weight:700;text-align:right;white-space:nowrap}
+/* ---------- NOCHE 17-17 ---------- */
+.night-chip{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-self:start;padding:7px 12px 7px 10px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:13px;font-weight:600;color:var(--ink-2)}
+.night-chip svg{width:16px;height:16px;color:var(--amber);flex:none}
+.night-chip em{font-style:normal;color:var(--muted);font-weight:500}
+.night-chip em b{font-family:var(--font-body);font-weight:800;color:var(--amber)}
 /* ---------- TOAST + STAMP ---------- */
 #toasts{position:fixed;left:0;right:0;bottom:calc(86px + env(safe-area-inset-bottom,0px));z-index:40;display:grid;justify-items:center;gap:8px;padding-inline:16px;pointer-events:none}
 .toast{pointer-events:auto;display:flex;align-items:center;gap:12px;background:var(--foam);color:var(--on-accent);border-radius:999px;padding:10px 12px 10px 18px;font-weight:700;
@@ -823,7 +828,7 @@ body.neon .toast{background:#FFE1F2;box-shadow:0 0 24px rgba(255,60,172,.6)}
 (() => {
 /* ================= CONFIG ================= */
 const PASS = 'chinchin';            // contraseña de la barra
-const NIGHT_CUTOFF_H = 6;            // la noche termina a las 6:00
+const NIGHT_CUTOFF_H = 17;           // cada noche va de 17:00 a 17:00 del día siguiente
 const GLASS_MAX = 30;                // puntos para llenar la caña
 const ICONS = {
   cerveza:'<path d="M5 8h10v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"/><path d="M15 10h2a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2"/><path d="M5 8a2.5 2.5 0 0 1 2.5-3 2.5 2.5 0 0 1 5 0A2.5 2.5 0 0 1 15 8"/><path d="M8.5 11.5v6M11.5 11.5v6"/>',
@@ -1032,7 +1037,7 @@ function docsOf(coll){
 }
 function flat(coll){
   const arr = [];
-  docsOf(coll).forEach(n => (n.items||[]).forEach(it => arr.push({...it, pid:n.pid, night:n.night})));
+  docsOf(coll).forEach(n => (n.items||[]).forEach(it => arr.push({...it, pid:n.pid, doc:n.night, night:nightKey(it.ts)})));
   return arr.sort((a,b) => a.ts - b.ts);
 }
 const allDrinks = () => flat('nights');
@@ -1049,6 +1054,11 @@ const person = id => people.find(p => p.id === id);
 const ptsOf = list => list.reduce((s,d) => s + (DMAP[d.t]?.pts || 0), 0);
 const bptsOf = list => list.reduce((s,d) => s + (BURDEL[d.t]?.pts || 0), 0);
 const tonightKey = () => nightKey(Date.now());
+const mineTonight = coll => flat(coll).filter(x => x.pid === me && x.night === tonightKey());
+function nightBounds(k){ const st = keyDate(k); st.setHours(NIGHT_CUTOFF_H, 0, 0, 0); const en = new Date(st); en.setDate(en.getDate() + 1); return [st, en]; }
+function nightRangeTxt(k){ const [st, en] = nightBounds(k); return `de ${DAYS[st.getDay()]} ${pad(NIGHT_CUTOFF_H)}:00 a ${DAYS[en.getDay()]} ${pad(NIGHT_CUTOFF_H)}:00`; }
+function nightChip(k){ const en = nightBounds(k)[1].getTime(); const left = en - Date.now();
+  return `<span class="night-chip" title="Cada noche de La Ronda va de ${pad(NIGHT_CUTOFF_H)}:00 a ${pad(NIGHT_CUTOFF_H)}:00 del día siguiente">${svgI('moon')}<span>Noche del ${fmtNight(k)} · ${nightRangeTxt(k)}</span>${left > 0 && k === tonightKey() ? `<em>cierra en <b data-close="${en}">${shortDur(left)}</b></em>` : ''}</span>`; }
 
 /* ================= GATE ================= */
 (function drawCap(){
@@ -1212,18 +1222,18 @@ function addItem(coll, t, extra={}){
 }
 function removeLast(coll, t){
   if (!canWrite()) return;
-  const id = `${me}__${tonightKey()}`; const cur = itemsOf(coll, id);
-  let idx = -1; for (let i = cur.length-1; i >= 0; i--) if (cur[i].t === t){ idx = i; break; }
-  if (idx < 0) return;
-  const removed = cur[idx];
-  writeArr(coll, id, cur.filter((_,i) => i !== idx));
+  const last = mineTonight(coll).filter(x => x.t === t).pop();
+  if (!last) return;
+  const id = `${me}__${last.doc}`; const cur = itemsOf(coll, id);
+  const removed = cur.find(it => it.ts === last.ts); if (!removed) return;
+  writeArr(coll, id, cur.filter(it => it !== removed));
   render(); bumpVal(t);
   const name = coll === 'nights' ? DMAP[t].n.toLowerCase() : BURDEL[t].one;
   toast(`Quitado: 1 ${name}`, {label:'Deshacer', fn:() => restore(coll, id, removed)});
 }
-function removeItem(coll, night, ts){
+function removeItem(coll, doc, ts){
   if (!canWrite()) return;
-  const id = `${me}__${night}`; const cur = itemsOf(coll, id);
+  const id = `${me}__${doc}`; const cur = itemsOf(coll, id);
   const removed = cur.find(it => it.ts === ts); if (!removed) return;
   writeArr(coll, id, cur.filter(it => it.ts !== ts)); render();
   toast('Quitado del historial', {label:'Deshacer', fn:() => restore(coll, id, removed)});
@@ -1240,7 +1250,7 @@ function undoAdd(coll, id, ts){
 }
 function addDrink(t, from){
   if (!canWrite()) return;
-  const before = ptsOf(itemsOf('nights', `${me}__${tonightKey()}`)); const lvBefore = levelFor(before);
+  const before = ptsOf(mineTonight('nights')); const lvBefore = levelFor(before);
   const {id, item} = addItem('nights', t);
   try { navigator.vibrate && navigator.vibrate(t === 'chupito' ? [20,40,20] : 25); } catch(e){}
   if (from) flyFrom(from, t);
@@ -1258,7 +1268,7 @@ function addBurdel(t, extra={}){
   toast(`${BURDEL[t].n} · +${BURDEL[t].pts} pts`, {label:'Deshacer', fn:() => undoAdd('burdel', id, item.ts)});
 }
 function setOut(s, out){
-  const id = `${s.pid}__${s.night}`;
+  const id = `${s.pid}__${s.doc || s.night}`;
   writeArr('fichajes', id, itemsOf('fichajes', id).map(it => {
     if (it.ts !== s.ts) return it;
     const n = {...it}; if (out) n.out = out; else delete n.out; return n;
@@ -1350,6 +1360,7 @@ function render(){
 setInterval(() => {
   document.querySelectorAll('[data-since]').forEach(e => { e.textContent = clock(Date.now() - Number(e.dataset.since)); });
   document.querySelectorAll('[data-since-short]').forEach(e => { e.textContent = shortDur(Date.now() - Number(e.dataset.sinceShort)); });
+  document.querySelectorAll('[data-close]').forEach(e => { const l = Number(e.dataset.close) - Date.now(); if (l <= 0 && !e.dataset.done){ e.dataset.done = 1; render(); } else e.textContent = shortDur(Math.max(0, l)); });
 }, 1000);
 const stepperHtml = (k, n, label, lockPlus) => `<div class="stepper" data-k="${k}">
   <button class="minus" data-k="${k}" aria-label="Quitar ${esc(label)}" ${n ? '' : 'disabled'}>−</button>
@@ -1384,7 +1395,7 @@ function renderMine(){
   const el = $('#view');
   if (!person(me) && dbState === 'ok'){ el.innerHTML = `<div class="sec card"><p>No encontramos tu posavasos.</p><button class="btn" id="goWho">Elegir quién soy</button></div>`; $('#goWho').onclick = () => { show('who'); renderWho(); }; return; }
   const key = tonightKey();
-  const tonight = itemsOf('nights', `${me}__${key}`);
+  const tonight = mineTonight('nights');
   const pts = ptsOf(tonight), lv = levelFor(pts), next = LEVELS[lv+1], prev = LEVELS[lv][0];
   const progress = next ? (pts - prev) / (next[0] - prev) : 1;
   const countT = k => tonight.filter(i => i.t === k).length;
@@ -1392,7 +1403,7 @@ function renderMine(){
   const chips = [...DRINKS, WATER].filter(d => countT(d.k)).map(d => `<span class="chip"><span class="dot" style="background:${d.hi}">${svgI(d.k,2.2)}</span><span class="num">${countT(d.k)}</span> ${esc(d.n)}</span>`).join('');
   el.innerHTML = fichHtml(key) + `
     <div class="sec">
-      <div class="sec-h"><div><div class="eyebrow">Esta noche · ${fmtNight(key)}</div><h2>Tu caña</h2></div></div>
+      <div class="sec-h"><div><div class="eyebrow">Esta noche</div><h2>Tu caña</h2></div></div>
       <div class="hero card">
         ${glassSvg(pts / GLASS_MAX, mixColor(tonight))}
         <div class="hero-stats">
@@ -1423,7 +1434,7 @@ function renderMine(){
             <span class="dot" style="background:${x.hi}">${svgI(d.t)}</span>
             <div><div style="font-weight:600">${esc(x.n)}</div><div class="when">${fmtNight(d.night)} · ${fmtTime(d.ts)}</div></div>
             <span class="p">+${fmtPts(x.pts)}</span>
-            <button class="del" data-n="${d.night}" data-ts="${d.ts}" aria-label="Quitar ${esc(x.n)} de las ${fmtTime(d.ts)}">Quitar</button></div>`; }).join('')
+            <button class="del" data-n="${d.doc}" data-ts="${d.ts}" aria-label="Quitar ${esc(x.n)} de las ${fmtTime(d.ts)}">Quitar</button></div>`; }).join('')
           : '<p class="empty">Aquí saldrá todo lo que te vayas tomando.</p>'}
         </div>
       </div>
@@ -1468,9 +1479,9 @@ function fichHtml(key){
   }
   const list = done.length ? `<div class="card" style="padding:2px 16px">${done.map(x => `<div class="sess"><span class="dot" style="background:${PLACES[x.t].hi}">${svgI(x.t)}</span>
     <div><div style="font-weight:600">${PLACES[x.t].n}${x.place ? ' · ' + esc(x.place) : ''}</div><div class="when">${fmtTime(x.ts)} → ${fmtTime(x.out)}</div></div>
-    <span class="d">${shortDur(sessDur(x))}</span>${x.nota ? `<button class="nota-chip" style="--nc:${notaColor(x.nota)}" data-rate="${x.ts}" aria-label="Nota ${x.nota}, cambiar">${x.nota}</button>` : `<button class="seg" data-rate="${x.ts}">Puntuar</button>`}<button class="del" data-fn="${x.night}" data-fts="${x.ts}">Quitar</button></div>`).join('')}</div>` : '';
+    <span class="d">${shortDur(sessDur(x))}</span>${x.nota ? `<button class="nota-chip" style="--nc:${notaColor(x.nota)}" data-rate="${x.ts}" aria-label="Nota ${x.nota}, cambiar">${x.nota}</button>` : `<button class="seg" data-rate="${x.ts}">Puntuar</button>`}<button class="del" data-fn="${x.doc}" data-fts="${x.ts}">Quitar</button></div>`).join('')}</div>` : '';
   const totTxt = [tot.bar && `bar ${shortDur(tot.bar)}`, tot.disco && `disco ${shortDur(tot.disco)}`].filter(Boolean).join(' · ');
-  return `<div class="sec" style="margin-top:8px"><div class="sec-h"><div><div class="eyebrow">Fichaje</div><h2>¿Dónde estás?</h2></div>${totTxt ? `<span class="eyebrow">Esta noche: ${totTxt}</span>` : ''}</div>${body}${list}</div>`;
+  return `<div class="sec" style="margin-top:8px">${nightChip(key)}<div class="sec-h"><div><div class="eyebrow">Fichaje</div><h2>¿Dónde estás?</h2></div>${totTxt ? `<span class="eyebrow">Esta noche: ${totTxt}</span>` : ''}</div>${body}${list}</div>`;
 }
 
 /* ================= MIS STATS ================= */
@@ -1837,7 +1848,7 @@ function knownPlaces(t){
   return Object.values(m).sort((a,b) => b.n - a.n).map(x => x.name);
 }
 function setFields(s, fields){
-  const id = `${s.pid}__${s.night}`;
+  const id = `${s.pid}__${s.doc || s.night}`;
   writeArr('fichajes', id, itemsOf('fichajes', id).map(it => it.ts === s.ts ? {...it, ...fields} : it));
 }
 function askRating(s){
@@ -2140,10 +2151,10 @@ function renderGroup(){
     options:{indexAxis:'y', maintainAspectRatio:false, interaction:{mode:'index', intersect:false}, plugins:{legend:{display:false}, tooltip:{...T.tip, filter:i => i.raw > 0,
       callbacks:{footer:items => 'Total: ' + items.reduce((s,i) => s + i.raw, 0) + ' bebidas'}}},
       scales:{x:T.axis(true,{beginAtZero:true, ticks:{color:T.muted, precision:0}}), y:T.axis(true,{grid:{display:false}, ticks:{color:T.ink2, font:{weight:'600', size:13}}})}}}));
-  const hours = [...Array.from({length:6},(_,i)=>18+i), ...Array.from({length:7},(_,i)=>i)];
+  const hours = [...Array.from({length:7},(_,i)=>17+i), ...Array.from({length:9},(_,i)=>i)];
   const otherHours = alc.filter(d => !hours.includes(new Date(d.ts).getHours())).length;
   const hLabels = hours.map(h => pad(h)+'h'); const hData = hours.map(h => alc.filter(d => new Date(d.ts).getHours() === h).length);
-  if (otherHours){ hLabels.unshift('antes'); hData.unshift(otherHours); }
+  if (otherHours){ hLabels.push('resto'); hData.push(otherHours); }
   charts.push(new Chart($('#cHours'), {type:'bar', data:{labels:hLabels, datasets:[{label:'Bebidas', data:hData, backgroundColor:T.amber, borderRadius:4, maxBarThickness:22}]},
     options:{maintainAspectRatio:false, plugins:{legend:{display:false}, tooltip:{...T.tip, callbacks:{label:c => ` ${c.raw} bebidas`}}},
       scales:{x:T.axis(false,{grid:{display:false}, ticks:{color:T.muted, maxRotation:0, autoSkipPadding:6}}), y:T.axis(false,{beginAtZero:true, ticks:{color:T.muted, precision:0}})}}}));
@@ -2195,7 +2206,7 @@ function renderTop(){
         <div class="filters" role="group" aria-label="Periodo">${Object.entries(rangeLbl).map(([k,v]) => `<button class="seg" data-r="${k}" aria-pressed="${topRange===k}">${v}</button>`).join('')}</div></div>
       <div class="board">
         <h2>${esc(rangeLbl[topRange])}</h2>
-        <div class="sub">${topRange === 'night' ? fmtNight(nowK) : topRange === 'month' ? MONTHS[Number(nowK.slice(5,7))-1] + ' ' + nowK.slice(0,4) : 'desde que abrió La Ronda'}</div>
+        <div class="sub">${topRange === 'night' ? 'noche del ' + fmtNight(nowK) + ', ' + nightRangeTxt(nowK) : topRange === 'month' ? MONTHS[Number(nowK.slice(5,7))-1] + ' ' + nowK.slice(0,4) : 'desde que abrió La Ronda'}</div>
         ${rows.length ? `<div class="podium">${pod.map((r,i) => { const place = [2,1,3][i]; if (!r) return `<div class="pod p${place}"></div>`;
           return `<div class="pod p${place}"><div class="av">${place===1 ? CROWN : ''}${av(r.p)}</div><div class="pn">${esc(r.p.name)}</div><div class="pp">${fmtPts(r.pts)} pts</div><div class="block">${place}</div></div>`; }).join('')}</div>`
         : `<p class="empty" style="font-family:var(--font-chalk);font-size:22px;margin-top:18px">${topRange === 'night' ? 'La noche es joven. Aún no ha bebido nadie.' : 'Pizarra en blanco. Que empiece la ronda.'}</p>`}
@@ -2213,6 +2224,7 @@ function renderTop(){
       <div class="sub">Cuanto más fuerte, más puntos de pedo</div>
       <div class="scale">${[...DRINKS].sort((a,b) => b.pts - a.pts).map(d => `<div><span>${esc(d.n)}</span><b>${fmtPts(d.pts)}</b></div>`).join('')}<div><span>Agua</span><b>0</b></div></div>
       <div class="levels">${LEVELS.map(l => `<span>${l[0]}+ ${esc(l[1])}</span>`).join(' · ')}</div>
+      <div class="sub" style="margin-top:14px">Cada noche va de las ${NIGHT_CUTOFF_H}:00 a las ${NIGHT_CUTOFF_H}:00 del día siguiente. Lo de las 4 de la mañana cuenta para la noche de antes.</div>
     </div>`;
   el.querySelectorAll('.seg').forEach(b => b.onclick = () => { topRange = b.dataset.r; render(); });
 }
@@ -2231,7 +2243,7 @@ function renderBurdel(){
   const el = $('#view');
   const p = person(me);
   const key = tonightKey();
-  const tonight = itemsOf('burdel', `${me}__${key}`);
+  const tonight = mineTonight('burdel');
   const cnt = k => tonight.filter(i => i.t === k).length;
   const status = p?.status;
   const singles = people.filter(o => o.id !== me && o.status !== 'pareja').sort((a,b) => a.name.localeCompare(b.name,'es'));
@@ -2277,7 +2289,7 @@ function renderBurdel(){
     </div>
     ${status ? `
     <div class="sec">
-      <div class="sec-h"><h2>Esta noche</h2><span class="eyebrow">${fmtNight(key)} · + suma · − resta</span></div>
+      ${nightChip(key)}<div class="sec-h"><h2>Esta noche</h2><span class="eyebrow">+ suma · − resta</span></div>
       <div class="ncard glow"><div class="tally"><b>${bptsOf(tonight)}</b><span>puntos de burdel esta noche</span></div></div>
       <div class="acts">${status === 'soltero' ? actHtml('lio') + actHtml('koito', koitoLock) : actHtml('asist')}</div>
       ${status === 'pareja' && assistOpen ? `<div class="ncard assist-pick">
@@ -2285,7 +2297,7 @@ function renderBurdel(){
         <div class="opts">${singles.map(o => `<button data-for="${esc(o.id)}">${av(o)} ${esc(o.name)}</button>`).join('')}<button data-for="">Alguien de fuera</button></div>
         <button class="seg" id="assistCancel" style="justify-self:start">Cancelar</button></div>` : ''}
       ${tonight.length ? `<div class="ncard" style="padding:4px 14px"><div class="log">${[...tonight].reverse().map(it => { const b = BURDEL[it.t]; if (!b) return ''; const f = it.for ? person(it.for) : null;
-        return `<div class="log-item"><span class="dot" style="background:${b.nc}">${svgI(it.t)}</span><div><div style="font-weight:600">${esc(b.n)}${f ? ' · para ' + esc(f.name) : ''}</div><div class="when">${fmtTime(it.ts)}</div></div><span class="p">+${b.pts}</span><button class="del" data-n="${key}" data-ts="${it.ts}">Quitar</button></div>`; }).join('')}</div></div>` : ''}
+        return `<div class="log-item"><span class="dot" style="background:${b.nc}">${svgI(it.t)}</span><div><div style="font-weight:600">${esc(b.n)}${f ? ' · para ' + esc(f.name) : ''}</div><div class="when">${fmtTime(it.ts)}</div></div><span class="p">+${b.pts}</span><button class="del" data-n="${it.doc}" data-ts="${it.ts}">Quitar</button></div>`; }).join('')}</div></div>` : ''}
     </div>` : `<div class="sec ncard"><p class="empty">Elige arriba si estás soltero/a o en pareja para empezar a puntuar.</p></div>`}`}
     <div class="sec">
       <div class="sec-h"><h2>Top del burdel</h2>
@@ -2379,7 +2391,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#avMod
 /* ================= TUTORIAL ================= */
 const TUTO = [
   {ill:'glass',   t:'Bienvenido a La Ronda', p:'La app oficial para contar lo que bebe la cuadrilla. Como Strava, pero con resaca. Abajo tienes las pestañas; te las enseñamos en un momento.', joke:'Son 9 pantallas. Menos que una ronda.'},
-  {ill:'stepper', tab:'mine', t:'Apunta lo que bebes', p:'Pides algo, le das al +. Te has colado, le das al −. Tu caña se va llenando y subes de nivel.', joke:'De "Sobrio como un juez" a "Leyenda del bar". Tú verás.'},
+  {ill:'stepper', tab:'mine', t:'Apunta lo que bebes', p:'Pides algo, le das al +. Te has colado, le das al −. Tu caña se va llenando y subes de nivel. Cada noche va de 17:00 a 17:00: lo de madrugada cuenta para la noche de antes.', joke:'De "Sobrio como un juez" a "Leyenda del bar". Tú verás.'},
   {ill:'fichar',  tab:'mine', t:'Ficha al entrar', p:'En Mi barra, arriba: fichas al entrar en un bar o en la disco y desfichas al salir. Si cambias de sitio, "Me muevo a la disco". Si se te olvida, pon la hora a mano.', joke:'Como en el curro, pero aquí vas con ganas.'},
   {ill:'points',  tab:'top', t:'Puntos de pedo', p:'Cuanto más fuerte lo que pides, más puntos. El agua no suma. En El top está el ranking de la noche, del mes y de siempre, con premios.', joke:'Pero tu hígado te manda un abrazo.'},
   {ill:'perfil',  tab:'stats', t:'Tú y tus stats', p:'En Mis stats ves tus mejores fiestas, tus horas de bar y tus récords. Toca tu nombre arriba para cambiar la foto, el nombre o si estás soltero o en pareja.', joke:'Si te pusiste un nombre absurdo, aún estás a tiempo.'},
