@@ -730,8 +730,8 @@ body.casino .tab[aria-selected="true"]{background:var(--gold);color:#1E1404}
 .cas-deco.d1{left:12px;bottom:24px;width:32px;animation:tumble 6s ease-in-out infinite}
 .cas-deco.d2{right:12px;bottom:24px;width:28px;animation:tumble 7s ease-in-out infinite reverse}
 @keyframes tumble{50%{transform:rotate(25deg) translateY(-6px)}}
-.game-pick{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px}
-@media (max-width:420px){.game-pick{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 8px}}
+.game-pick{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+@media (max-width:520px){.game-pick{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 8px}}
 .gchip{display:grid;justify-items:center;align-content:start;gap:6px;font-weight:700;font-size:12px;line-height:1.15;text-align:center;color:var(--ink-2)}
 .gchip .cp{width:min(68px,100%);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;position:relative;transition:transform .25s;
   background:repeating-conic-gradient(var(--cc) 0 22.5deg,#F5EFE0 22.5deg 45deg);box-shadow:0 5px 0 rgba(0,0,0,.45),0 0 0 2px rgba(0,0,0,.25)}
@@ -1014,6 +1014,98 @@ body.bank .kpi b{color:#F3EEE2}
 .edit-card .tbody > *{max-width:100%}
 .ef-total{font-size:14.5px;color:var(--ink-2)}
 .ef-total b{color:var(--amber);font-family:var(--font-mono)}
+/* tragaperras pirata */
+.sl-wrap{gap:12px;background:radial-gradient(ellipse at 50% 20%,#1B4A5E,#0D2C3A 60%,#071A24)}
+.sl-capbox{align-items:end}
+.sl-capt{width:84px;height:98px;flex:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.45))}
+.sl-capbox .pk-bubble{align-self:center}
+.sl-machine{position:relative;padding-right:22px;max-width:440px;width:100%;margin:0 auto}
+.sl-cab{position:relative;overflow:hidden;border-radius:22px;padding:12px 10px 12px;display:grid;gap:9px;
+  background:linear-gradient(160deg,#7A4520,#4A2610 55%,#6A3A18);box-shadow:inset 0 0 0 3px #C9A24A,inset 0 0 0 6px #3A1E0C,0 16px 30px rgba(0,0,0,.55)}
+.sl-cab::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(92deg,transparent 0 18px,rgba(0,0,0,.08) 18px 20px);pointer-events:none}
+.sl-bulbs{display:flex;justify-content:space-between;padding:0 8px;position:relative}
+.sl-bulbs i{width:7px;height:7px;border-radius:50%;background:#FFE27A;box-shadow:0 0 6px #FFC93A;animation:slbulb 1.2s steps(1) infinite}
+.sl-bulbs i:nth-child(odd){animation-delay:.6s}
+@keyframes slbulb{50%{background:#7A5A20;box-shadow:none}}
+.sl-title{position:relative;text-align:center;line-height:.95;font-family:'Rye',Georgia,serif;color:#FFE9A8;text-shadow:0 2px 0 #6A3A10,0 0 14px rgba(255,201,58,.45)}
+.sl-title span{display:block;font-size:13px;letter-spacing:.32em}
+.sl-title b{display:block;font-weight:400;font-size:30px;letter-spacing:.06em;background:linear-gradient(#FFF3C4,#F2B33D 60%,#B8761A);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 0 #4A2408)}
+.sl-win{position:relative;min-height:40px;display:grid;place-items:center;align-content:center;border-radius:12px;background:#08151C;box-shadow:inset 0 0 0 2px #C9A24A,inset 0 0 14px rgba(0,0,0,.8);color:#9FE3FF;font-family:var(--font-mono);font-size:13px;padding:3px 8px}
+.sl-win b{font-family:'Rye',Georgia,serif;font-weight:400;font-size:24px;color:#FFE27A;text-shadow:0 0 12px rgba(255,201,58,.7);line-height:1}
+.sl-win b.pop{animation:vpop .4s cubic-bezier(.2,1.6,.4,1)}
+.sl-win small{font-size:11px;color:#FFE9B0;opacity:.85}
+.sl-window{position:relative;border-radius:12px;padding:6px;background:#2A140A;box-shadow:inset 0 0 0 2px #C9A24A,inset 0 6px 14px rgba(0,0,0,.7)}
+.sl-reels{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}
+.sl-reel{position:relative;aspect-ratio:1/3;overflow:hidden;border-radius:7px;background:linear-gradient(#E8D7AE,#F7EBCB 18%,#F7EBCB 82%,#D9C392)}
+.sl-reel::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(rgba(40,20,8,.55),transparent 22%,transparent 78%,rgba(40,20,8,.55));z-index:2}
+.sl-strip{will-change:transform}
+.sl-reel.spin .sl-strip{animation:slblur var(--sd,1.2s) linear}
+@keyframes slblur{0%{filter:blur(0)}12%{filter:blur(2.2px)}70%{filter:blur(1.6px)}92%,100%{filter:blur(0)}}
+.sl-reel.land{animation:slland .28s ease}
+@keyframes slland{40%{transform:translateY(3px)}}
+.sl-reel.tense{box-shadow:0 0 0 2px #FFE27A,0 0 14px rgba(255,226,122,.9);animation:sltense .5s ease-in-out infinite alternate}
+@keyframes sltense{to{box-shadow:0 0 0 2px #FF6B3D,0 0 20px rgba(255,107,61,.9)}}
+.sl-t{aspect-ratio:1;display:grid;place-items:center;position:relative}
+.sl-t .e{font-size:clamp(24px,8.4vw,38px);line-height:1;filter:drop-shadow(0 2px 1px rgba(60,30,10,.35))}
+.sl-t svg{width:72%;height:72%;filter:drop-shadow(0 2px 1px rgba(60,30,10,.35))}
+.sl-t.s-wild{background:radial-gradient(circle,rgba(196,24,44,.22),transparent 70%)}
+.sl-t.s-cofre{background:radial-gradient(circle,rgba(242,179,61,.35),transparent 70%)}
+.sl-t.gold{background:radial-gradient(circle,#FFF3B0,rgba(242,179,61,.6) 55%,transparent 75%)}
+.sl-t.turn{animation:slturn .7s ease both}
+@keyframes slturn{0%{transform:rotateY(90deg) scale(.7)}60%{transform:rotateY(0) scale(1.15)}100%{transform:none}}
+.sl-t.hit{z-index:3;animation:slhit .8s ease-in-out 3}
+.sl-t.hit::before{content:"";position:absolute;inset:3px;border-radius:8px;box-shadow:0 0 0 2.5px #FFD54A,0 0 12px rgba(255,213,74,.95);animation:fadeIn .25s ease}
+@keyframes slhit{50%{transform:scale(1.12)}}
+.sl-lines{position:absolute;inset:6px;width:calc(100% - 12px);height:calc(100% - 12px);pointer-events:none;z-index:4}
+.sl-lines polyline{stroke-dasharray:1200;stroke-dashoffset:1200;animation:sldraw .6s ease forwards;filter:drop-shadow(0 0 3px rgba(0,0,0,.6));opacity:.9}
+@keyframes sldraw{to{stroke-dashoffset:0}}
+.sl-pay i{position:absolute;left:-2px;right:-2px;height:2px;margin-top:-1px;background:linear-gradient(90deg,#C4182C,transparent 8%,transparent 92%,#C4182C);pointer-events:none;z-index:3}
+.sl-panel{position:relative;display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center}
+.sl-stat{display:grid;justify-items:center;background:#08151C;border-radius:10px;padding:4px 9px;box-shadow:inset 0 0 0 1.5px #C9A24A;min-width:62px}
+.sl-stat small{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#E6CC8F}
+.sl-stat b{font-family:var(--font-mono);font-size:17px;color:#FFE27A}
+.sl-bets{display:flex;justify-content:center;gap:5px}
+.sl-bet{width:36px;height:36px;border-radius:50%;font:800 13px/1 var(--font-body);color:#1E1408;background:radial-gradient(circle,#FBF8F1 0 46%,#C4182C 47% 60%,#FBF8F1 61% 68%,#C4182C 69%);box-shadow:0 3px 0 #5A0E16,0 4px 8px rgba(0,0,0,.4);transition:transform .15s}
+.sl-bet[aria-pressed="true"]{transform:translateY(-3px);box-shadow:0 6px 0 #5A0E16,0 0 0 2px #FFE27A,0 0 12px rgba(255,226,122,.7)}
+.sl-bet:disabled{opacity:.35}
+.sl-spin{position:relative;justify-self:center;width:100%;padding:13px 10px;border-radius:16px;font-family:'Rye',Georgia,serif;font-size:22px;letter-spacing:.08em;color:#FFF6E0;
+  background:linear-gradient(#E0343F,#A5121F);box-shadow:0 5px 0 #5A0910,0 8px 14px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.35);text-shadow:0 2px 0 #5A0910;transition:transform .1s}
+.sl-spin:active:not(:disabled){transform:translateY(4px);box-shadow:0 1px 0 #5A0910,0 3px 6px rgba(0,0,0,.45)}
+.sl-spin:disabled{filter:grayscale(.6) brightness(.8)}
+.sl-lever{position:absolute;right:0;top:34%;width:22px;height:150px;padding:0;background:none}
+.sl-lever i{position:absolute;left:3px;top:20px;width:12px;height:118px;border-radius:6px;background:linear-gradient(90deg,#8A8F96,#E6E9EC,#8A8F96);transform-origin:50% 100%;box-shadow:0 2px 4px rgba(0,0,0,.5)}
+.sl-lever b{position:absolute;left:-3px;top:2px;width:24px;height:24px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FF8A8A,#C4182C 55%,#6A0A12);box-shadow:0 3px 6px rgba(0,0,0,.5)}
+.sl-lever::after{content:"";position:absolute;left:-2px;bottom:4px;width:22px;height:18px;border-radius:5px;background:linear-gradient(#C9A24A,#7A5418)}
+.sl-lever.pull i,.sl-lever.pull b{animation:slpull .55s ease}
+@keyframes slpull{40%{transform:translateY(70px) scaleY(.55)}}
+.sl-lever.pull b{animation-name:slpullb}
+@keyframes slpullb{40%{transform:translateY(64px)}}
+.sl-coins{position:absolute;inset:0;pointer-events:none;z-index:6;overflow:hidden}
+.sl-coins i,.sl-jack > i{position:absolute;top:-30px;font-style:normal;font-size:22px;animation:slfall 1.4s cubic-bezier(.3,.1,.6,1) both}
+@keyframes slfall{to{transform:translateY(560px) rotate(540deg);opacity:.2}}
+.sl-jack{position:fixed;inset:0;z-index:95;display:grid;place-items:center;overflow:hidden;background:radial-gradient(circle,rgba(40,20,4,.75),rgba(0,0,0,.88));animation:fadeIn .3s ease}
+.sl-jack > i{font-size:28px}
+.sl-jack > i{animation-name:slfallbig}
+@keyframes slfallbig{to{transform:translateY(110vh) rotate(720deg)}}
+.sl-jbox{position:relative;z-index:2;display:grid;justify-items:center;gap:6px;text-align:center;padding:24px 26px;animation:vpop .6s cubic-bezier(.2,1.5,.4,1)}
+.sl-jbox svg{width:120px;height:110px;filter:drop-shadow(0 0 24px rgba(255,201,58,.9));animation:slfloat 1.6s ease-in-out infinite alternate}
+@keyframes slfloat{to{transform:translateY(-8px) rotate(3deg)}}
+.sl-jbox b{font-family:'Rye',Georgia,serif;font-weight:400;font-size:clamp(30px,10vw,46px);line-height:1;background:linear-gradient(#FFF7CF,#F2B33D 55%,#B8761A);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 3px 0 #4A2408)}
+.sl-jbox span{font-family:var(--font-mono);font-size:24px;color:#FFE27A;font-weight:700}
+.sl-jbox small{color:#F3E2B5;font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+.sl-jack.gold{background:radial-gradient(circle,rgba(120,80,0,.8),rgba(10,6,0,.92))}
+.sl-jack.gold .sl-jbox b{font-size:clamp(34px,11vw,54px)}
+.sl-table .sl-pt{display:grid;gap:4px;margin-top:8px}
+.sl-pth,.sl-ptr{display:grid;grid-template-columns:40px repeat(3,1fr) 1.7fr;gap:6px;align-items:center;text-align:center}
+.sl-pth{font-size:11px;color:#E6CC8F;letter-spacing:.08em}
+.sl-ptr b{font-family:var(--font-mono);color:#FFE27A;font-size:14px}
+.sl-ptr small{font-size:11.5px;color:#D6E6EE}
+.sl-ptr.gold{background:rgba(242,179,61,.14);border-radius:10px;padding:2px 0}
+.sl-pti{display:block;width:36px;border-radius:8px;background:#F7EBCB}
+.sl-pti .sl-t .e{font-size:22px}
+.sl-note{font-size:12.5px;color:#D6E6EE;line-height:1.45;margin-top:8px}
+.sl-lmap{display:flex;gap:6px;justify-content:center;margin-top:8px}
+.sl-lmap svg{width:48px;height:29px}
 /* póker */
 .pk-wrap{gap:12px}
 .pk-head{display:flex;align-items:center;justify-content:center;gap:10px;position:relative}
@@ -2442,6 +2534,7 @@ const DIE_SVG = '<svg viewBox="0 0 48 48"><rect x="3" y="3" width="42" height="4
 const GAMES = {
   ruleta:   {n:'Ruleta', cc:'#B3202A', ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M12 3v5.5M12 15.5V21M3 12h5.5M15.5 12H21"/></svg>'},
   poker:    {n:'Póker', cc:'#0E7A3E', ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="10" height="14" rx="2" transform="rotate(-10 8 12)"/><rect x="11" y="5" width="10" height="14" rx="2" transform="rotate(10 16 12)"/><path d="M16 10.5c.8 1 2 1.6 2 2.6a1.2 1.2 0 0 1-2 .8l.3 1.6h-1.2l.3-1.6a1.2 1.2 0 0 1-2-.8c0-1 1.2-1.6 2-2.6z" fill="currentColor"/></svg>'},
+  slots:    {n:'Tragaperras', cc:'#B07A10', ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="15" height="13" rx="2.5"/><path d="M7 10v5M10.5 10v5M14 10v5"/><path d="M21 7v7h-3"/><circle cx="21" cy="5.5" r="1.5" fill="currentColor"/></svg>'},
   blackjack:{n:'Blackjack', cc:'#15120F', ico:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c3 4 7 6 7 10a4 4 0 0 1-6.3 3.3L14 21h-4l1.3-4.7A4 4 0 0 1 5 13c0-4 4-6 7-10z"/></svg>'},
   hilo:     {n:'Más o menos', cc:'#1F5FA8', ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5-5 5 5M7 14l5 5 5-5"/></svg>'},
   verdad:   {n:'La Verdad', cc:'#C2407F', ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M10 9.5a2 2 0 1 1 2.8 1.8c-.5.3-.8.7-.8 1.2V13"/><circle cx="12" cy="16.5" r=".6" fill="currentColor"/></svg>'},
@@ -2464,10 +2557,10 @@ function renderCasino(force){
     <div class="sec" id="casGame"></div>
     <p class="cas-foot">Los retos los ponéis vosotros. Juega con cabeza: el agua también cuenta.</p>
   </div>`;
-  el.querySelectorAll('.gchip').forEach(b => b.onclick = () => { if (rl.spinning || dc.rolling) return; casGame = b.dataset.g; el.querySelectorAll('.gchip').forEach(x => x.setAttribute('aria-pressed', x === b)); mountGame(); });
+  el.querySelectorAll('.gchip').forEach(b => b.onclick = () => { if (rl.spinning || dc.rolling || sl.spinning) return; casGame = b.dataset.g; el.querySelectorAll('.gchip').forEach(x => x.setAttribute('aria-pressed', x === b)); mountGame(); });
   mountGame();
 }
-function mountGame(){ ({ruleta:mountRuleta, poker:mountPoker, blackjack:mountBJ, hilo:mountHL, verdad:mountVerdad, dados:mountDados})[casGame](); }
+function mountGame(){ ({ruleta:mountRuleta, poker:mountPoker, slots:mountSlots, blackjack:mountBJ, hilo:mountHL, verdad:mountVerdad, dados:mountDados})[casGame](); }
 
 /* ---- Ruleta ---- */
 function mountRuleta(){
@@ -2831,8 +2924,10 @@ const pkIsLeader = () => pk.st && pk.st.leader === me && !!pk.mySeat && !pk.mySe
 function pkSubscribe(){
   if (pk.subscribed || !db) return; pk.subscribed = true;
   db.collection('poker').onSnapshot(snap => {
-    const seats = {}; let st = null;
-    snap.docs.forEach(d => { const v = d.data(); if (!v) return; if (d.id === 'mesa') st = v; else if (v.pid) seats[v.pid] = v; });
+    const seats = {}, slots = {}; let st = null;
+    snap.docs.forEach(d => { const v = d.data(); if (!v) return; if (d.id === 'mesa') st = v; else if (d.id.startsWith('slot_')){ if (v.who) slots[v.who] = v; } else if (v.pid) seats[v.pid] = v; });
+    pk.slots = slots;
+    if (document.getElementById('slRoot') && !sl.spinning) slPaintSide();
     // mi asiento solo cuenta si no me levanté y he dado señales en los últimos 10 min (si no, estoy fuera)
     const mine = seats[me], fresh = mine && !mine.leave && Date.now() - (mine.beat || mine.ts || 0) < 600e3;
     pk.seats = seats; pk.mySeat = fresh ? mine : (pk.mySeat && pk.mySeat._local ? pk.mySeat : null);
@@ -3160,6 +3255,270 @@ function pkPaint(soft){
   on('pkSit', pkSit); on('pkStand', pkStand); on('pkStart', pkStart); on('pkTake', pkTakeOver);
   on('pkRebuy', () => { if (!canWrite()) return; pkWriteSeat({rebuySeq:(pk.mySeat?.rebuySeq || 0) + 1}); toast('Pides fichas al croupier.'); });
   body.querySelectorAll('[data-pk]').forEach(b => b.onclick = () => pkAct(b.dataset.pk, Number(b.dataset.to || 0)));
+}
+
+/* ---- Tragaperras pirata: El Tesoro Maldito ----
+   5 rodillos de 41 posiciones, 3 filas visibles y 5 líneas de pago.
+   Paga con 3, 4 o 5 iguales seguidos desde la izquierda; la bandera pirata sustituye a todo menos al cofre.
+   Calculado: devuelve el 95,8 % (RTP), hay premio en el 23 % de las tiradas,
+   5 cofres sale 1 entre 95.355 y, de esas, un 9,5 % son de oro: 1 entre 1.000.000 y pagan el triple. */
+const SL_SYM = {
+  loro:    {n:'Loro',           e:'🦜', pay:[1, 4, 10]},
+  ancla:   {n:'Ancla',          e:'⚓', pay:[2, 5, 12]},
+  ron:     {n:'Ron',            pay:[2, 6, 15]},
+  brujula: {n:'Brújula',        e:'🧭', pay:[3, 8, 25]},
+  mapa:    {n:'Mapa',           e:'🗺️', pay:[4, 12, 40]},
+  calavera:{n:'Calavera',       e:'💀', pay:[5, 20, 100]},
+  wild:    {n:'Bandera pirata', e:'🏴‍☠️', pay:[10, 50, 500]},
+  cofre:   {n:'Cofre',          pay:[20, 200, 1000]}
+};
+const SL_COMP = {loro:9, ancla:8, ron:7, brujula:5, mapa:4, calavera:3, wild:2, cofre:3};
+const SL_ODDS5 = {loro:144, ancla:232, ron:393, brujula:1388, mapa:3017, calavera:7492, wild:724101, cofre:105410};
+const SL_LINES = [[1,1,1,1,1], [0,0,0,0,0], [2,2,2,2,2], [0,1,2,1,0], [2,1,0,1,2]];
+const SL_LCOL = ['#FFD54A', '#FF6B6B', '#5BC0EB', '#9BE564', '#C77DFF'];
+const SL_GOLD = 0.095355, SL_BETS = [1, 2, 5, 10], SL_START = 100;
+const SL_STRIPS = (() => {
+  let a = 20261004;
+  const rnd = () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const base = Object.entries(SL_COMP).flatMap(([k, n]) => Array(n).fill(k));
+  return [0, 1, 2, 3, 4].map(() => { const s = base.slice(); for (let i = s.length - 1; i > 0; i--){ const j = Math.floor(rnd() * (i + 1)); [s[i], s[j]] = [s[j], s[i]]; } return s; });
+})();
+const SL_L = SL_STRIPS[0].length;
+const slRand = n => { try { const u = new Uint32Array(1); crypto.getRandomValues(u); return u[0] % n; } catch(e){ return Math.floor(Math.random() * n); } };
+let sl = {w:null, bet:1, spinning:false, grid:null, shown:null, tip:0};
+pk.slots = {};
+
+const SL_RON = '<svg viewBox="0 0 40 48" aria-hidden="true"><rect x="16" y="2" width="8" height="6" rx="1.5" fill="#B07A45"/><path d="M15 8h10v8c0 2 6 4 6 10v16a4 4 0 0 1-4 4H13a4 4 0 0 1-4-4V26c0-6 6-8 6-10z" fill="#5A2A12"/><path d="M15 8h10v8c0 2 6 4 6 10v16a4 4 0 0 1-4 4H13a4 4 0 0 1-4-4V26c0-6 6-8 6-10z" fill="none" stroke="#2A1408" stroke-width="1.5"/><path d="M12 14c1-2 3-3 3-6" stroke="rgba(255,255,255,.35)" stroke-width="2" fill="none" stroke-linecap="round"/><rect x="9" y="26" width="22" height="12" rx="2" fill="#F3E2B5" stroke="#B8862E" stroke-width="1.2"/><text x="20" y="35.5" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="8.5" fill="#7A1E14">RON</text></svg>';
+const slCofre = gold => `<svg viewBox="0 0 48 44" aria-hidden="true"><path d="M5 18c0-9 8-14 19-14s19 5 19 14z" fill="${gold ? '#F6C945' : '#8B4A1E'}" stroke="${gold ? '#9A6A00' : '#3E1E0A'}" stroke-width="1.6"/><rect x="5" y="18" width="38" height="22" rx="2.5" fill="${gold ? '#E8B325' : '#6E3814'}" stroke="${gold ? '#9A6A00' : '#3E1E0A'}" stroke-width="1.6"/><path d="M5 18h38" stroke="${gold ? '#FFF2A8' : '#E7C46A'}" stroke-width="3"/><path d="M13 5.5V40M35 5.5V40" stroke="${gold ? '#FFF2A8' : '#E7C46A'}" stroke-width="3"/><rect x="20" y="15" width="8" height="10" rx="1.5" fill="${gold ? '#FFF7C8' : '#E7C46A'}" stroke="${gold ? '#9A6A00' : '#7A5410'}" stroke-width="1.2"/><circle cx="24" cy="19.5" r="1.4" fill="#2A1A08"/>${gold ? '<path d="M40 4l1.4 3.2L44.6 8.6 41.4 10 40 13.2 38.6 10 35.4 8.6 38.6 7.2z" fill="#FFFBE0"/><path d="M8 26l.9 2 2 .9-2 .9L8 31.8l-.9-2-2-.9 2-.9z" fill="#FFFBE0"/>' : '<path d="M9 22l6 5M33 22l6 5" stroke="rgba(0,0,0,.25)" stroke-width="1.2"/>'}</svg>`;
+function slTile(s, gold){
+  const c = s === 'ron' ? SL_RON : s === 'cofre' ? slCofre(gold) : `<span class="e">${SL_SYM[s].e}</span>`;
+  return `<div class="sl-t s-${s}${gold ? ' gold' : ''}">${c}</div>`;
+}
+// la capitana Brea: personaje original de la casa
+const SL_CAPTAIN = `<svg class="sl-capt" viewBox="0 0 120 140" aria-hidden="true">
+  <path d="M33 58c-6 22-4 46 2 70h50c6-24 8-48 2-70z" fill="#24140F"/>
+  <path d="M12 140c2-24 14-36 32-40h32c18 4 30 16 32 40z" fill="#7A1626"/>
+  <path d="M44 100l16 30 16-30" fill="#F3EBDD"/>
+  <path d="M41 101l19 36M79 101l-19 36" stroke="#E7C46A" stroke-width="3"/>
+  <circle cx="34" cy="122" r="2.4" fill="#E7C46A"/><circle cx="86" cy="122" r="2.4" fill="#E7C46A"/>
+  <rect x="52" y="82" width="16" height="20" rx="7" fill="#B9805E"/>
+  <ellipse cx="60" cy="67" rx="19" ry="22" fill="#CF956F"/>
+  <path d="M41 64c1-13 9-19 19-19s18 6 19 19c-6-6-12-8-19-7-7-1-13 1-19 7z" fill="#24140F"/>
+  <path d="M44 60c4-1 7-1 11 1M65 61c4-2 7-2 11-1" stroke="#24140F" stroke-width="2.2" stroke-linecap="round"/>
+  <ellipse cx="51.5" cy="68" rx="2.6" ry="3.3" fill="#1E120C"/><ellipse cx="68.5" cy="68" rx="2.6" ry="3.3" fill="#1E120C"/>
+  <circle cx="52.4" cy="66.8" r=".9" fill="#fff"/><circle cx="69.4" cy="66.8" r=".9" fill="#fff"/>
+  <ellipse cx="46" cy="76" rx="4" ry="2.4" fill="#E88A7A" opacity=".45"/><ellipse cx="74" cy="76" rx="4" ry="2.4" fill="#E88A7A" opacity=".45"/>
+  <path d="M60 70l-2 7h4" stroke="#9E6446" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M52 81c5 4 11 4 16 0" stroke="#7A2A22" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+  <path d="M73 79l7-3" stroke="#B06A52" stroke-width="1.3" stroke-linecap="round"/>
+  <circle cx="41" cy="79" r="3.6" fill="none" stroke="#E7C46A" stroke-width="1.8"/>
+  <path d="M38 62c-6 10-6 24-2 36" stroke="#24140F" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <g fill="#3A2218"><ellipse cx="35" cy="100" rx="4.5" ry="5.5"/><ellipse cx="34" cy="109" rx="4.2" ry="5.2"/><ellipse cx="34.5" cy="118" rx="3.8" ry="4.8"/></g>
+  <path d="M31 123l3 6 3-6" fill="#C4182C"/>
+  <path d="M38 44c1-17 10-27 22-27s21 10 22 27z" fill="#1A1110"/>
+  <path d="M10 49c14-18 33-14 50-8 17-6 36-10 50 8-14-4-31-3-50 6-19-9-36-10-50-6z" fill="#231714" stroke="#E7C46A" stroke-width="2.2" stroke-linejoin="round"/>
+  <circle cx="60" cy="31" r="5.6" fill="#F3EBDD"/><rect x="56.6" y="34.5" width="6.8" height="4" rx="1.2" fill="#F3EBDD"/>
+  <circle cx="58" cy="30.5" r="1.4" fill="#1A1110"/><circle cx="62" cy="30.5" r="1.4" fill="#1A1110"/>
+  <path d="M79 36c10-14 22-20 30-18-6 4-10 10-14 16-5 2-10 3-16 2z" fill="#C4182C"/><path d="M81 35c8-8 16-13 24-15" stroke="#F06A5E" stroke-width="1.2" fill="none"/>
+  <g transform="translate(94 101) scale(.92)">
+    <path d="M-2 14c-4-10 0-20 8-22 7 2 9 12 5 22z" fill="#2FA84F"/>
+    <path d="M2 10c2 6 4 10 9 14" stroke="#1E7A38" stroke-width="3" stroke-linecap="round"/>
+    <path d="M4 18c3 6 3 12 1 16" stroke="#3E7FD8" stroke-width="3.2" stroke-linecap="round"/>
+    <circle cx="5" cy="-8" r="7.5" fill="#35BF5A"/>
+    <path d="M10 -9c6 0 8 4 5 7-1-3-3-3-5-3z" fill="#F5A623"/>
+    <circle cx="7" cy="-10" r="1.8" fill="#fff"/><circle cx="7.4" cy="-10" r="1" fill="#111"/>
+    <path d="M0 -14c1-4 4-6 7-6" stroke="#E23D3D" stroke-width="2.4" stroke-linecap="round"/>
+  </g>
+</svg>`;
+
+/* lógica pura de la máquina */
+function slLine(c){
+  let best = null, n = 0;
+  while (n < 5 && c[n] === 'cofre') n++;
+  if (n >= 3) best = {s:'cofre', n, m:SL_SYM.cofre.pay[n - 3]};
+  for (const s of Object.keys(SL_SYM)){
+    if (s === 'cofre') continue;
+    let k = 0; while (k < 5 && (c[k] === s || (c[k] === 'wild' && s !== 'wild'))) k++;
+    if (k >= 3){ const m = SL_SYM[s].pay[k - 3]; if (!best || m > best.m) best = {s, n:k, m}; }
+  }
+  return best;
+}
+function slSpinResult(){
+  const stops = [0, 1, 2, 3, 4].map(() => slRand(SL_L));
+  const grid = stops.map((st, r) => [0, 1, 2].map(row => SL_STRIPS[r][(st + row) % SL_L]));
+  const wins = [];
+  SL_LINES.forEach((ln, i) => { const w = slLine(ln.map((row, r) => grid[r][row])); if (w) wins.push({...w, line:i}); });
+  const jack = wins.some(w => w.s === 'cofre' && w.n === 5);
+  const gold = jack && slRand(1e6) < SL_GOLD * 1e6;
+  if (gold) wins.forEach(w => { if (w.s === 'cofre' && w.n === 5){ w.m *= 3; w.gold = true; } });
+  return {grid, wins, jack, gold, mult:wins.reduce((a, w) => a + w.m, 0)};
+}
+
+/* monedero (va en la colección del casino, doc slot_<id>) */
+const slDefault = () => ({who:me, chips:SL_START, rebuys:0, spins:0, best:0, jackpots:0, golds:0, ts:0});
+function slWallet(){
+  const remote = pk.slots[me];
+  if (sl.w && sl.w.who === me && (!remote || (remote.ts || 0) <= (sl.w.ts || 0))) return sl.w;
+  return remote ? {...slDefault(), ...remote} : slDefault();
+}
+function slSave(w){
+  w.ts = Date.now(); w.who = me; sl.w = w; pk.slots[me] = w;
+  return db.collection('poker').doc('slot_' + me).set(JSON.parse(JSON.stringify(w))).catch(e => toast(pkErrMsg(e)));
+}
+
+/* interfaz */
+const SL_IDLE = [
+  '¡Ahoy, grumete! Soy la capitana Brea. Elige cuántas fichas apuestas y dale a tirar. Cobras con 3 o más iguales seguidos desde la izquierda en cualquiera de las 5 líneas.',
+  'La bandera pirata vale por cualquier símbolo menos por el cofre.',
+  '5 cofres es el gran botín: 1000 veces lo que apuestes. Y si salen de oro, el triple. Pasa 1 vez entre un millón.',
+  'Esta máquina devuelve 96 de cada 100 fichas… a la larga. A la corta, que te lo cuente la suerte.'
+];
+const SL_LOSE = ['Nada. El mar da y el mar quita.', 'Ni una gaviota. Otra vez.', 'Agua salada y poco más.', 'Los piratas no se rinden. Bueno, a veces sí.', 'Casi… casi… no.', 'La bandera pirata sustituye a todo menos al cofre. Recuérdalo.', 'Ni el loro se ha inmutado.'];
+const slFmt = n => Number(n).toLocaleString('es-ES');
+function slSay(t){ const b = document.getElementById('slMsg'); if (!b) return; b.textContent = t; b.style.animation = 'none'; void b.offsetWidth; b.style.animation = ''; }
+function mountSlots(){
+  pkSubscribe();
+  const box = $('#casGame');
+  if (!sl.grid) sl.grid = [0, 1, 2, 3, 4].map(r => { const st = slRand(SL_L); return [0, 1, 2].map(row => SL_STRIPS[r][(st + row) % SL_L]); });
+  const w = slWallet();
+  box.innerHTML = `<div class="ctable sl-wrap" id="slRoot">
+    <h3>Tragaperras</h3><p class="crule">Empiezas con ${SL_START} fichas. Tres o más iguales seguidos desde la izquierda en una línea, y cobras.</p>
+    <div class="pk-croupier sl-capbox">${SL_CAPTAIN}<span class="pk-bubble" id="slMsg">${esc(SL_IDLE[0])}</span></div>
+    <div class="sl-machine">
+      <div class="sl-cab">
+        <div class="sl-bulbs" aria-hidden="true">${'<i></i>'.repeat(14)}</div>
+        <div class="sl-title" aria-label="El Tesoro Maldito"><span>EL TESORO</span><b>MALDITO</b></div>
+        <div class="sl-win" id="slWin" aria-live="polite"><span>Elige apuesta y tira</span></div>
+        <div class="sl-window">
+          <div class="sl-reels" id="slReels">${sl.grid.map(col => `<div class="sl-reel"><div class="sl-strip">${col.map(s => slTile(s)).join('')}</div></div>`).join('')}</div>
+          <svg class="sl-lines" id="slLines" viewBox="0 0 500 300" preserveAspectRatio="none" aria-hidden="true"></svg>
+          <div class="sl-pay" aria-hidden="true"><i style="top:50%"></i></div>
+        </div>
+        <div class="sl-panel">
+          <div class="sl-stat"><small>Fichas</small><b id="slChips">${slFmt(w.chips)}</b></div>
+          <div class="sl-bets" role="group" aria-label="Apuesta">${SL_BETS.map(b => `<button class="sl-bet" data-bet="${b}" aria-pressed="${sl.bet === b}">${b}</button>`).join('')}</div>
+          <div class="sl-stat"><small>Apuesta</small><b id="slBetV">${sl.bet}</b></div>
+        </div>
+        <button class="sl-spin" id="slSpin"><span>¡TIRAR!</span></button>
+      </div>
+      <button class="sl-lever" id="slLever" aria-label="Tirar de la palanca"><i></i><b></b></button>
+    </div>
+    <div id="slExtra"></div>
+    <details class="pk-log sl-table"><summary>Premios y probabilidades</summary>
+      <div class="sl-pt"><div class="sl-pth"><span></span><span>×3</span><span>×4</span><span>×5</span><span>5 seguidos</span></div>
+      ${Object.keys(SL_SYM).slice().reverse().map(s => `<div class="sl-ptr"><span class="sl-pti">${slTile(s)}</span>${SL_SYM[s].pay.map(m => `<b>${m}</b>`).join('')}<small>1 entre ${slFmt(SL_ODDS5[s])}</small></div>`).join('')}
+      <div class="sl-ptr gold"><span class="sl-pti">${slTile('cofre', true)}</span><b style="grid-column:span 3">5 de oro: ${slFmt(SL_SYM.cofre.pay[2] * 3)}</b><small>1 entre 1.000.000</small></div></div>
+      <div class="sl-note">Los premios son veces tu apuesta y se suman si ganas en varias líneas. Hay premio más o menos en 1 de cada 4 tiradas, y a la larga la máquina devuelve el 96&nbsp;% de lo apostado, como las de verdad.</div>
+      <div class="sl-lmap">${SL_LINES.map((ln, i) => `<svg viewBox="0 0 50 30" aria-label="Línea ${i + 1}"><rect width="50" height="30" rx="3" fill="rgba(0,0,0,.35)"/><polyline points="${ln.map((row, r) => `${5 + r * 10},${5 + row * 10}`).join(' ')}" fill="none" stroke="${SL_LCOL[i]}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`).join('')}</div>
+    </details>
+  </div>`;
+  box.querySelectorAll('[data-bet]').forEach(b => b.onclick = () => { if (sl.spinning) return; sl.bet = Number(b.dataset.bet); slPaintSide(); });
+  $('#slSpin').onclick = slSpin; $('#slLever').onclick = slSpin;
+  slPaintSide();
+}
+function slPaintSide(){
+  if (!document.getElementById('slRoot')) return;
+  const w = slWallet(); const chips = sl.spinning && sl.shown != null ? sl.shown : w.chips;
+  $('#slChips').textContent = slFmt(chips);
+  $('#slBetV').textContent = sl.bet;
+  document.querySelectorAll('.sl-bet').forEach(b => { const v = Number(b.dataset.bet); b.setAttribute('aria-pressed', v === sl.bet); b.disabled = sl.spinning || v > chips; });
+  $('#slSpin').disabled = sl.spinning || chips < sl.bet;
+  const broke = !sl.spinning && w.chips < SL_BETS[0];
+  const rich = Object.values(pk.slots).filter(x => person(x.who)).map(x => x.who === me ? {...x, ...w} : x).sort((a, b) => b.chips - a.chips).slice(0, 5);
+  const ex = document.getElementById('slExtra'); if (!ex) return;
+  ex.innerHTML = `${broke ? `<div class="cbtns"><button class="cbtn" id="slLoan">Pedir un préstamo a la capitana (+${SL_START})</button></div>` : ''}
+    ${!broke && w.chips < sl.bet ? `<p class="pk-wait">No te llega para ${sl.bet}. Baja la apuesta.</p>` : ''}
+    ${rich.length ? `<div class="pk-rank"><span class="hand-l">Los más ricos del barco</span>${rich.map((x, i) => `<div><span>${i + 1}. ${av(person(x.who))} ${esc(person(x.who)?.name || '¿?')}${x.golds ? ' <small>🏆 oro</small>' : x.jackpots ? ' <small>🏆 botín</small>' : ''}</span><b>${slFmt(x.chips)}</b></div>`).join('')}</div>` : ''}`;
+  const loan = document.getElementById('slLoan');
+  if (loan) loan.onclick = () => { if (!canWrite()) return; const nw = {...slWallet()}; nw.chips += SL_START; nw.rebuys = (nw.rebuys || 0) + 1; slSave(nw); slSay(nw.rebuys > 2 ? `Otro préstamo… van ${nw.rebuys}. Lo apunto en la cuenta del barco.` : 'Toma, grumete. Pero esto lo devuelves en ron.'); slPaintSide(); };
+}
+function slSpin(){
+  if (sl.spinning || !document.getElementById('slRoot')) return;
+  if (!canWrite()) return;
+  const w = slWallet(), bet = sl.bet;
+  if (w.chips < bet){ toast('No te llegan las fichas para esa apuesta.'); return; }
+  const res = slSpinResult(), win = res.mult * bet;
+  const nw = {...w, chips:w.chips - bet + win, spins:(w.spins || 0) + 1, best:Math.max(w.best || 0, win), jackpots:(w.jackpots || 0) + (res.jack ? 1 : 0), golds:(w.golds || 0) + (res.gold ? 1 : 0)};
+  sl.spinning = true; sl.shown = w.chips - bet;
+  slSave(nw);   // se guarda ya, por si cierras la app a mitad de tirada
+  slPaintSide();
+  $('#slLines').innerHTML = ''; $('#slWin').innerHTML = '<span>¡Rodando…!</span>';
+  const lev = $('#slLever'); lev.classList.remove('pull'); void lev.offsetWidth; lev.classList.add('pull');
+  try { navigator.vibrate && navigator.vibrate(20); } catch(e){}
+  slAnimate(res, () => slShow(res, win, nw));
+}
+function slTension(grid){
+  // cuántos cofres seguidos desde la izquierda en la mejor línea (para alargar los últimos rodillos)
+  return Math.max(...SL_LINES.map(ln => { let n = 0; while (n < 5 && grid[n][ln[n]] === 'cofre') n++; return n; }));
+}
+function slAnimate(res, done){
+  const reels = [...document.querySelectorAll('#slReels .sl-reel')];
+  const tens = slTension(res.grid); let left = reels.length, extra = 0;
+  reels.forEach((reel, r) => {
+    const strip = reel.querySelector('.sl-strip');
+    const H = reel.clientWidth;
+    const slow = tens >= 2 && r >= tens && r <= 4;
+    if (slow) extra += 650;
+    const N = 12 + r * 4 + (slow ? 8 : 0);
+    const fill = Array.from({length:N}, () => SL_STRIPS[r][slRand(SL_L)]);
+    strip.innerHTML = [...res.grid[r], ...fill, ...sl.grid[r]].map(s => slTile(s)).join('');
+    strip.style.transition = 'none';
+    strip.style.transform = `translateY(${-(N + 3) * H}px)`;
+    void strip.offsetHeight;
+    const dur = 1000 + r * 300 + extra;
+    strip.style.transition = `transform ${dur}ms cubic-bezier(.18,.7,.28,1.04)`;
+    strip.style.transform = 'translateY(0)';
+    reel.classList.add('spin'); reel.style.setProperty('--sd', dur + 'ms');
+    if (slow) setTimeout(() => reel.classList.add('tense'), Math.max(0, dur - 1100));
+    setTimeout(() => {
+      if (!document.contains(strip)) { if (--left === 0) done(); return; }
+      reel.classList.remove('spin', 'tense');
+      strip.style.transition = 'none'; strip.style.transform = 'translateY(0)';
+      strip.innerHTML = res.grid[r].map(s => slTile(s)).join('');
+      reel.classList.remove('land'); void reel.offsetWidth; reel.classList.add('land');
+      try { navigator.vibrate && navigator.vibrate(8); } catch(e){}
+      if (--left === 0) done();
+    }, dur + 20);
+  });
+}
+function slShow(res, win, nw){
+  sl.grid = res.grid; sl.spinning = false; sl.shown = null;
+  if (!document.getElementById('slRoot')) return;
+  const reels = [...document.querySelectorAll('#slReels .sl-reel')];
+  if (res.gold){
+    // los cofres de la línea ganadora se vuelven de oro
+    res.wins.filter(w => w.gold).forEach(w => SL_LINES[w.line].forEach((row, r) => { const t = reels[r].querySelectorAll('.sl-t')[row]; if (t) t.outerHTML = slTile('cofre', true).replace('sl-t ', 'sl-t turn '); }));
+  }
+  res.wins.forEach(w => SL_LINES[w.line].forEach((row, r) => { if (r < w.n) reels[r].querySelectorAll('.sl-t')[row]?.classList.add('hit'); }));
+  $('#slLines').innerHTML = res.wins.map((w, k) => `<polyline style="animation-delay:${k * 160}ms" points="${SL_LINES[w.line].map((row, r) => `${50 + r * 100},${50 + row * 100}`).join(' ')}" fill="none" stroke="${SL_LCOL[w.line]}" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>`).join('');
+  const winEl = $('#slWin');
+  if (win){
+    winEl.innerHTML = `<b class="pop">+<span id="slCount">0</span></b><small>${res.wins.length > 1 ? `${res.wins.length} líneas` : `${res.wins[0].n} × ${SL_SYM[res.wins[0].s].n}`}</small>`;
+    const el = $('#slCount'), t0 = performance.now(), dur = Math.min(2200, 500 + win * 6);
+    const step = t => { if (!document.contains(el)) return; const k = Math.min(1, (t - t0) / dur); el.textContent = slFmt(Math.round(win * (1 - Math.pow(1 - k, 3)))); if (k < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  } else winEl.innerHTML = '<span>Sin premio</span>';
+  const best = res.wins.slice().sort((a, b) => b.m - a.m)[0];
+  if (res.gold){ slSay(`¡¡EL TESORO MALDITO!! Cinco cofres de oro. Esto pasa una vez entre un millón y te ha pasado a ti. +${slFmt(win)} fichas.`); slParty(win, true); }
+  else if (res.jack){ slSay(`¡EL GRAN BOTÍN! Cinco cofres, ${slFmt(win)} fichas. Que nadie toque a este pirata.`); slParty(win, false); }
+  else if (res.mult >= 20){ slSay(`¡Por mis barbas! ${slFmt(win)} fichas con ${best.n} × ${SL_SYM[best.s].n}. Eso sí es navegar.`); slCoins(18); }
+  else if (res.mult >= 5){ slSay(rand([`¡Buena pesca! +${slFmt(win)}.`, `Eso ya es un botín decente: +${slFmt(win)}.`, `El loro aplaude: +${slFmt(win)}.`])); slCoins(8); }
+  else if (win){ slSay(rand([`Algo es algo: +${slFmt(win)}.`, `Unas monedas para el ron: +${slFmt(win)}.`, win === sl.bet ? 'Recuperas lo apostado. Ni pierdes ni ganas.' : `+${slFmt(win)}. Poco a poco se llena el cofre.`])); }
+  else { sl.tip = (sl.tip + 1) % 7; slSay(sl.tip % 3 === 2 ? SL_IDLE[1 + (sl.tip % SL_IDLE.length) % 3] : rand(SL_LOSE)); }
+  if (res.mult >= 5 || res.jack) try { navigator.vibrate && navigator.vibrate(res.jack ? [60, 40, 60, 40, 120] : [30, 30, 30]); } catch(e){}
+  slPaintSide();
+}
+function slCoins(n){
+  const cab = document.querySelector('.sl-cab'); if (!cab) return;
+  const wrap = document.createElement('div'); wrap.className = 'sl-coins';
+  wrap.innerHTML = Array.from({length:n}, () => `<i style="left:${5 + Math.random() * 90}%;animation-delay:${Math.random() * 500}ms;animation-duration:${1100 + Math.random() * 700}ms">🪙</i>`).join('');
+  cab.appendChild(wrap); setTimeout(() => wrap.remove(), 2600);
+}
+function slParty(win, gold){
+  const o = document.createElement('div'); o.className = 'sl-jack' + (gold ? ' gold' : ''); o.setAttribute('role', 'alert');
+  o.innerHTML = `<div class="sl-jbox">${slCofre(true)}<b>${gold ? 'TESORO DE ORO' : '¡EL GRAN BOTÍN!'}</b><span>+${slFmt(win)} fichas</span><small>${gold ? '1 entre 1.000.000' : 'Cinco cofres'}</small></div>${Array.from({length:40}, () => `<i style="left:${Math.random() * 100}%;animation-delay:${Math.random() * 1600}ms;animation-duration:${1600 + Math.random() * 1400}ms">${gold ? rand(['🪙', '✨', '💰']) : '🪙'}</i>`).join('')}`;
+  document.body.appendChild(o);
+  const close = () => o.remove(); o.onclick = close; setTimeout(close, gold ? 7000 : 5000);
 }
 
 /* ---- Dados ---- */
@@ -3768,7 +4127,7 @@ const TUTO = [
   {ill:'perfil',  tab:'stats', t:'Tus stats y El Banco', p:'Tus mejores fiestas y récords, y en El Banco lo que llevas fundido en euros. Toca tu nombre arriba para cambiar foto, nombre o estado.', joke:'Si te pusiste un nombre absurdo, aún estás a tiempo.'},
   {ill:'podium',  tab:'group', t:'El grupo y El top', p:'En El grupo, las gráficas, quién está fichado ahora y quién hizo qué. En El top, el podio de barriles de la taberna.', joke:'Spoiler: el problema del grupo eres tú.'},
   {ill:'fotos',   tab:'fotos', t:'Pruebas del Delito', p:'Sube las fotos de la noche con un marco de broma y dales pulgar arriba. Las más votadas van al podio.', joke:'Lo que se sube, no se olvida.'},
-  {ill:'casino',  tab:'casino', t:'Gran Casino Resaca', p:'Póker en mesa compartida, ruleta, blackjack, más o menos, dados y La Verdad con 500 preguntas picantes. Saca el móvil y a jugar.', joke:'La banca siempre gana. Tú, a veces bebes.'},
+  {ill:'casino',  tab:'casino', t:'Gran Casino Resaca', p:'Póker en mesa compartida, tragaperras pirata, ruleta, blackjack, más o menos, dados y La Verdad con 500 preguntas picantes.', joke:'La banca siempre gana. Tú, a veces bebes.'},
   {ill:'tabernia', tab:'tabernia', t:'Las Crónicas de Tabernia', p:'Todos los bares y discotecas donde habéis estado, con la nota media de la cuadrilla.', joke:'Que los dioses del vermut nos protejan.'},
   {ill:'neon',    tab:'burdel', t:'El Burdel', p:'Solteros: +20 por lío y +10 si hay koito. En pareja: +25 por ayudar a otro. ¿Dudas? El botón ? de arriba.', joke:'Lo que pasa en el burdel, se queda en el burdel.'}
 ];
