@@ -22,7 +22,7 @@
 <title>La Ronda</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Caveat+Brush&family=JetBrains+Mono:wght@500;700&family=Monoton&family=Cinzel+Decorative:wght@700&family=IM+Fell+English:ital@0;1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Caveat+Brush&family=JetBrains+Mono:wght@500;700&family=Monoton&family=Limelight&family=Cinzel+Decorative:wght@700&family=IM+Fell+English:ital@0;1&display=swap">
 <style>
 /* Layout: app de bar de barrio de noche — azulejo de fondo, posavasos, caña que se llena; El Burdel cambia a sala de neones. Columna única de 760px con barra de pestañas abajo */
 :root{
@@ -159,7 +159,7 @@ h1,h2,h3{text-wrap:balance;margin:0}
 .tab[aria-selected="true"]{background:var(--amber);color:var(--on-accent)}
 .tab[data-v="burdel"]{color:var(--pink)}
 .tab[data-v="burdel"][aria-selected="true"]{background:var(--pink);color:#18051A;box-shadow:0 0 18px var(--pink)}
-@media (max-width:640px){.tab{padding:10px 8px;font-size:13px}.tab span{display:none}.tab[aria-selected="true"] span{display:inline}}
+@media (max-width:640px){.tab{padding:10px 7px;font-size:13px}.tab span{display:none}.tab[aria-selected="true"] span{display:inline}}
 .view{animation:viewIn .35s ease both}
 @keyframes viewIn{from{opacity:0;transform:translateY(10px)}}
 .sec{margin-top:30px;display:grid;gap:14px}
@@ -704,6 +704,119 @@ body.fantasy .tab[aria-selected="true"]{background:#C9A24A;color:#241805}
 .night-chip svg{width:16px;height:16px;color:var(--amber);flex:none}
 .night-chip em{font-style:normal;color:var(--muted);font-weight:500}
 .night-chip em b{font-family:var(--font-body);font-weight:800;color:var(--amber)}
+/* ---------- GRAN CASINO RESACA ---------- */
+body.casino{--bg:#06170E; --surface:#0E2A1B; --surface-2:#163A26; --line:#2C5E42; --muted:#8FB39C; --ink-2:#D3E6D9; --tile:transparent; --gold:#E7C46A; --gold-d:#9C7A2A;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .14 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 50% 10%,#1B6A42 0%,#0F4029 45%,#06170E 100%);background-size:160px 160px,100% 100%}
+body.casino .mini-logo{font-family:'Limelight',Georgia,serif;color:var(--gold);text-shadow:0 0 10px rgba(231,196,106,.5);transform:none;font-size:22px}
+body.casino .sec-h h2{font-family:'Limelight',Georgia,serif;font-weight:400;color:var(--gold);font-size:24px}
+body.casino .tab[aria-selected="true"]{background:var(--gold);color:#1E1404}
+.cas-hero{position:relative;border-radius:22px;padding:30px 16px 22px;text-align:center;overflow:hidden;
+  background:radial-gradient(ellipse at 50% 30%,#3A0D1C,#1A0610 70%);border:3px solid var(--gold-d);box-shadow:0 0 0 2px #2A1A06,0 18px 40px rgba(0,0,0,.6),inset 0 0 60px rgba(0,0,0,.6)}
+.bulbs{position:absolute;left:10px;right:10px;display:flex;justify-content:space-between;pointer-events:none}
+.bulbs.t{top:8px}.bulbs.b{bottom:8px}
+.bulbs i{width:9px;height:9px;border-radius:50%;background:#FFE9A8;box-shadow:0 0 6px #FFD36A,0 0 14px #FFB800;animation:bulb 1.2s steps(1) infinite}
+.bulbs i:nth-child(2n){animation-delay:.6s}
+@keyframes bulb{50%{background:#5A4520;box-shadow:none}}
+.cas-sign{font-family:'Limelight',Georgia,serif;line-height:1;position:relative;z-index:1}
+.cas-sign .g{display:block;font-size:clamp(18px,5vw,24px);letter-spacing:.35em;color:var(--gold);text-shadow:0 0 6px rgba(231,196,106,.8),0 0 18px rgba(231,196,106,.4)}
+.cas-sign .r{display:block;margin-top:6px;font-size:clamp(42px,13vw,72px);color:#FFE1EC;text-shadow:0 0 4px #fff,0 0 12px #FF2E7E,0 0 28px #FF2E7E,0 0 56px #FF2E7E}
+.cas-sign .r span{display:inline-block}
+.cas-sign .fl{animation:flicker 4.5s linear infinite}
+.cas-tag{position:relative;z-index:1;margin-top:10px;padding-inline:34px;color:#E8D9B5;font-style:italic;font-family:Georgia,serif;font-size:15px}
+.cas-deco{position:absolute;z-index:0;opacity:.9;filter:drop-shadow(0 6px 10px rgba(0,0,0,.6))}
+.cas-deco.d1{left:12px;bottom:24px;width:32px;animation:tumble 6s ease-in-out infinite}
+.cas-deco.d2{right:12px;bottom:24px;width:28px;animation:tumble 7s ease-in-out infinite reverse}
+@keyframes tumble{50%{transform:rotate(25deg) translateY(-6px)}}
+.game-pick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.gchip{display:grid;justify-items:center;gap:6px;font-weight:700;font-size:12.5px;color:var(--ink-2)}
+.gchip .cp{width:min(68px,100%);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;position:relative;transition:transform .25s;
+  background:repeating-conic-gradient(var(--cc) 0 22.5deg,#F5EFE0 22.5deg 45deg);box-shadow:0 5px 0 rgba(0,0,0,.45),0 0 0 2px rgba(0,0,0,.25)}
+.gchip .cp::before{content:"";position:absolute;inset:16%;border-radius:50%;background:var(--cc);box-shadow:inset 0 0 0 2px rgba(255,255,255,.55),inset 0 0 0 5px var(--cc),inset 0 0 0 6px rgba(255,255,255,.35)}
+.gchip .cp svg{position:relative;width:46%;height:46%;color:#FFF6E0}
+.gchip:hover .cp{transform:translateY(-3px) rotate(-12deg)}
+.gchip[aria-pressed="true"] .cp{transform:translateY(-4px) scale(1.06);box-shadow:0 7px 0 rgba(0,0,0,.45),0 0 0 3px var(--gold),0 0 22px rgba(231,196,106,.55)}
+.gchip[aria-pressed="true"]{color:var(--gold)}
+.ctable{position:relative;border-radius:26px;padding:16px 14px 18px;background:radial-gradient(ellipse at 50% 35%,#1F7A4C,#0F4A2D 70%,#0A3A22);
+  border:10px solid #5A3618;box-shadow:inset 0 0 0 2px var(--gold-d),inset 0 0 50px rgba(0,0,0,.45),0 0 0 2px #2A1808,0 18px 40px rgba(0,0,0,.55);display:grid;gap:14px}
+.ctable h3{font-family:'Limelight',Georgia,serif;font-weight:400;color:var(--gold);font-size:22px;text-align:center;margin:0}
+.ctable .crule{text-align:center;color:#E3F0E7;font-size:13.5px;margin:-6px 0 0}
+.cbtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border-radius:999px;font-weight:800;font-size:15px;color:#2A1A04;
+  background:linear-gradient(#F7DE8E,#D9AE45 55%,#B88A26);box-shadow:0 5px 0 #7A5A14,0 8px 18px rgba(0,0,0,.4);transition:transform .12s,box-shadow .12s}
+.cbtn:active:not(:disabled){transform:translateY(4px);box-shadow:0 1px 0 #7A5A14}
+.cbtn.alt{color:#FFF6E0;background:linear-gradient(#B8243A,#8A1426);box-shadow:0 5px 0 #4A0A14,0 8px 18px rgba(0,0,0,.4)}
+.cbtn.alt:active:not(:disabled){box-shadow:0 1px 0 #4A0A14}
+.cbtn.ghost{color:#E3F0E7;background:rgba(0,0,0,.25);box-shadow:inset 0 0 0 2px rgba(231,196,106,.6)}
+.cbtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.verdict{text-align:center;min-height:56px;display:grid;place-items:center;gap:2px}
+.verdict b{font-family:'Limelight',Georgia,serif;font-weight:400;font-size:26px;line-height:1.1;color:#FFF6E0;text-shadow:0 2px 0 rgba(0,0,0,.4)}
+.verdict span{font-size:14px;color:#E3F0E7}
+.verdict.win b{color:#FFE27A;text-shadow:0 0 14px rgba(255,226,122,.6)}
+.verdict.lose b{color:#FF8FA8;text-shadow:0 0 14px rgba(255,80,120,.5)}
+.verdict.pop{animation:vpop .5s cubic-bezier(.2,1.6,.4,1)}
+@keyframes vpop{from{transform:scale(.6);opacity:0}}
+.cas-foot{text-align:center;font-size:12.5px;color:var(--muted)}
+/* ruleta */
+.wheel-wrap{position:relative;width:min(300px,100%);margin:0 auto;aspect-ratio:1}
+.wheel-wrap canvas{width:100%;height:100%;display:block}
+.wheel-res{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+.wheel-res span{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;font-family:'Limelight',Georgia,serif;font-size:28px;color:#fff;border:3px solid var(--gold);box-shadow:0 0 0 4px rgba(0,0,0,.35),0 0 26px rgba(231,196,106,.6);animation:vpop .5s cubic-bezier(.2,1.6,.4,1)}
+.rl-board{padding:2px 4px}
+.rl-grid{display:grid;grid-template-columns:1.3fr repeat(12,minmax(0,1fr));grid-template-rows:repeat(3,30px);gap:2px}
+.rl-grid button,.rl-out button{border-radius:4px;font-weight:800;font-size:11px;padding:0;font-variant-numeric:tabular-nums;color:#fff;border:1px solid rgba(255,255,255,.35);transition:transform .12s,box-shadow .15s}
+.rl-grid .z{grid-row:1 / span 3;background:#0E7A3E}
+.rl-grid .rd{background:#B3202A}.rl-grid .bk{background:#15120F}
+.rl-out{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:6px}
+.rl-out button{padding:8px 0;font-size:12.5px;background:rgba(0,0,0,.3)}
+.rl-out .rd{background:#B3202A}.rl-out .bk{background:#15120F}
+.rl-grid button[aria-pressed="true"],.rl-out button[aria-pressed="true"]{box-shadow:0 0 0 3px var(--gold),0 0 14px rgba(231,196,106,.7);transform:scale(1.08);position:relative;z-index:1}
+.rl-bet{text-align:center;font-size:13.5px;color:#E3F0E7}
+.rl-bet b{color:var(--gold)}
+.rl-hist{display:flex;gap:5px;justify-content:center;flex-wrap:wrap}
+.rl-hist i{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:800;color:#fff;border:1px solid rgba(255,255,255,.4)}
+/* cartas */
+.hand{display:grid;gap:6px;justify-items:center}
+.hand-l{font-size:12.5px;font-weight:700;color:#E3F0E7;letter-spacing:.08em;text-transform:uppercase}
+.hand-l b{font-family:var(--font-mono);font-size:14px;color:var(--gold);letter-spacing:0;margin-left:6px}
+.cards{display:flex;justify-content:center;min-height:100px;padding:0 10px}
+.cards .pc{margin-left:-18px}.cards .pc:first-child{margin-left:0}
+.pc{width:66px;height:96px;perspective:600px;flex:none}
+.pc-in{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.3,1.3,.5,1)}
+.pc.hid .pc-in{transform:rotateY(180deg)}
+.pc-f,.pc-b{position:absolute;inset:0;border-radius:8px;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 4px 10px rgba(0,0,0,.45)}
+.pc-f{background:#FBF8F1;color:#16120E;font-family:Georgia,'Times New Roman',serif;border:1px solid #D8D0BC}
+.pc-f.red{color:#C4182C}
+.pc-f .c1,.pc-f .c2{position:absolute;display:grid;justify-items:center;line-height:.95;font-weight:700;font-size:16px}
+.pc-f .c1{left:5px;top:5px}.pc-f .c2{right:5px;bottom:5px;transform:rotate(180deg)}
+.pc-f .c1 small,.pc-f .c2 small{font-size:13px}
+.pc-f .mid{position:absolute;inset:0;display:grid;place-items:center;font-size:34px}
+.pc-b{transform:rotateY(180deg);border:3px solid #FBF8F1;background:repeating-linear-gradient(45deg,#8A1426 0 6px,#A51E33 6px 12px);box-shadow:inset 0 0 0 2px var(--gold-d),0 4px 10px rgba(0,0,0,.45)}
+.pc-b::after{content:"R";position:absolute;inset:0;display:grid;place-items:center;font-family:'Limelight',Georgia,serif;font-size:28px;color:var(--gold);text-shadow:0 1px 0 #000}
+.pc.deal{animation:deal .5s cubic-bezier(.2,1.2,.4,1) both}
+@keyframes deal{from{transform:translate(90px,-120px) rotate(25deg);opacity:0}}
+.pc.big{width:96px;height:138px}
+.pc.big .pc-f .c1,.pc.big .pc-f .c2{font-size:22px}
+.pc.big .pc-f .mid{font-size:52px}
+.hl-row{display:flex;justify-content:center;align-items:center;gap:18px;min-height:150px}
+.hl-q{font-family:'Limelight',Georgia,serif;font-size:40px;color:var(--gold);text-shadow:0 0 12px rgba(231,196,106,.5)}
+.streak{display:flex;justify-content:center;gap:16px;color:#E3F0E7;font-size:13.5px}
+.streak b{font-family:'Limelight',Georgia,serif;font-weight:400;font-size:22px;color:var(--gold);margin-left:4px}
+/* dados */
+.dice-row{display:flex;justify-content:center;gap:34px;padding:22px 0 10px;perspective:700px}
+.die{width:70px;height:70px;position:relative;transform-style:preserve-3d;transition:transform 1.6s cubic-bezier(.15,.9,.25,1)}
+.die .f{position:absolute;inset:0;border-radius:12px;background:radial-gradient(circle at 30% 25%,#FFFFFF,#ECE6D8);border:1px solid #CFC6B0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);padding:9px;box-shadow:inset 0 -4px 8px rgba(0,0,0,.12)}
+.die .f i{width:12px;height:12px;border-radius:50%;background:#1A1410;place-self:center;box-shadow:inset 0 2px 2px rgba(0,0,0,.5)}
+.die .f.one i{background:#C4182C;width:16px;height:16px}
+.die .f1{transform:translateZ(35px)}.die .f6{transform:rotateY(180deg) translateZ(35px)}
+.die .f3{transform:rotateY(90deg) translateZ(35px)}.die .f4{transform:rotateY(-90deg) translateZ(35px)}
+.die .f5{transform:rotateX(90deg) translateZ(35px)}.die .f2{transform:rotateX(-90deg) translateZ(35px)}
+.dice-shadow{display:flex;justify-content:center;gap:34px;margin-top:-6px}
+.dice-shadow i{width:64px;height:10px;border-radius:50%;background:rgba(0,0,0,.35);filter:blur(3px)}
+.dice-n{display:flex;align-items:center;justify-content:center;gap:12px}
+.dice-n button{width:44px;height:44px;border-radius:50%;font-size:22px;font-weight:800;color:#2A1A04;background:linear-gradient(#F7DE8E,#D9AE45);box-shadow:0 3px 0 #7A5A14}
+.dice-n output{font-family:'Limelight',Georgia,serif;font-size:44px;color:#FFF6E0;min-width:64px;text-align:center;text-shadow:0 0 14px rgba(255,255,255,.3)}
+.dice-p{text-align:center;font-size:13.5px;color:#E3F0E7}
+.dice-p b{color:var(--gold)}
 /* ---------- TOAST + STAMP ---------- */
 #toasts{position:fixed;left:0;right:0;bottom:calc(86px + env(safe-area-inset-bottom,0px));z-index:40;display:grid;justify-items:center;gap:8px;padding-inline:16px;pointer-events:none}
 .toast{pointer-events:auto;display:flex;align-items:center;gap:12px;background:var(--foam);color:var(--on-accent);border-radius:999px;padding:10px 12px 10px 18px;font-weight:700;
@@ -805,6 +918,9 @@ body.neon .toast{background:#FFE1F2;box-shadow:0 0 24px rgba(255,60,172,.6)}
     <button class="tab" role="tab" data-v="fotos" aria-selected="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.5"/></svg>
       <span>Pruebas</span></button>
+    <button class="tab" role="tab" data-v="casino" aria-selected="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="13" height="13" rx="3"/><path d="M16 8h2a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3h-7a3 3 0 0 1-3-3v-2"/><circle cx="7.5" cy="7.5" r=".9" fill="currentColor"/><circle cx="11.5" cy="11.5" r=".9" fill="currentColor"/></svg>
+      <span>Casino</span></button>
     <button class="tab" role="tab" data-v="tabernia" aria-selected="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V9l2-1V4h2v2h2V4h4v2h2V4h2v4l2 1v12z"/><path d="M10 21v-4a2 2 0 0 1 4 0v4"/></svg>
       <span>Tabernia</span></button>
@@ -1076,6 +1192,8 @@ function show(id){
   $('#tabs').hidden = id !== 'app';
   document.body.classList.toggle('neon', id === 'app' && view === 'burdel');
   document.body.classList.toggle('fantasy', id === 'app' && view === 'tabernia');
+  document.body.classList.toggle('casino', id === 'app' && view === 'casino');
+  casinoForce = true;
   window.scrollTo(0,0);
 }
 function pourTo(next){ const p = $('#pour'); p.classList.remove('go'); void p.offsetWidth; p.classList.add('go'); setTimeout(next, 560); }
@@ -1341,6 +1459,8 @@ function setView(v){
   document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', t.dataset.v === v));
   document.body.classList.toggle('neon', v === 'burdel');
   document.body.classList.toggle('fantasy', v === 'tabernia');
+  document.body.classList.toggle('casino', v === 'casino');
+  casinoForce = true;
   const el = $('#view'); el.classList.remove('view'); void el.offsetWidth; el.classList.add('view');
   render(); window.scrollTo({top:0});
 }
@@ -1353,7 +1473,8 @@ function render(){
   $('#dbBanner').innerHTML = dbBannerHtml();
   const keep = {}; ['placeName','outTime'].forEach(id => { const e = document.getElementById(id); if (e && e.value) keep[id] = e.value; });
   const focused = document.activeElement && document.activeElement.id;
-  ({mine:renderMine, stats:renderStats, group:renderGroup, top:renderTop, fotos:renderFotos, tabernia:renderTabernia, burdel:renderBurdel})[view]();
+  ({mine:renderMine, stats:renderStats, group:renderGroup, top:renderTop, fotos:renderFotos, casino:() => renderCasino(casinoForce), tabernia:renderTabernia, burdel:renderBurdel})[view]();
+  casinoForce = false;
   Object.entries(keep).forEach(([id, v]) => { const e = document.getElementById(id); if (e) e.value = v; });
   if (focused && (focused === 'placeName' || focused === 'outTime')) document.getElementById(focused)?.focus({preventScroll:true});
 }
@@ -1932,6 +2053,311 @@ function renderTabernia(){
       <div class="hint" style="margin-top:8px">La nota de cada sitio es la media de todas las notas que le ha puesto la cuadrilla. Toca un sitio para ver quién le puso qué.</div></div>`;
 }
 
+let casinoForce = true;
+/* ================= GRAN CASINO RESACA ================= */
+let casGame = 'ruleta', casMounted = false;
+const RL_ORDER = [0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26];
+const RL_RED = new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]);
+const rlColor = n => n === 0 ? 'verde' : RL_RED.has(n) ? 'rojo' : 'negro';
+const rlHex = n => n === 0 ? '#0E7A3E' : RL_RED.has(n) ? '#B3202A' : '#15120F';
+const RL_BETS = {rojo:['Rojo', n => RL_RED.has(n)], negro:['Negro', n => n !== 0 && !RL_RED.has(n)], par:['Par', n => n !== 0 && n % 2 === 0], impar:['Impar', n => n % 2 === 1],
+  bajo:['1 a 18', n => n >= 1 && n <= 18], alto:['19 a 36', n => n >= 19]};
+const rl = {bet:null, spinning:false, W:0, B:-Math.PI/2, r:128, result:null, hist:[], verdict:null};
+const SUITS = [['♠',0],['♥',1],['♦',1],['♣',0]];
+const CARD_RANKS = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+function newDeck(){ const d = []; SUITS.forEach(([s, red]) => CARD_RANKS.forEach((r, i) => d.push({r, s, red, v:i + 1}))); for (let i = d.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [d[i], d[j]] = [d[j], d[i]]; } return d; }
+function cardHtml(c, o = {}){
+  return `<div class="pc ${o.hid ? 'hid' : ''} ${o.deal ? 'deal' : ''} ${o.big ? 'big' : ''}" style="${o.delay ? `animation-delay:${o.delay}ms` : ''}" ${c ? `aria-label="${o.hid ? 'Carta tapada' : c.r + ' de ' + c.s}"` : ''}>
+    <div class="pc-in"><div class="pc-f ${c && c.red ? 'red' : ''}">${c ? `<span class="c1">${c.r}<small>${c.s}</small></span><span class="mid">${c.s}</span><span class="c2">${c.r}<small>${c.s}</small></span>` : ''}</div><div class="pc-b"></div></div></div>`;
+}
+const DIE_FACES = {1:[5],2:[1,9],3:[1,5,9],4:[1,3,7,9],5:[1,3,5,7,9],6:[1,3,4,6,7,9]};
+const faceHtml = n => `<div class="f f${n} ${n === 1 ? 'one' : ''}">${Array.from({length:9}, (_, i) => DIE_FACES[n].includes(i + 1) ? '<i></i>' : '<span></span>').join('')}</div>`;
+const DIE_ROT = {1:[0,0],2:[90,0],3:[0,-90],4:[0,90],5:[-90,0],6:[0,180]};
+const dc = {n:7, rolling:false, rot:[[0,0],[0,0]], vals:[null,null], verdict:null};
+const bj = {deck:[], p:[], d:[], phase:'idle', verdict:null, shown:0};
+const hl = {deck:[], cur:null, next:null, streak:0, best:0, phase:'idle', verdict:null};
+const VERDICT = (cls, big, small) => ({cls, big, small});
+function verdictHtml(v, id){ return `<div class="verdict ${v ? v.cls + ' pop' : ''}" id="${id}" role="status" aria-live="polite">${v ? `<b>${esc(v.big)}</b><span>${esc(v.small)}</span>` : '<span>&nbsp;</span>'}</div>`; }
+const DIE_SVG = '<svg viewBox="0 0 48 48"><rect x="3" y="3" width="42" height="42" rx="9" fill="#FBF8F1" stroke="#CFC6B0" stroke-width="2"/><circle cx="14" cy="14" r="4.2" fill="#1A1410"/><circle cx="24" cy="24" r="4.2" fill="#C4182C"/><circle cx="34" cy="34" r="4.2" fill="#1A1410"/></svg>';
+const GAMES = {
+  ruleta:   {n:'Ruleta', cc:'#B3202A', ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M12 3v5.5M12 15.5V21M3 12h5.5M15.5 12H21"/></svg>'},
+  blackjack:{n:'Blackjack', cc:'#15120F', ico:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c3 4 7 6 7 10a4 4 0 0 1-6.3 3.3L14 21h-4l1.3-4.7A4 4 0 0 1 5 13c0-4 4-6 7-10z"/></svg>'},
+  hilo:     {n:'Más o menos', cc:'#1F5FA8', ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5-5 5 5M7 14l5 5 5-5"/></svg>'},
+  dados:    {n:'Dados', cc:'#6B2E9E', ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="4"/><circle cx="9" cy="9" r="1.3" fill="currentColor"/><circle cx="15" cy="15" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/></svg>'}
+};
+function renderCasino(force){
+  const el = $('#view');
+  if (!force && casMounted && document.getElementById('casRoot')) return;
+  casMounted = true;
+  el.innerHTML = `<div id="casRoot">
+    <div class="sec" style="margin-top:8px">
+      <div class="cas-hero">
+        <div class="bulbs t" aria-hidden="true">${'<i></i>'.repeat(16)}</div><div class="bulbs b" aria-hidden="true">${'<i></i>'.repeat(16)}</div>
+        <span class="cas-deco d1" aria-hidden="true">${DIE_SVG}</span><span class="cas-deco d2" aria-hidden="true">${DIE_SVG}</span>
+        <h1 class="cas-sign" aria-label="Gran Casino Resaca"><span class="g">GRAN CASINO</span><span class="r"><span>RES</span><span class="fl">A</span><span>CA</span></span></h1>
+        <div class="cas-tag">La banca siempre gana. Tú, a veces bebes.</div>
+      </div>
+    </div>
+    <div class="sec"><div class="game-pick" role="group" aria-label="Elige juego">${Object.entries(GAMES).map(([k, g]) => `<button class="gchip" data-g="${k}" aria-pressed="${casGame === k}"><span class="cp" style="--cc:${g.cc}">${g.ico}</span>${g.n}</button>`).join('')}</div></div>
+    <div class="sec" id="casGame"></div>
+    <p class="cas-foot">Los retos los ponéis vosotros. Juega con cabeza: el agua también cuenta.</p>
+  </div>`;
+  el.querySelectorAll('.gchip').forEach(b => b.onclick = () => { if (rl.spinning || dc.rolling) return; casGame = b.dataset.g; el.querySelectorAll('.gchip').forEach(x => x.setAttribute('aria-pressed', x === b)); mountGame(); });
+  mountGame();
+}
+function mountGame(){ ({ruleta:mountRuleta, blackjack:mountBJ, hilo:mountHL, dados:mountDados})[casGame](); }
+
+/* ---- Ruleta ---- */
+function mountRuleta(){
+  const box = $('#casGame');
+  const top = [], mid = [], bot = [];
+  for (let c = 0; c < 12; c++){ top.push(3*c + 3); mid.push(3*c + 2); bot.push(3*c + 1); }
+  const cell = n => `<button data-bet="n${n}" class="${RL_RED.has(n) ? 'rd' : 'bk'}" aria-pressed="${rl.bet === 'n' + n}" aria-label="Número ${n}">${n}</button>`;
+  box.innerHTML = `<div class="ctable">
+    <h3>Ruleta europea</h3><p class="crule">Elige dónde crees que cae la bola. Si fallas, ya sabéis lo que toca.</p>
+    <div class="wheel-wrap"><canvas id="rlCv" width="600" height="600" aria-label="Ruleta"></canvas><div class="wheel-res" id="rlRes"></div></div>
+    ${verdictHtml(rl.verdict, 'rlV')}
+    <div class="rl-board"><div class="rl-grid"><button data-bet="n0" class="z" aria-pressed="${rl.bet === 'n0'}" aria-label="Cero">0</button>${top.map(cell).join('')}${mid.map(cell).join('')}${bot.map(cell).join('')}</div>
+      <div class="rl-out">${Object.entries(RL_BETS).map(([k, [lbl]]) => `<button data-bet="${k}" class="${k === 'rojo' ? 'rd' : k === 'negro' ? 'bk' : ''}" aria-pressed="${rl.bet === k}">${lbl}</button>`).join('')}</div></div>
+    <div class="rl-bet" id="rlBet"></div>
+    <div class="cbtns"><button class="cbtn" id="rlSpin">¡Girar la ruleta!</button></div>
+    <div><div class="hand-l" style="text-align:center;margin-bottom:6px">Últimos números</div><div class="rl-hist" id="rlHist"></div></div>
+  </div>`;
+  const grid = box.querySelector('.rl-grid');
+  [...grid.children].slice(1).forEach((b, i) => { b.style.gridRow = String(Math.floor(i / 12) + 1); b.style.gridColumn = String(i % 12 + 2); });
+  box.querySelectorAll('[data-bet]').forEach(b => b.onclick = () => { if (rl.spinning) return; rl.bet = rl.bet === b.dataset.bet ? null : b.dataset.bet; box.querySelectorAll('[data-bet]').forEach(x => x.setAttribute('aria-pressed', x.dataset.bet === rl.bet)); paintBet(); });
+  $('#rlSpin').onclick = spinRuleta;
+  paintBet(); paintHist(); drawWheel();
+  if (rl.result != null && !rl.spinning) showRes(rl.result);
+}
+function betLabel(b){ if (!b) return null; if (b[0] === 'n') return 'al ' + b.slice(1); return 'a ' + RL_BETS[b][0].toLowerCase(); }
+function betWins(b, n){ if (b[0] === 'n') return Number(b.slice(1)) === n; return RL_BETS[b][1](n); }
+function paintBet(){ const e = $('#rlBet'); if (e) e.innerHTML = rl.bet ? `Apuestas <b>${esc(betLabel(rl.bet))}</b>` : 'Sin apuesta: gira y que decida la suerte.'; }
+function paintHist(){ const e = $('#rlHist'); if (e) e.innerHTML = rl.hist.length ? rl.hist.map(n => `<i style="background:${rlHex(n)}">${n}</i>`).join('') : '<span class="hint" style="color:#E3F0E7">Todavía no ha girado.</span>'; }
+function showRes(n){ const e = $('#rlRes'); if (e) e.innerHTML = `<span style="background:${rlHex(n)}">${n}</span>`; }
+function drawWheel(){
+  const cv = $('#rlCv'); if (!cv) return;
+  const x = cv.getContext('2d'), S = cv.width, c = S / 2, k = S / 300, seg = Math.PI * 2 / 37;
+  x.setTransform(1, 0, 0, 1, 0, 0); x.clearRect(0, 0, S, S); x.setTransform(k, 0, 0, k, c - 150 * k, c - 150 * k);
+  const C = 150;
+  let g = x.createRadialGradient(C, C, 120, C, C, 150); g.addColorStop(0, '#3A2310'); g.addColorStop(.5, '#7A4A20'); g.addColorStop(1, '#2A1708');
+  x.fillStyle = g; x.beginPath(); x.arc(C, C, 149, 0, Math.PI * 2); x.fill();
+  x.strokeStyle = '#E7C46A'; x.lineWidth = 2; x.beginPath(); x.arc(C, C, 147, 0, Math.PI * 2); x.stroke();
+  g = x.createRadialGradient(C, C, 112, C, C, 138); g.addColorStop(0, '#1A0F06'); g.addColorStop(1, '#4A2C12');
+  x.fillStyle = g; x.beginPath(); x.arc(C, C, 138, 0, Math.PI * 2); x.fill();
+  x.save(); x.translate(C, C); x.rotate(rl.W);
+  RL_ORDER.forEach((n, i) => {
+    const a0 = i * seg - seg / 2 - Math.PI / 2, a1 = a0 + seg;
+    x.fillStyle = rlHex(n); x.beginPath(); x.moveTo(0, 0); x.arc(0, 0, 116, a0, a1); x.closePath(); x.fill();
+    x.strokeStyle = 'rgba(231,196,106,.7)'; x.lineWidth = 1; x.beginPath(); x.moveTo(Math.cos(a0) * 70, Math.sin(a0) * 70); x.lineTo(Math.cos(a0) * 116, Math.sin(a0) * 116); x.stroke();
+    x.save(); x.rotate(i * seg); x.fillStyle = '#FFF6E0'; x.font = 'bold 11px Georgia, serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(String(n), 0, -104); x.restore();
+  });
+  x.strokeStyle = '#E7C46A'; x.lineWidth = 2; x.beginPath(); x.arc(0, 0, 116, 0, Math.PI * 2); x.stroke();
+  x.fillStyle = '#20140A'; x.beginPath(); x.arc(0, 0, 92, 0, Math.PI * 2); x.fill();
+  RL_ORDER.forEach((_, i) => { const a = i * seg - seg / 2 - Math.PI / 2; x.strokeStyle = 'rgba(231,196,106,.5)'; x.beginPath(); x.moveTo(Math.cos(a) * 72, Math.sin(a) * 72); x.lineTo(Math.cos(a) * 92, Math.sin(a) * 92); x.stroke(); });
+  g = x.createRadialGradient(-12, -12, 4, 0, 0, 72); g.addColorStop(0, '#E9C27A'); g.addColorStop(.55, '#8A5A24'); g.addColorStop(1, '#3A220C');
+  x.fillStyle = g; x.beginPath(); x.arc(0, 0, 72, 0, Math.PI * 2); x.fill();
+  x.strokeStyle = '#F2D488'; x.lineWidth = 5; x.lineCap = 'round';
+  for (let q = 0; q < 4; q++){ x.save(); x.rotate(q * Math.PI / 2); x.beginPath(); x.moveTo(0, 0); x.lineTo(0, -34); x.stroke(); x.beginPath(); x.arc(0, -36, 4, 0, Math.PI * 2); x.fillStyle = '#F2D488'; x.fill(); x.restore(); }
+  x.fillStyle = '#F7E3A6'; x.beginPath(); x.arc(0, 0, 9, 0, Math.PI * 2); x.fill();
+  x.restore();
+  const bx = C + Math.cos(rl.B) * rl.r, by = C + Math.sin(rl.B) * rl.r;
+  x.fillStyle = 'rgba(0,0,0,.35)'; x.beginPath(); x.arc(bx + 1.5, by + 2, 6, 0, Math.PI * 2); x.fill();
+  g = x.createRadialGradient(bx - 2, by - 2, 1, bx, by, 6.5); g.addColorStop(0, '#FFFFFF'); g.addColorStop(1, '#BDB6A8');
+  x.fillStyle = g; x.beginPath(); x.arc(bx, by, 6, 0, Math.PI * 2); x.fill();
+}
+function spinRuleta(){
+  if (rl.spinning) return;
+  rl.spinning = true; rl.verdict = null; const v = $('#rlV'); if (v){ v.className = 'verdict'; v.innerHTML = '<span>La bola está rodando…</span>'; }
+  const res = $('#rlRes'); if (res) res.innerHTML = '';
+  const btn = $('#rlSpin'); if (btn) btn.disabled = true;
+  const idx = Math.floor(Math.random() * 37), n = RL_ORDER[idx], seg = Math.PI * 2 / 37;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const dur = reduce ? 1200 : 7000;
+  const W0 = rl.W % (Math.PI * 2), Wt = Math.PI * 2 * (3 + Math.random()), Wend = W0 + Wt;
+  const Bend = Wend + idx * seg - Math.PI / 2 + (Math.random() - .5) * seg * .4, K = Math.PI * 2 * 5;
+  const easeW = t => 1 - Math.pow(1 - t, 3), easeB = t => 1 - Math.pow(1 - t, 4);
+  const t0 = performance.now();
+  try { navigator.vibrate && navigator.vibrate(15); } catch(e){}
+  const step = now => {
+    const t = Math.min(1, (now - t0) / dur);
+    rl.W = W0 + Wt * easeW(t); rl.B = Bend + K * (1 - easeB(t));
+    if (t < .55) rl.r = 128 + Math.sin(t * 60) * .6;
+    else if (t < .8) { const u = (t - .55) / .25; rl.r = 128 - (128 - 92) * (u * u); }
+    else { const u = (t - .8) / .2; rl.r = 80 + 12 * Math.abs(Math.sin(u * Math.PI * 3)) * (1 - u); }
+    drawWheel();
+    if (t < 1 && document.getElementById('rlCv')) requestAnimationFrame(step);
+    else finishRuleta(n);
+  };
+  requestAnimationFrame(step);
+}
+function finishRuleta(n){
+  rl.spinning = false; rl.result = n; rl.hist = [n, ...rl.hist].slice(0, 12);
+  const col = rlColor(n);
+  if (rl.bet){ const ok = betWins(rl.bet, n); rl.verdict = ok ? VERDICT('win', '¡Acertaste!', `Ha caído el ${n} ${col}. Te libras: reparte tú.`) : VERDICT('lose', 'La casa gana', `Ha caído el ${n} ${col}. Apostaste ${betLabel(rl.bet)}: bebes.`); }
+  else rl.verdict = VERDICT('', `${n} ${col}`, n === 0 ? 'El cero. Chupito para todos.' : 'Que la suerte decida quién bebe.');
+  try { navigator.vibrate && navigator.vibrate([30, 40, 30]); } catch(e){}
+  if (!document.getElementById('rlCv')) return;
+  showRes(n); paintHist();
+  const v = $('#rlV'); if (v) v.outerHTML = verdictHtml(rl.verdict, 'rlV');
+  const btn = $('#rlSpin'); if (btn){ btn.disabled = false; btn.textContent = 'Otra vez'; }
+}
+
+/* ---- Blackjack ---- */
+function bjVal(cards){ let t = 0, aces = 0; cards.forEach(c => { const v = c.v === 1 ? 11 : Math.min(10, c.v); t += v; if (c.v === 1) aces++; }); while (t > 21 && aces){ t -= 10; aces--; } return {t, soft:aces > 0}; }
+function mountBJ(){
+  const box = $('#casGame');
+  box.innerHTML = `<div class="ctable">
+    <h3>Blackjack</h3><p class="crule">Una mano contra la banca. Acércate a 21 sin pasarte. La banca se planta en 17.</p>
+    <div class="hand"><span class="hand-l" id="bjDL">Banca</span><div class="cards" id="bjD"></div></div>
+    ${verdictHtml(bj.verdict, 'bjV')}
+    <div class="hand"><div class="cards" id="bjP"></div><span class="hand-l" id="bjPL">Tú</span></div>
+    <div class="cbtns" id="bjBtns"></div>
+  </div>`;
+  bj.shownP = 0; bj.shownD = 0; paintBJ(true);
+}
+function paintBJ(all){
+  const P = $('#bjP'), D = $('#bjD'); if (!P) return;
+  const hideHole = bj.phase === 'player';
+  P.innerHTML = bj.p.map((c, i) => cardHtml(c, {deal: all || i >= bj.shownP, delay: all ? i * 120 : 0})).join('');
+  D.innerHTML = bj.d.map((c, i) => cardHtml(c, {hid: i === 1 && hideHole, deal: all || i >= bj.shownD, delay: all ? i * 120 + 60 : 0})).join('');
+  bj.shownP = bj.p.length; bj.shownD = bj.d.length;
+  const pv = bjVal(bj.p), dv = hideHole ? bjVal(bj.d.slice(0, 1)) : bjVal(bj.d);
+  $('#bjPL').innerHTML = `Tú${bj.p.length ? `<b>${pv.t}${pv.soft && pv.t < 21 ? ' (blanda)' : ''}</b>` : ''}`;
+  $('#bjDL').innerHTML = `Banca${bj.d.length ? `<b>${dv.t}${hideHole ? ' + ?' : ''}</b>` : ''}`;
+  const btns = $('#bjBtns');
+  btns.innerHTML = bj.phase === 'player' ? `<button class="cbtn" id="bjHit">Pedir carta</button><button class="cbtn alt" id="bjStand">Plantarse</button>`
+    : bj.phase === 'dealer' ? `<span class="hint" style="color:#E3F0E7">La banca juega…</span>` : `<button class="cbtn" id="bjDeal">${bj.phase === 'idle' ? 'Repartir' : 'Otra mano'}</button>`;
+  const h = $('#bjHit'), s = $('#bjStand'), d = $('#bjDeal');
+  if (h) h.onclick = bjHit; if (s) s.onclick = bjStand; if (d) d.onclick = bjDeal;
+}
+function bjVerdict(v){ bj.verdict = v; const e = $('#bjV'); if (e) e.outerHTML = verdictHtml(v, 'bjV'); }
+function bjDeal(){
+  bj.deck = newDeck(); bj.p = [bj.deck.pop(), bj.deck.pop()]; bj.d = [bj.deck.pop(), bj.deck.pop()]; bj.phase = 'player';
+  bj.shownP = 0; bj.shownD = 0; bjVerdict(null); paintBJ(true);
+  const pv = bjVal(bj.p).t, dv = bjVal(bj.d).t;
+  if (pv === 21 || dv === 21) setTimeout(() => { bj.phase = 'done'; paintBJ(false); bjResolve(); }, 900);
+}
+function bjHit(){
+  if (bj.phase !== 'player') return;
+  bj.p.push(bj.deck.pop()); paintBJ(false);
+  const v = bjVal(bj.p).t;
+  if (v > 21){ bj.phase = 'done'; setTimeout(() => { paintBJ(false); bjResolve(); }, 450); }
+  else if (v === 21) setTimeout(bjStand, 500);
+}
+function bjStand(){
+  if (bj.phase !== 'player') return;
+  bj.phase = 'dealer'; paintBJ(false);
+  const loop = () => {
+    if (!document.getElementById('bjD')){ bj.phase = 'done'; return; }
+    if (bjVal(bj.d).t < 17){ bj.d.push(bj.deck.pop()); paintBJ(false); setTimeout(loop, 700); }
+    else { bj.phase = 'done'; paintBJ(false); bjResolve(); }
+  };
+  setTimeout(loop, 650);
+}
+function bjResolve(){
+  const p = bjVal(bj.p).t, d = bjVal(bj.d).t, pBJ = p === 21 && bj.p.length === 2, dBJ = d === 21 && bj.d.length === 2;
+  let v;
+  if (pBJ && dBJ) v = VERDICT('', 'Doble blackjack', 'Empate de leyenda: brindis para los dos.');
+  else if (pBJ) v = VERDICT('win', '¡Blackjack!', 'Te libras y repartes dos tragos.');
+  else if (dBJ) v = VERDICT('lose', 'Blackjack de la banca', 'Mala suerte: bebes.');
+  else if (p > 21) v = VERDICT('lose', `Te pasas (${p})`, 'La avaricia rompe el saco: bebes.');
+  else if (d > 21) v = VERDICT('win', `La banca se pasa (${d})`, 'Te libras: reparte tú.');
+  else if (p > d) v = VERDICT('win', `Ganas ${p} a ${d}`, 'Te libras: reparte tú.');
+  else if (p < d) v = VERDICT('lose', `Pierdes ${p} a ${d}`, 'La casa gana: bebes.');
+  else v = VERDICT('', `Empate a ${p}`, 'Brindis para los dos.');
+  bjVerdict(v);
+  try { navigator.vibrate && navigator.vibrate(v.cls === 'win' ? [20, 40, 20] : 60); } catch(e){}
+}
+
+/* ---- Más alta o más baja ---- */
+const hlVal = c => c.v === 1 ? 14 : c.v;
+function mountHL(){
+  const box = $('#casGame');
+  box.innerHTML = `<div class="ctable">
+    <h3>¿Más alta o más baja?</h3><p class="crule">Adivina si la siguiente carta es más alta o más baja. El As es la más alta. Si es igual, gana la casa.</p>
+    <div class="streak"><span>Racha<b id="hlS">${hl.streak}</b></span><span>Récord<b id="hlB">${hl.best}</b></span></div>
+    <div class="hl-row" id="hlRow"></div>
+    ${verdictHtml(hl.verdict, 'hlV')}
+    <div class="cbtns" id="hlBtns"></div>
+  </div>`;
+  paintHL(true);
+}
+function paintHL(first){
+  const row = $('#hlRow'); if (!row) return;
+  row.innerHTML = hl.cur ? cardHtml(hl.cur, {big:true, deal:first}) + (hl.next ? cardHtml(hl.next, {big:true, deal:true}) : '<span class="hl-q" aria-hidden="true">?</span>') : cardHtml(null, {big:true, hid:true});
+  $('#hlS').textContent = hl.streak; $('#hlB').textContent = hl.best;
+  const b = $('#hlBtns');
+  b.innerHTML = hl.phase === 'guess' ? `<button class="cbtn" data-hl="up">▲ Más alta</button><button class="cbtn alt" data-hl="down">▼ Más baja</button>`
+    : hl.phase === 'reveal' ? '' : `<button class="cbtn" id="hlStart">${hl.phase === 'idle' ? 'Sacar carta' : 'Empezar otra vez'}</button>`;
+  b.querySelectorAll('[data-hl]').forEach(x => x.onclick = () => hlGuess(x.dataset.hl));
+  const st = $('#hlStart'); if (st) st.onclick = hlStart;
+}
+function hlSetV(v){ hl.verdict = v; const e = $('#hlV'); if (e) e.outerHTML = verdictHtml(v, 'hlV'); }
+function hlStart(){ hl.deck = newDeck(); hl.cur = hl.deck.pop(); hl.next = null; hl.streak = 0; hl.phase = 'guess'; hlSetV(null); paintHL(true); }
+function hlGuess(dir){
+  if (hl.phase !== 'guess') return;
+  if (hl.deck.length < 2) hl.deck = newDeck();
+  hl.next = hl.deck.pop(); hl.phase = 'reveal'; paintHL(false);
+  const a = hlVal(hl.cur), b = hlVal(hl.next);
+  const ok = dir === 'up' ? b > a : b < a;
+  setTimeout(() => {
+    if (!document.getElementById('hlRow')) return;
+    if (ok){
+      hl.streak++; hl.best = Math.max(hl.best, hl.streak);
+      hlSetV(VERDICT('win', `¡Bien! Racha de ${hl.streak}`, hl.streak >= 5 ? 'Estás on fire. ¿Te atreves con otra?' : 'Sigue, a ver hasta dónde llegas.'));
+      try { navigator.vibrate && navigator.vibrate(20); } catch(e){}
+      setTimeout(() => { if (!document.getElementById('hlRow')) return; hl.cur = hl.next; hl.next = null; hl.phase = 'guess'; paintHL(true); }, 1000);
+    } else {
+      hl.phase = 'lost';
+      hlSetV(VERDICT('lose', b === a ? 'Iguales: gana la casa' : 'Has fallado', `Racha final: ${hl.streak}. Bebes.`));
+      try { navigator.vibrate && navigator.vibrate(80); } catch(e){}
+      paintHL(false);
+    }
+  }, 650);
+}
+
+/* ---- Dados ---- */
+function sumProb(gt){ let c = 0; for (let a = 1; a <= 6; a++) for (let b = 1; b <= 6; b++) if (a + b > gt) c++; return c / 36; }
+function mountDados(){
+  const box = $('#casGame');
+  box.innerHTML = `<div class="ctable">
+    <h3>Los dados</h3><p class="crule">Elige un número. Si la suma de los dos dados es mayor, bebes.</p>
+    <div class="dice-n"><button id="dcM" aria-label="Bajar número">−</button><output id="dcN" aria-live="polite">${dc.n}</output><button id="dcP" aria-label="Subir número">+</button></div>
+    <div class="dice-p" id="dcProb"></div>
+    <div class="dice-row">${[0, 1].map(i => `<div class="die" id="die${i}" style="transform:rotateX(${dc.rot[i][0]}deg) rotateY(${dc.rot[i][1]}deg)">${[1,2,3,4,5,6].map(faceHtml).join('')}</div>`).join('')}</div>
+    <div class="dice-shadow" aria-hidden="true"><i></i><i></i></div>
+    ${verdictHtml(dc.verdict, 'dcV')}
+    <div class="cbtns"><button class="cbtn" id="dcRoll">Tirar los dados</button></div>
+  </div>`;
+  const prob = () => { $('#dcN').textContent = dc.n; $('#dcProb').innerHTML = `Probabilidad de beber: <b>${Math.round(sumProb(dc.n) * 100)} %</b>`; };
+  $('#dcM').onclick = () => { if (!dc.rolling && dc.n > 2){ dc.n--; prob(); } };
+  $('#dcP').onclick = () => { if (!dc.rolling && dc.n < 12){ dc.n++; prob(); } };
+  $('#dcRoll').onclick = rollDados;
+  prob();
+}
+function rollDados(){
+  if (dc.rolling) return;
+  dc.rolling = true; const btn = $('#dcRoll'); btn.disabled = true;
+  const v = $('#dcV'); v.className = 'verdict'; v.innerHTML = '<span>Rodando…</span>';
+  const vals = [1 + Math.floor(Math.random() * 6), 1 + Math.floor(Math.random() * 6)];
+  vals.forEach((val, i) => {
+    const [tx, ty] = DIE_ROT[val]; const [cx, cy] = dc.rot[i];
+    const spinX = 360 * (2 + Math.floor(Math.random() * 2)), spinY = 360 * (2 + Math.floor(Math.random() * 2));
+    const nx = cx - (((cx % 360) + 360) % 360) + spinX + tx, ny = cy - (((cy % 360) + 360) % 360) + spinY + ty;
+    dc.rot[i] = [nx, ny];
+    const d = $('#die' + i); d.style.transitionDuration = (1.4 + i * .25) + 's'; d.style.transform = `rotateX(${nx}deg) rotateY(${ny}deg)`;
+  });
+  try { navigator.vibrate && navigator.vibrate([10, 30, 10, 30, 10]); } catch(e){}
+  setTimeout(() => {
+    dc.rolling = false; dc.vals = vals; const s = vals[0] + vals[1];
+    dc.verdict = s > dc.n ? VERDICT('lose', `${vals[0]} + ${vals[1]} = ${s}`, `Más de ${dc.n}: bebes.`) : VERDICT('win', `${vals[0]} + ${vals[1]} = ${s}`, `No pasa de ${dc.n}: te libras.`);
+    if (!document.getElementById('dcV')) return;
+    $('#dcV').outerHTML = verdictHtml(dc.verdict, 'dcV');
+    const b = $('#dcRoll'); b.disabled = false; b.textContent = 'Tirar otra vez';
+  }, 1750);
+}
+
 /* ================= LA CUADRILLA ================= */
 const FRASES = [
   'Dice que viene a tomar una y cierra el garito.',
@@ -2390,13 +2816,14 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#avMod
 
 /* ================= TUTORIAL ================= */
 const TUTO = [
-  {ill:'glass',   t:'Bienvenido a La Ronda', p:'La app oficial para contar lo que bebe la cuadrilla. Como Strava, pero con resaca. Abajo tienes las pestañas; te las enseñamos en un momento.', joke:'Son 9 pantallas. Menos que una ronda.'},
+  {ill:'glass',   t:'Bienvenido a La Ronda', p:'La app oficial para contar lo que bebe la cuadrilla. Como Strava, pero con resaca. Abajo tienes las pestañas; te las enseñamos en un momento.', joke:'Son 10 pantallas. Menos que una ronda.'},
   {ill:'stepper', tab:'mine', t:'Apunta lo que bebes', p:'Pides algo, le das al +. Te has colado, le das al −. Tu caña se va llenando y subes de nivel. Cada noche va de 17:00 a 17:00: lo de madrugada cuenta para la noche de antes.', joke:'De "Sobrio como un juez" a "Leyenda del bar". Tú verás.'},
   {ill:'fichar',  tab:'mine', t:'Ficha al entrar', p:'En Mi barra, arriba: fichas al entrar en un bar o en la disco y desfichas al salir. Si cambias de sitio, "Me muevo a la disco". Si se te olvida, pon la hora a mano.', joke:'Como en el curro, pero aquí vas con ganas.'},
   {ill:'points',  tab:'top', t:'Puntos de pedo', p:'Cuanto más fuerte lo que pides, más puntos. El agua no suma. En El top está el ranking de la noche, del mes y de siempre, con premios.', joke:'Pero tu hígado te manda un abrazo.'},
   {ill:'perfil',  tab:'stats', t:'Tú y tus stats', p:'En Mis stats ves tus mejores fiestas, tus horas de bar y tus récords. Toca tu nombre arriba para cambiar la foto, el nombre o si estás soltero o en pareja.', joke:'Si te pusiste un nombre absurdo, aún estás a tiempo.'},
   {ill:'podium',  tab:'group', t:'El grupo', p:'Gráficas de todos, quién está fichado ahora mismo, la crónica con quién hizo qué y a qué hora, y la cuadrilla con la frase de cada uno.', joke:'Spoiler: el problema del grupo eres tú.'},
   {ill:'fotos',   tab:'fotos', t:'Pruebas del Delito', p:'Sube las fotos de la noche con marcos de broma y dales pulgar arriba. Las más votadas suben al podio de la vergüenza.', joke:'Lo que se sube, no se olvida.'},
+  {ill:'casino', tab:'casino', t:'Gran Casino Resaca', p:'Ruleta, blackjack, más alta o más baja y dados. Saca el móvil en la mesa y que la suerte decida quién bebe.', joke:'La banca siempre gana. Tú, a veces bebes.'},
   {ill:'tabernia', tab:'tabernia', t:'Las Crónicas de Tabernia', p:'Al desfichar, ponle nota del 1 al 10 al bar o a la disco. Aquí ves la media de cada sitio y su rango, de Maldita a Legendaria.', joke:'Que los dioses del vermut nos protejan.'},
   {ill:'neon',    tab:'burdel', t:'El Burdel', p:'Solteros puntúan ligando: +20 el lío y +10 si hay koito. En pareja, ayudando a otro: +25. Si quieres repasar esto, el botón ? de arriba.', joke:'Lo que pasa en el burdel, se queda en el burdel.'}
 ];
@@ -2426,6 +2853,7 @@ function tutoIll(k){
       <div class="me-chip" style="pointer-events:none;font-size:15px"><span class="e">${emo}</span><span class="n">${esc(person(me)?.name || 'Tu nombre')}</span></div>
       <div class="t-prof">${['Foto haciendo el tonto','Nombre o mote','Soltero/a o en pareja'].map((x,i) => `<span style="animation-delay:${300 + i*180}ms">✓ ${x}</span>`).join('')}</div>
     </div><span class="t-finger" style="right:calc(50% - 90px);bottom:auto;top:58px" aria-hidden="true">👆</span></div>`;
+  if (k === 'casino') return `<div class="till" style="background:radial-gradient(ellipse at 50% 40%,#1F7A4C,#0A3A22 75%)"><div style="display:flex;gap:10px;align-items:center"><div style="width:52px;transform:rotate(-14deg)">${DIE_SVG}</div><div class="cards" style="min-height:0">${cardHtml({r:'A',s:'♠',red:0})}${cardHtml({r:'K',s:'♥',red:1})}</div></div></div>`;
   if (k === 'tabernia') return `<div class="till" style="background:radial-gradient(ellipse at 50% 50%,rgba(201,162,74,.2),transparent 70%),#100E12"><div class="t-scroll"><span class="seal" style="--rk:#D9A21B"><b>8,7</b></span><span style="display:grid;gap:2px;text-align:left"><b style="font-family:'Cinzel Decorative',Georgia,serif;font-size:15px">La Taberna del Pirata</b><i style="font-family:'IM Fell English',Georgia,serif;color:#8A5E00">Legendaria</i><small>5 notas · 7 visitas</small></span></div></div>`;
   if (k === 'fotos') return `<div class="till"><div style="width:130px;transform:rotate(-5deg)"><div class="frame f-polaroid" style="cursor:default"><span class="ph" style="display:grid;place-items:center;font-size:54px;background:#2B3C34">${emo}</span><span class="fcap">Esto no pasó.</span></div></div></div>`;
   return `<div class="till neon"><div class="t-sign"><span class="el">EL</span><span class="bd">BU<span class="flick">R</span>DEL</span></div></div>`;
