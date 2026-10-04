@@ -2801,6 +2801,23 @@ function pkHint(cards){
 function pkActiveSeats(){
   return Object.values(pk.seats).filter(s => s.pid && !s.leave && person(s.pid) && Date.now() - (s.beat || s.ts || 0) < PK_STALE).sort((a, b) => a.ts - b.ts);
 }
+// sentados "presentes": no se han levantado y han dado señales en los últimos 10 min
+function pkPresentSeats(){
+  return Object.values(pk.seats).filter(s => s.pid && !s.leave && person(s.pid) && Date.now() - (s.beat || s.ts || 0) < 600e3).sort((a, b) => a.ts - b.ts);
+}
+// mesa vacía: partida nueva (se conserva el contador de manos y lo visto para no reaplicar jugadas viejas)
+function pkFreshState(old, msg){
+  return {phase:'lobby', leader:null, chips:{}, rebuys:{}, hand:old?.hand || 0, seen:old?.seen || {}, rebuySeen:old?.rebuySeen || {}, log:[msg], msg};
+}
+// quien se levanta en mitad de una mano la pierde
+function pkFoldLeaver(st, p){
+  if (!st || st.phase === 'lobby' || st.phase === 'showdown' || !st.order?.includes(p) || st.folded?.[p]) return false;
+  if (st.toAct === p){ pkApply(st, p, {t:'fold'}); return true; }
+  st.folded[p] = true; st.acted[p] = true;
+  pkLog(st, `${pkNm(p)} se levanta y deja la mano.`);
+  pkAdvance(st, true);
+  return true;
+}
 const pkIsLeader = () => pk.st && pk.st.leader === me && !!pk.mySeat && !pk.mySeat.leave;
 function pkSubscribe(){
   if (pk.subscribed || !db) return; pk.subscribed = true;
@@ -2841,9 +2858,17 @@ function pkSit(){
   if (!canWrite()) return;
   pkWriteSeat({ts:Date.now(), leave:false, seq:(pk.mySeat?.seq || 0), act:null});
   const st = pk.st, act = pkActiveSeats().filter(s => s.pid !== me);
+  const present = pkPresentSeats().filter(s => s.pid !== me);
   const leaderAlive = st && st.leader && act.some(s => s.pid === st.leader);
   if (!st || !leaderAlive){
-    const base = st ? JSON.parse(JSON.stringify(st)) : {chips:{}, rebuys:{}, hand:0, log:[]};
+    let base;
+    if (!st) base = {chips:{}, rebuys:{}, hand:0, log:[]};
+    else if (!present.length) base = pkFreshState(st, 'Mesa vacía. Empieza una partida nueva.');
+    else {
+      base = JSON.parse(JSON.stringify(st));
+      // si había una mano a medias sin líder, se devuelve lo apostado
+      if (base.phase && base.phase !== 'lobby' && base.phase !== 'showdown') (base.order || []).forEach(p => { base.chips[p] = (base.chips[p] || 0) + (base.contrib?.[p] || 0); });
+    }
     Object.assign(base, {leader:me, phase:'lobby', seen:base.seen || {}, rebuySeen:base.rebuySeen || {}});
     if (base.chips[me] == null) base.chips[me] = PK_START;
     pkLog(base, `${person(me)?.name || 'Alguien'} se sienta y lleva la batuta.`);
@@ -2851,7 +2876,27 @@ function pkSit(){
   }
   toast('Te has sentado a la mesa. Empiezas con tus fichas.');
 }
-function pkStand(){ if (!canWrite()) return; pkWriteSeat({leave:true}); pk.eng = null; toast('Te levantas de la mesa.'); }
+function pkStand(){
+  if (!canWrite()) return;
+  const wasLeader = pkIsLeader(), eng = pk.eng;
+  const others = pkPresentSeats().filter(s => s.pid !== me);
+  pkWriteSeat({leave:true, act:null});
+  if (!others.length && pk.st) pkWriteState(pkFreshState(pk.st, 'Se han levantado todos. Partida reiniciada: el primero que se siente manda.'));
+  else if (wasLeader && eng){
+    const st = JSON.parse(JSON.stringify(eng));
+    pkFoldLeaver(st, me);
+    const nx = (pkActiveSeats().find(x => x.pid !== me) || others[0]).pid;
+    st.leader = nx; pkLog(st, `${pkNm(me)} se levanta. Ahora manda ${pkNm(nx)}.`);
+    pkWriteState(st);
+  }
+  pk.eng = null; clearTimeout(pk.timer);
+  toast(rand(['Te levantas de la mesa. ¡Hasta la próxima!','Te vas con tus fichas. El croupier te echará de menos.','Fuera de la mesa. Retirada a tiempo, victoria.']));
+  // sales del póker y vuelves al casino
+  casGame = 'ruleta';
+  document.querySelectorAll('.gchip').forEach(x => x.setAttribute('aria-pressed', x.dataset.g === casGame));
+  mountGame();
+  document.querySelector('.game-pick')?.scrollIntoView({behavior:'smooth', block:'center'});
+}
 function pkAct(t, to){
   if (!canWrite() || !pk.mySeat) return;
   pkWriteSeat({seq:(pk.mySeat.seq || 0) + 1, act:{t, to:to || 0, h:pk.st?.hand || 0}});
@@ -2987,6 +3032,8 @@ function pkEngineTick(){
   if (st.phase === 'lobby' || st.phase === 'showdown'){
     pkActiveSeats().forEach(s => { if (st.chips[s.pid] == null){ st.chips[s.pid] = PK_START; changed = true; } });
   }
+  // quien se ha levantado deja la mano al momento
+  (st.order || []).forEach(p => { if (p !== me && pk.seats[p]?.leave && pkFoldLeaver(st, p)) changed = true; });
   // acción del jugador al que le toca
   if (st.toAct && st.phase !== 'lobby' && st.phase !== 'showdown'){
     const s = pk.seats[st.toAct]; st.seen = st.seen || {};
@@ -3027,8 +3074,8 @@ function pkPaint(soft){
   const st = pk.st, seats = pkActiveSeats(), seated = !!(pk.mySeat && !pk.mySeat.leave);
   const playing = st && st.phase !== 'lobby';
   const inHand = playing && st.order?.includes(me);
-  // jugadores visibles: los de la mano (si hay mano) y los sentados
-  const ids = [...new Set([...(playing ? st.order : []), ...seats.map(s => s.pid)])].filter(person);
+  // en la mesa solo aparecen los que siguen sentados
+  const ids = seats.map(s => s.pid).filter(person);
   const meIdx = ids.indexOf(me); const ring = meIdx >= 0 ? [...ids.slice(meIdx), ...ids.slice(0, meIdx)] : ids;
   const n = Math.max(ring.length, 1), slots = Math.max(6, n);
   const leaderAlive = st && seats.some(s => s.pid === st.leader);
@@ -3089,7 +3136,7 @@ function pkPaint(soft){
     if (myChips <= 0 && !(inHand && st.phase !== 'showdown')) ctrl += `<div class="cbtns"><button class="cbtn" id="pkRebuy">Recomprar ${PK_START} fichas</button></div>`;
     ctrl += `<div class="cbtns"><button class="seg" id="pkStand">Levantarme de la mesa</button></div>`;
   }
-  const chips = st?.chips ? Object.entries(st.chips).filter(([pid]) => person(pid)).sort((a, b) => b[1] - a[1]) : [];
+  const chips = st?.chips ? Object.entries(st.chips).filter(([pid]) => person(pid) && ids.includes(pid)).sort((a, b) => b[1] - a[1]) : [];
   const table = chips.length ? `<div class="pk-rank"><span class="hand-l">Fichas de la cuadrilla</span>${chips.map(([pid, c], i) => `<div><span>${i + 1}. ${av(person(pid))} ${esc(pkNm(pid))}${st.rebuys?.[pid] ? ` <small>(${st.rebuys[pid]} recompra${st.rebuys[pid] > 1 ? 's' : ''})</small>` : ''}</span><b>${c}</b></div>`).join('')}</div>` : '';
   const log = st?.log?.length ? `<details class="pk-log"><summary>Lo que ha pasado</summary>${[...st.log].reverse().map(l => `<div>${esc(l)}</div>`).join('')}</details>` : '';
   body.innerHTML = felt + ctrl + table + log;
@@ -3714,7 +3761,7 @@ const TUTO = [
 ];
 const PK_TUTO = [
   {ill:'pk-sit',   t:'Siéntate a la mesa', p:'Pulsa «Sentarme a la mesa». La primera vez te damos 100 fichas y lo que ganes o pierdas se queda contigo. Si llegas a cero, recompras otras 100.', joke:'Las fichas no son euros. El Banco no se entera.'},
-  {ill:'pk-start', t:'El primero manda', p:'El primero que se sienta es el líder (lleva la corona ♛). Cuando haya al menos dos, pulsa «Iniciar partida» y el croupier reparte. Las siguientes manos salen solas. Si el líder se va, cualquiera puede «Tomar el mando».', joke:'Ser líder no te da mejores cartas. Lo hemos comprobado.'},
+  {ill:'pk-start', t:'El primero manda', p:'El primero que se sienta es el líder (lleva la corona ♛). Cuando haya al menos dos, pulsa «Iniciar partida» y el croupier reparte. Las siguientes manos salen solas. Si el líder se levanta, manda el siguiente; si os levantáis todos, partida nueva.', joke:'Ser líder no te da mejores cartas. Lo hemos comprobado.'},
   {ill:'pk-turn',  t:'Cuando te toque', p:'Sale «Te toca» y eliges: Retirarte (tiras tus cartas), Pasar si nadie ha apostado, Igualar lo que hay, Apostar o Subir, o All-in con todo. El croupier te va contando qué hace cada uno.', joke:'Pensarlo mucho también es una estrategia. Mala, pero estrategia.'},
   {ill:'pk-rules', t:'Reglas en 20 segundos', p:'Tienes 2 cartas tuyas y salen 5 comunes en el centro (3, luego 1 y luego 1), con una ronda de apuestas entre cada tanda. Gana la mejor jugada de 5 cartas, o el último que no se haya retirado.', joke:'Debajo de tus cartas te decimos qué llevas. De nada.'}
 ];
