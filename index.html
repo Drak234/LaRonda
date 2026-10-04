@@ -1016,6 +1016,21 @@ body.bank .kpi b{color:#F3EEE2}
 .ef-total b{color:var(--amber);font-family:var(--font-mono)}
 /* póker */
 .pk-wrap{gap:12px}
+.pk-head{display:flex;align-items:center;justify-content:center;gap:10px;position:relative}
+.pk-help{position:absolute;right:0;font-size:12.5px;font-weight:700;color:#FFE9B0;padding:6px 11px;border-radius:99px;border:1px solid rgba(231,196,106,.5);background:rgba(0,0,0,.25)}
+.t-pk{border-color:#0C4A2C}
+.t-pkseats{display:flex;gap:18px;align-items:flex-end}
+.t-pkseat{position:relative;display:grid;justify-items:center;gap:6px;animation:vpop .45s ease both}
+.t-pkseat .pk-chair{top:-6px}
+.t-pkseat small{position:relative;font-family:var(--font-mono);font-size:11px;color:#FFE9B0;background:rgba(0,0,0,.45);padding:2px 7px;border-radius:8px}
+.t-pkbtn{pointer-events:none;padding:10px 22px;animation:pkpulse 1.4s ease-in-out infinite}
+@keyframes pkpulse{50%{transform:scale(1.06);box-shadow:0 0 18px rgba(255,226,122,.55)}}
+.t-pkacts{display:flex;gap:5px}
+.t-pkacts span{font-size:11.5px;font-weight:700;padding:6px 8px;border-radius:9px;background:rgba(0,0,0,.4);color:#FFF6E0;border:1px solid rgba(231,196,106,.45);animation:vpop .4s ease both}
+.t-pkrank{display:grid;grid-template-columns:1fr 1fr;gap:4px 14px;padding:0 14px}
+.t-pkrank span{display:flex;gap:6px;align-items:center;font-size:12.5px;color:#FFF6E0;animation:tin .35s ease both}
+.t-pkrank span:first-child{grid-column:1/-1;justify-self:center;color:#FFE27A;font-weight:800}
+.t-pkrank b{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#FBF8F1;color:#16120E;font-size:10.5px}
 .pk-croupier{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center}
 .pk-cr-av{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:28px;background:#0A2A18;border:2px solid var(--gold);box-shadow:0 0 12px rgba(231,196,106,.35)}
 .pk-bubble{position:relative;background:#FBF8F1;color:#1E1408;border-radius:14px;padding:9px 12px;font-size:13.5px;line-height:1.35;box-shadow:0 4px 10px rgba(0,0,0,.35);animation:vpop .35s ease}
@@ -3002,8 +3017,10 @@ let pkSeen = {hand:0, board:0};
 function mountPoker(){
   pkSubscribe();
   const box = $('#casGame');
-  box.innerHTML = `<div class="ctable pk-wrap" id="pkRoot"><h3>Póker</h3><p class="crule">Texas Hold'em entre la cuadrilla. Siéntate, el primero que se sienta manda y reparte.</p><div id="pkBody"></div></div>`;
+  box.innerHTML = `<div class="ctable pk-wrap" id="pkRoot"><div class="pk-head"><h3>Póker</h3><button class="pk-help" id="pkHelp">¿Cómo va?</button></div><p class="crule">Texas Hold'em entre la cuadrilla. Siéntate, el primero que se sienta manda y reparte.</p><div id="pkBody"></div></div>`;
+  $('#pkHelp').onclick = () => openTuto(PK_TUTO);
   pkPaint();
+  if (me && !store.get(PK_TUTO.key + me)) setTimeout(() => { if (document.getElementById('pkRoot') && $('#tuto').hidden) openTuto(PK_TUTO); }, 450);
 }
 function pkPaint(soft){
   const body = document.getElementById('pkBody'); if (!body) return;
@@ -3695,7 +3712,16 @@ const TUTO = [
   {ill:'tabernia', tab:'tabernia', t:'Las Crónicas de Tabernia', p:'Todos los bares y discotecas donde habéis estado, con la nota media de la cuadrilla.', joke:'Que los dioses del vermut nos protejan.'},
   {ill:'neon',    tab:'burdel', t:'El Burdel', p:'Solteros: +20 por lío y +10 si hay koito. En pareja: +25 por ayudar a otro. ¿Dudas? El botón ? de arriba.', joke:'Lo que pasa en el burdel, se queda en el burdel.'}
 ];
-let tutoI = 0, tutoTick = null;
+const PK_TUTO = [
+  {ill:'pk-sit',   t:'Siéntate a la mesa', p:'Pulsa «Sentarme a la mesa». La primera vez te damos 100 fichas y lo que ganes o pierdas se queda contigo. Si llegas a cero, recompras otras 100.', joke:'Las fichas no son euros. El Banco no se entera.'},
+  {ill:'pk-start', t:'El primero manda', p:'El primero que se sienta es el líder (lleva la corona ♛). Cuando haya al menos dos, pulsa «Iniciar partida» y el croupier reparte. Las siguientes manos salen solas. Si el líder se va, cualquiera puede «Tomar el mando».', joke:'Ser líder no te da mejores cartas. Lo hemos comprobado.'},
+  {ill:'pk-turn',  t:'Cuando te toque', p:'Sale «Te toca» y eliges: Retirarte (tiras tus cartas), Pasar si nadie ha apostado, Igualar lo que hay, Apostar o Subir, o All-in con todo. El croupier te va contando qué hace cada uno.', joke:'Pensarlo mucho también es una estrategia. Mala, pero estrategia.'},
+  {ill:'pk-rules', t:'Reglas en 20 segundos', p:'Tienes 2 cartas tuyas y salen 5 comunes en el centro (3, luego 1 y luego 1), con una ronda de apuestas entre cada tanda. Gana la mejor jugada de 5 cartas, o el último que no se haya retirado.', joke:'Debajo de tus cartas te decimos qué llevas. De nada.'}
+];
+PK_TUTO.done = '¡A jugar!'; PK_TUTO.key = 'ronda_pktuto_';
+PK_TUTO.toasts = ['Siéntate y que reparta el croupier.','Cara de póker activada.','Recuerda: farolear también vale.'];
+TUTO.key = 'ronda_tuto_';
+let tutoI = 0, tutoTick = null, tutoDeck = TUTO;
 function tutoIll(k){
   const emo = av(person(me));
   if (k === 'glass') return `<div class="till">
@@ -3722,22 +3748,36 @@ function tutoIll(k){
       <div class="t-prof">${['Foto haciendo el tonto','Nombre o mote','Soltero/a o en pareja'].map((x,i) => `<span style="animation-delay:${300 + i*180}ms">✓ ${x}</span>`).join('')}</div>
     </div><span class="t-finger" style="right:calc(50% - 90px);bottom:auto;top:58px" aria-hidden="true">👆</span></div>`;
   if (k === 'casino') return `<div class="till" style="background:radial-gradient(ellipse at 50% 40%,#1F7A4C,#0A3A22 75%)"><div style="display:flex;gap:10px;align-items:center"><div style="width:52px;transform:rotate(-14deg)">${DIE_SVG}</div><div class="cards" style="min-height:0">${cardHtml({r:'A',s:'♠',red:0})}${cardHtml({r:'K',s:'♥',red:1})}</div></div></div>`;
+  const felt = 'background:radial-gradient(ellipse at 50% 45%,#2A9460,#13643C 60%,#0A3A22)';
+  if (k === 'pk-sit') return `<div class="till t-pk" style="${felt}"><div class="t-pkseats">
+      ${[['🦊',0],[emo,1],['🐙',0]].map(([e, lead], i) => `<span class="t-pkseat" style="animation-delay:${i*160}ms"><span class="pk-chair"></span><span class="pk-av">${e}${lead ? '<em class="pk-crown">♛</em>' : ''}</span><small>${lead ? 'Tú · 100' : '100'}</small></span>`).join('')}
+    </div><span class="t-finger" style="right:calc(50% - 30px);bottom:22px" aria-hidden="true">👆</span></div>`;
+  if (k === 'pk-start') return `<div class="till t-pk" style="${felt}"><div style="display:grid;gap:12px;justify-items:center;padding:0 14px">
+      <div class="pk-croupier"><span class="pk-cr-av">🤵</span><span class="pk-bubble">Cuando quieras, reparto.</span></div>
+      <span class="cbtn t-pkbtn">Iniciar partida</span></div></div>`;
+  if (k === 'pk-turn') return `<div class="till t-pk" style="${felt}"><div style="display:grid;gap:8px;justify-items:center">
+      <div class="pk-turn" style="font-size:19px">Te toca</div>
+      <div style="display:flex;gap:6px">${pkCard(56, {cls:'lg'})}${pkCard(53, {cls:'lg'})}</div>
+      <div class="t-pkacts">${['Retirarme','Pasar','Apostar','All-in'].map((b, i) => `<span style="animation-delay:${300 + i*120}ms">${b}</span>`).join('')}</div></div></div>`;
+  if (k === 'pk-rules') return `<div class="till t-pk" style="${felt}"><div class="t-pkrank">
+      ${['Escalera de color','Póker','Full','Color','Escalera','Trío','Doble pareja','Pareja','Carta alta'].map((h, i) => `<span style="animation-delay:${i*70}ms"><b>${i + 1}</b>${h}</span>`).join('')}
+    </div></div>`;
   if (k === 'tabernia') return `<div class="till" style="background:radial-gradient(ellipse at 50% 50%,rgba(201,162,74,.2),transparent 70%),#100E12"><div class="t-scroll"><span class="seal" style="--rk:#D9A21B"><b>8,7</b></span><span style="display:grid;gap:2px;text-align:left"><b style="font-family:'Cinzel Decorative',Georgia,serif;font-size:15px">La Taberna del Pirata</b><i style="font-family:'IM Fell English',Georgia,serif;color:#8A5E00">Legendaria</i><small>5 notas · 7 visitas</small></span></div></div>`;
   if (k === 'fotos') return `<div class="till"><div style="width:130px;transform:rotate(-5deg)"><div class="frame f-polaroid" style="cursor:default"><span class="ph" style="display:grid;place-items:center;font-size:54px;background:#2B3C34">${emo}</span><span class="fcap">Esto no pasó.</span></div></div></div>`;
   return `<div class="till neon"><div class="t-sign"><span class="el">EL</span><span class="bd">BU<span class="flick">R</span>DEL</span></div></div>`;
 }
 function renderTuto(dir){
-  const s = TUTO[tutoI]; const last = tutoI === TUTO.length - 1;
+  const D = tutoDeck, s = D[tutoI]; const last = tutoI === D.length - 1;
   const box = $('#tuto');
   box.innerHTML = `<div class="tcard">
-    <div class="ttop"><span class="tstep">${tutoI + 1} / ${TUTO.length}</span>${last ? '' : '<button class="tskip" id="tSkip">Saltar</button>'}</div>
+    <div class="ttop"><span class="tstep">${tutoI + 1} / ${D.length}</span>${last ? '' : '<button class="tskip" id="tSkip">Saltar</button>'}</div>
     <div class="tslide ${dir < 0 ? 'back' : ''}">
       ${tutoIll(s.ill)}
       <div class="tbody">${s.tab ? `<span class="ttab">${document.querySelector(`.tab[data-v="${s.tab}"] svg`)?.outerHTML || ''} Pestaña ${esc(document.querySelector(`.tab[data-v="${s.tab}"] span`)?.textContent || '')}</span>` : ''}<h2 id="tutoTitle">${esc(s.t)}</h2><p>${esc(s.p)}</p><div class="joke">${esc(s.joke)}</div></div>
     </div>
     <div class="tfoot">
-      <div class="tdots" aria-hidden="true">${TUTO.map((_,i) => `<i class="${i === tutoI ? 'on' : ''}"></i>`).join('')}</div>
-      <div class="tnav">${tutoI ? '<button class="btn sm ghost" id="tPrev">Atrás</button>' : ''}<button class="btn sm" id="tNext">${last ? '¡A la barra!' : tutoI ? 'Siguiente' : 'Vamos'}</button></div>
+      <div class="tdots" aria-hidden="true">${D.map((_,i) => `<i class="${i === tutoI ? 'on' : ''}"></i>`).join('')}</div>
+      <div class="tnav">${tutoI ? '<button class="btn sm ghost" id="tPrev">Atrás</button>' : ''}<button class="btn sm" id="tNext">${last ? (D.done || '¡A la barra!') : tutoI ? 'Siguiente' : 'Vamos'}</button></div>
     </div></div>`;
   $('#tNext').onclick = () => last ? closeTuto() : goTuto(1);
   const pv = $('#tPrev'); if (pv) pv.onclick = () => goTuto(-1);
@@ -3746,12 +3786,12 @@ function renderTuto(dir){
   if (s.ill === 'stepper'){ let n = 1; tutoTick = setInterval(() => { const c = $('#tCount'); if (!c) return; n = n >= 5 ? 1 : n + 1; c.textContent = n; c.classList.remove('pulse'); void c.offsetWidth; c.classList.add('pulse'); }, 900); }
   $('#tNext').focus({preventScroll:true});
 }
-function goTuto(d){ const n = tutoI + d; if (n < 0 || n >= TUTO.length) return; tutoI = n; renderTuto(d); }
-function openTuto(){ tutoI = 0; $('#tuto').hidden = false; renderTuto(1); }
+function goTuto(d){ const n = tutoI + d; if (n < 0 || n >= tutoDeck.length) return; tutoI = n; renderTuto(d); }
+function openTuto(deck){ tutoDeck = Array.isArray(deck) ? deck : TUTO; tutoI = 0; $('#tuto').hidden = false; renderTuto(1); }
 function closeTuto(){
   clearInterval(tutoTick); $('#tuto').hidden = true;
-  if (me) store.set('ronda_tuto_' + me, '1');
-  toast(rand(['Ya sabes todo. Ahora, a beber con cabeza.','Lección aprendida. Que empiece la ronda.','Tutorial superado. Te has ganado una caña.']));
+  if (me) store.set(tutoDeck.key + me, '1');
+  toast(rand(tutoDeck.toasts || ['Ya sabes todo. Ahora, a beber con cabeza.','Lección aprendida. Que empiece la ronda.','Tutorial superado. Te has ganado una caña.']));
 }
 (() => {
   const box = $('#tuto'); let x0 = null;
