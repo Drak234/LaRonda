@@ -1283,9 +1283,6 @@ body.neon .toast{background:#FFE1F2;box-shadow:0 0 24px rgba(255,60,172,.6)}
     <button class="tab" role="tab" data-v="top" aria-label="El top" title="El top" aria-selected="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/></svg>
       <span>El top</span></button>
-    <button class="tab" role="tab" data-v="banco" aria-selected="false" aria-label="El Banco">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-6 9 6"/><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 21h18M4 18h16"/></svg>
-      <span>El Banco</span></button>
     <button class="tab" role="tab" data-v="fotos" aria-label="Pruebas" title="Pruebas" aria-selected="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.5"/></svg>
       <span>Pruebas</span></button>
@@ -1298,6 +1295,9 @@ body.neon .toast{background:#FFE1F2;box-shadow:0 0 24px rgba(255,60,172,.6)}
     <button class="tab" role="tab" data-v="burdel" aria-label="El Burdel" title="El Burdel" aria-selected="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7.5-4.6-7.5-10A4 4 0 0 1 12 7.6 4 4 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/></svg>
       <span>El Burdel</span></button>
+    <button class="tab" role="tab" data-v="banco" aria-selected="false" aria-label="El Banco">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-6 9 6"/><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 21h18M4 18h16"/></svg>
+      <span>El Banco</span></button>
   </div>
 </nav>
 
@@ -4125,7 +4125,7 @@ const TUTO = [
   {ill:'glass',   t:'Bienvenido a La Ronda', p:'La app para contar lo que bebe la cuadrilla. Como Strava, pero con resaca. Abajo tienes las pestañas; te las enseñamos rapidito.', joke:'Son 9 pantallas. Menos que una ronda.'},
   {ill:'stepper', tab:'mine', t:'Apunta lo que bebes', p:'Le das al + cuando pides y al − si te has colado. Cuanto más fuerte, más puntos. La noche va de 17:00 a 17:00.', joke:'De "Sobrio como un juez" a "Leyenda del bar". Tú verás.'},
   {ill:'fichar',  tab:'mine', t:'Ficha al entrar', p:'Fichas al entrar en un bar o en la disco, o tocas "Estoy con…" para unirte a un amigo. Al salir, desfichas y le pones nota (solo la primera vez). ¿Se te olvidó? Lo corriges abajo.', joke:'Como en el curro, pero aquí vas con ganas.'},
-  {ill:'perfil',  tab:'stats', t:'Tus stats y El Banco', p:'Tus mejores fiestas y récords, y en El Banco lo que llevas fundido en euros. Toca tu nombre arriba para cambiar foto, nombre o estado.', joke:'Si te pusiste un nombre absurdo, aún estás a tiempo.'},
+  {ill:'perfil',  tab:'stats', t:'Tus stats y El Banco', p:'Tus mejores fiestas y récords, y en El Banco (la última pestaña) lo que llevas fundido en euros. Toca tu nombre arriba para cambiar foto, nombre o estado.', joke:'Si te pusiste un nombre absurdo, aún estás a tiempo.'},
   {ill:'podium',  tab:'group', t:'El grupo y El top', p:'En El grupo, las gráficas, quién está fichado ahora y quién hizo qué. En El top, el podio de barriles de la taberna.', joke:'Spoiler: el problema del grupo eres tú.'},
   {ill:'fotos',   tab:'fotos', t:'Pruebas del Delito', p:'Sube las fotos de la noche con un marco de broma y dales pulgar arriba. Las más votadas van al podio.', joke:'Lo que se sube, no se olvida.'},
   {ill:'casino',  tab:'casino', t:'Gran Casino Resaca', p:'Póker en mesa compartida, tragaperras pirata, ruleta, blackjack, más o menos, dados y La Verdad con 500 preguntas picantes.', joke:'La banca siempre gana. Tú, a veces bebes.'},
