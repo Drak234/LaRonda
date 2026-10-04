@@ -22,7 +22,7 @@
 <title>La Ronda</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Caveat+Brush&family=JetBrains+Mono:wght@500;700&family=Monoton&family=Limelight&family=Cinzel+Decorative:wght@700&family=IM+Fell+English:ital@0;1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Caveat+Brush&family=JetBrains+Mono:wght@500;700&family=Monoton&family=Limelight&family=Rye&family=Cinzel+Decorative:wght@700&family=IM+Fell+English:ital@0;1&display=swap">
 <style>
 /* Layout: app de bar de barrio de noche — azulejo de fondo, posavasos, caña que se llena; El Burdel cambia a sala de neones. Columna única de 760px con barra de pestañas abajo */
 :root{
@@ -856,6 +856,81 @@ body.casino .tab[aria-selected="true"]{background:var(--gold);color:#1E1404}
 .with-t b{font-size:15px}
 .with-t span{display:flex;align-items:center;gap:5px;font-size:12.5px;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .with-t svg{width:14px;height:14px;flex:none;color:var(--fc)}
+/* ---------- EL TOP: TABERNA ---------- */
+body.tavern{--bg:#1A0F08; --surface:#2A1A0E; --surface-2:#3A2614; --line:#5A3C22; --muted:#B89A78; --ink-2:#E6D3B8;
+  background-image:repeating-linear-gradient(90deg,rgba(0,0,0,.28) 0 2px,transparent 2px 120px),repeating-linear-gradient(0deg,#2A1A0E 0 38px,#24160B 38px 40px,#2E1C10 40px 78px,#22140A 78px 80px);background-size:auto,auto}
+body.tavern .mini-logo{font-family:'Rye',Georgia,serif;color:#F2B33D;transform:none;font-size:22px}
+body.tavern .sec-h h2{font-family:'Rye',Georgia,serif;font-weight:400;color:#F6E6C8;font-size:22px}
+body.tavern .tab[aria-selected="true"]{background:#F2B33D;color:#2A1404}
+.tav-sign-wrap{display:grid;justify-items:center;padding-top:6px}
+.tav-chains{display:flex;gap:150px;height:26px}
+.tav-chains i{width:3px;background:repeating-linear-gradient(#8A7A62 0 5px,#4A3E2E 5px 8px);border-radius:2px}
+.tav-sign{position:relative;margin-top:-2px;padding:16px 26px 14px;border-radius:12px;text-align:center;transform-origin:50% -26px;animation:swing 4s ease-in-out infinite;
+  background:repeating-linear-gradient(0deg,#7A4A22 0 10px,#6E421E 10px 11px,#83512A 11px 22px);border:4px solid #3E2410;box-shadow:inset 0 0 0 2px #A87A3E,0 14px 24px rgba(0,0,0,.55)}
+@keyframes swing{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
+.tav-sign::before,.tav-sign::after{content:"";position:absolute;top:-7px;width:10px;height:10px;border-radius:50%;background:#C9B48A;box-shadow:inset 0 -2px 0 #6A5A3A}
+.tav-sign::before{left:calc(50% - 82px)}.tav-sign::after{right:calc(50% - 82px)}
+.tav-sign h2{font-family:'Rye',Georgia,serif;font-weight:400;font-size:clamp(24px,7vw,34px);line-height:1.05;color:#FBE7B0;text-shadow:0 2px 0 #3E2410,0 0 18px rgba(242,179,61,.35)}
+.tav-sign small{display:block;margin-top:4px;font-family:var(--font-chalk);font-size:18px;color:#F2D9A8}
+.tav-filters{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:14px}
+.tav-stage{position:relative;margin-top:6px;padding:20px 10px 0;border-radius:18px;background:radial-gradient(ellipse at 50% 0%,rgba(255,214,120,.22),transparent 65%)}
+.barrels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:end;gap:8px}
+.bslot{display:grid;justify-items:center;gap:6px;min-width:0}
+.b1{order:2}.b2{order:1}.b3{order:3}
+.bav{position:relative;font-size:46px;width:72px;height:72px;display:grid;place-items:center;border-radius:50%;background:#2A1A0E;border:4px solid #C98A55;box-shadow:0 6px 12px rgba(0,0,0,.5);animation:hop 2.4s ease-in-out infinite}
+.bav .avx{font-size:58px}
+.b1 .bav{width:88px;height:88px;font-size:56px;border-color:#F2B33D;box-shadow:0 0 0 4px rgba(242,179,61,.25),0 0 30px rgba(242,179,61,.45),0 6px 12px rgba(0,0,0,.5);animation-duration:1.8s}
+.b1 .bav .avx{font-size:72px}
+.b2 .bav{border-color:#C9CDD2;animation-delay:-.6s}.b3 .bav{animation-delay:-1.2s}
+@keyframes hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.bav .crown{position:absolute;top:-30px;left:50%;width:48px;transform:translateX(-50%) rotate(-12deg);animation:crown 2.2s ease-in-out infinite}
+.bav .foam{position:absolute;right:-16px;bottom:-4px;width:34px;filter:drop-shadow(0 3px 4px rgba(0,0,0,.5))}
+.btitle{font-family:'Rye',Georgia,serif;font-size:12.5px;line-height:1.15;color:#F2B33D;text-align:center;min-height:2.3em;display:grid;place-items:end center}
+.b1 .btitle{font-size:14px}
+.bname{font-weight:800;font-size:14.5px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#FBF1DE}
+.barrel{position:relative;width:100%;max-width:120px;border-radius:22px/14px;display:grid;place-content:center;justify-items:center;gap:2px;transform-origin:bottom;animation:grow .8s cubic-bezier(.2,1.4,.4,1) both;
+  background:linear-gradient(90deg,#4A2A12,#8A5428 22%,#A86A34 50%,#8A5428 78%,#4A2A12);box-shadow:inset 0 0 0 2px rgba(0,0,0,.25),0 8px 16px rgba(0,0,0,.5)}
+.barrel::before,.barrel::after{content:"";position:absolute;left:-2px;right:-2px;height:9px;border-radius:4px;background:linear-gradient(#8A8A8A,#4A4A4A 60%,#6A6A6A);box-shadow:0 2px 2px rgba(0,0,0,.4)}
+.barrel::before{top:18%}.barrel::after{bottom:18%}
+.b1 .barrel{height:150px;animation-delay:.35s}.b2 .barrel{height:112px;animation-delay:.15s}.b3 .barrel{height:86px;animation-delay:.5s}
+.barrel b{position:relative;z-index:1;font-family:'Rye',Georgia,serif;font-weight:400;font-size:40px;line-height:1;color:#2A1404;text-shadow:0 1px 0 rgba(255,220,160,.35)}
+.barrel .bpts{position:relative;z-index:1;font-family:var(--font-mono);font-weight:700;font-size:12px;color:#FBE7B0;background:rgba(42,20,4,.55);padding:1px 7px;border-radius:99px}
+.b3 .barrel b{font-size:32px}
+.tav-floor{height:14px;margin:0 -10px;border-radius:0 0 18px 18px;background:linear-gradient(#3E2410,#22140A)}
+.drip{position:absolute;left:8%;right:8%;top:-8px;height:16px;z-index:2;background:radial-gradient(circle at 8px 9px,#FFF6E0 7.5px,transparent 8px) 0 0/16px 16px repeat-x;filter:drop-shadow(0 2px 1px rgba(0,0,0,.25));animation:foamy 2.6s ease-in-out infinite}
+@keyframes foamy{50%{transform:translateY(-2px) scaleY(1.12)}}
+.sayings{display:grid;gap:10px;margin-top:4px}
+.saying{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 14px;border-radius:10px;color:#3B2A14;
+  background:radial-gradient(ellipse at 30% 20%,#F6E8C8,#E7D2A6 70%,#D9BE88);box-shadow:0 6px 14px rgba(0,0,0,.45);animation:slideUp .45s ease both}
+.saying .sp{font-family:'Rye',Georgia,serif;font-size:24px;width:40px;text-align:center}
+.saying .sp.g1{color:#B8860B}.saying .sp.g2{color:#7A7F86}.saying .sp.g3{color:#9C5A2A}
+.saying .st{display:grid;gap:2px;min-width:0}
+.saying .st b{font-family:'Rye',Georgia,serif;font-weight:400;font-size:15px}
+.saying .st i{font-family:var(--font-chalk);font-style:normal;font-size:18px;line-height:1.2;color:#7A3A12}
+.saying .st span{font-size:12.5px;color:#6A5230}
+.saying .sav{font-size:30px;line-height:1}
+.saying .sav .avx{font-size:38px}
+.plaques{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.plaque{position:relative;padding:14px 12px 12px;border-radius:8px;text-align:center;display:grid;gap:4px;justify-items:center;
+  background:repeating-linear-gradient(90deg,#5A3618 0 14px,#52311A 14px 15px);border:3px solid #2E1A0A;box-shadow:inset 0 0 0 2px #8A5A2A,0 8px 14px rgba(0,0,0,.45);animation:slideUp .45s ease both}
+.plaque::before,.plaque::after{content:"";position:absolute;top:6px;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#E8E0D0,#7A7060)}
+.plaque::before{left:8px}.plaque::after{right:8px}
+.plaque .pp{font-family:'Rye',Georgia,serif;font-size:13px;color:#F2B33D}
+.plaque .pav{font-size:34px;line-height:1}.plaque .pav .avx{font-size:40px}
+.plaque b{color:#FBF1DE;font-size:15px}
+.plaque i{font-family:var(--font-chalk);font-style:normal;font-size:16px;color:#F2D9A8;line-height:1.15}
+.plaque small{font-family:var(--font-mono);font-size:12px;color:#E6D3B8}
+.parroquia{display:flex;flex-wrap:wrap;gap:8px}
+.parroquia span{display:inline-flex;align-items:center;gap:6px;padding:6px 12px 6px 6px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:13px;font-weight:600}
+.parroquia span .avx{font-size:22px}
+.parroquia em{font-style:normal;font-family:var(--font-mono);color:var(--muted)}
+.tab-bill{display:grid;gap:4px;padding:16px;border-radius:6px;color:#2A1A08;font-family:'Courier New',ui-monospace,monospace;font-size:13.5px;
+  background:#FBF6EA;box-shadow:0 8px 16px rgba(0,0,0,.45);position:relative;max-width:360px;margin:0 auto;width:100%}
+.tab-bill::after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:8px;background:linear-gradient(-45deg,transparent 6px,#FBF6EA 0) 0 0/12px 8px,linear-gradient(45deg,transparent 6px,#FBF6EA 0) 0 0/12px 8px}
+.tab-bill h3{font-family:'Rye',Georgia,serif;font-weight:400;font-size:18px;text-align:center;margin:0 0 4px}
+.tab-bill .ln{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dashed #C8B898;padding:3px 0}
+.tab-bill .tot{font-weight:700;font-size:15px;border-bottom:0;padding-top:6px}
+.tab-bill .fn{text-align:center;font-size:12.5px;color:#6A5230;margin-top:6px}
 /* ---------- TOAST + STAMP ---------- */
 #toasts{position:fixed;left:0;right:0;bottom:calc(86px + env(safe-area-inset-bottom,0px));z-index:40;display:grid;justify-items:center;gap:8px;padding-inline:16px;pointer-events:none}
 .toast{pointer-events:auto;display:flex;align-items:center;gap:12px;background:var(--foam);color:var(--on-accent);border-radius:999px;padding:10px 12px 10px 18px;font-weight:700;
@@ -1232,6 +1307,7 @@ function show(id){
   document.body.classList.toggle('neon', id === 'app' && view === 'burdel');
   document.body.classList.toggle('fantasy', id === 'app' && view === 'tabernia');
   document.body.classList.toggle('casino', id === 'app' && view === 'casino');
+  document.body.classList.toggle('tavern', id === 'app' && view === 'top');
   casinoForce = true;
   window.scrollTo(0,0);
 }
@@ -1515,6 +1591,7 @@ function setView(v){
   document.body.classList.toggle('neon', v === 'burdel');
   document.body.classList.toggle('fantasy', v === 'tabernia');
   document.body.classList.toggle('casino', v === 'casino');
+  document.body.classList.toggle('tavern', v === 'top');
   casinoForce = true;
   const el = $('#view'); el.classList.remove('view'); void el.offsetWidth; el.classList.add('view');
   render(); window.scrollTo({top:0});
@@ -2721,7 +2798,6 @@ function renderTop(){
     const perNight = {}; alc.forEach(d => perNight[d.night] = (perNight[d.night]||0) + DMAP[d.t].pts);
     return {pid, p:person(pid), pts:ptsOf(l), n:alc.length, bestN:Math.max(0, ...Object.values(perNight))}; })
     .filter(r => r.n > 0).sort((a,b) => b.pts - a.pts || b.n - a.n);
-  const maxPts = rows[0]?.pts || 1;
   const rangeLbl = {night:'Esta noche', month:'Este mes', all:'Siempre'};
   const titleFor = r => topRange === 'night' ? LEVELS[levelFor(r.pts)][1] : LEVELS[levelFor(r.bestN)][1] + ' (su mejor noche)';
   const awards = [];
@@ -2744,24 +2820,16 @@ function renderTop(){
   if (legend){ const [pid, n] = legend[0].split('|'); if (person(pid)) awards.unshift({title:'Noche legendaria', who:person(pid), why:`${fmtPts(legend[1])} pts el ${fmtNight(n)}.`, k:'moon'}); }
   const late = drinks.filter(d => d.t !== 'agua').map(d => { const dt = new Date(d.ts); return [d, ((dt.getHours() - NIGHT_CUTOFF_H + 24) % 24) * 60 + dt.getMinutes()]; }).sort((a,b) => b[1]-a[1])[0];
   if (late && person(late[0].pid)) awards.push({title:'Cierra bares', who:person(late[0].pid), why:`Pidió a las ${fmtTime(late[0].ts)}. Nadie más aguantó.`, k:'clock'});
-  const pod = [rows[1], rows[0], rows[2]];
+  const T = tavernTop(rows, drinks);
+  const sub = topRange === 'night' ? 'Noche del ' + fmtNight(nowK) : topRange === 'month' ? 'Mes de ' + ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'][Number(nowK.slice(5,7))-1] : 'Desde que abrió la taberna';
   el.innerHTML = `
-    <div class="sec" style="margin-top:8px">
-      <div class="sec-h"><div><div class="eyebrow">Ranking oficial</div><h2>El top del pedo</h2></div>
-        <div class="filters" role="group" aria-label="Periodo">${Object.entries(rangeLbl).map(([k,v]) => `<button class="seg" data-r="${k}" aria-pressed="${topRange===k}">${v}</button>`).join('')}</div></div>
-      <div class="board">
-        <h2>${esc(rangeLbl[topRange])}</h2>
-        <div class="sub">${topRange === 'night' ? 'noche del ' + fmtNight(nowK) + ', ' + nightRangeTxt(nowK) : topRange === 'month' ? MONTHS[Number(nowK.slice(5,7))-1] + ' ' + nowK.slice(0,4) : 'desde que abrió La Ronda'}</div>
-        ${rows.length ? `<div class="podium">${pod.map((r,i) => { const place = [2,1,3][i]; if (!r) return `<div class="pod p${place}"></div>`;
-          return `<div class="pod p${place}"><div class="av">${place===1 ? CROWN : ''}${av(r.p)}</div><div class="pn">${esc(r.p.name)}</div><div class="pp">${fmtPts(r.pts)} pts</div><div class="block">${place}</div></div>`; }).join('')}</div>`
-        : `<p class="empty" style="font-family:var(--font-chalk);font-size:22px;margin-top:18px">${topRange === 'night' ? 'La noche es joven. Aún no ha bebido nadie.' : 'Pizarra en blanco. Que empiece la ronda.'}</p>`}
-      </div>
+    <div class="sec" style="margin-top:2px">
+      <div class="tav-sign-wrap"><div class="tav-chains" aria-hidden="true"><i></i><i></i></div>
+        <div class="tav-sign"><h2>El Top<br>de la Taberna</h2><small>${esc(sub)}</small></div></div>
+      <div class="tav-filters" role="group" aria-label="Periodo">${Object.entries(rangeLbl).map(([k,v]) => `<button class="seg" data-r="${k}" aria-pressed="${topRange===k}">${v}</button>`).join('')}</div>
+      ${rows.length ? T.barrels + T.sayings : `<div class="board" style="margin-top:14px"><p class="empty" style="font-family:var(--font-chalk);font-size:22px">${topRange === 'night' ? 'La taberna acaba de abrir. Aún no ha bebido nadie.' : 'Barriles vacíos. Que empiece la ronda.'}</p></div>`}
     </div>
-    ${rows.length ? `<div class="sec"><div class="rank">${rows.map((r,i) => `<div class="rk ${r.pid===me?'me':''}" style="animation-delay:${i*50}ms">
-      <span class="pos">${i+1}</span><span class="e">${av(r.p)}</span>
-      <div class="who"><b>${esc(r.p.name)}</b><span>${esc(titleFor(r))}</span></div>
-      <div class="sc"><b>${fmtPts(r.pts)}</b><span>${plural(r.n,'bebida','bebidas')}</span></div>
-      <div class="bar-mini"><i style="width:${Math.round(r.pts/maxPts*100)}%"></i></div></div>`).join('')}</div></div>` : ''}
+    ${T.plaques}${T.parroquia}${T.bill}
     ${awards.length ? `<div class="sec"><div class="sec-h"><h2>Premios</h2><span class="eyebrow">${esc(rangeLbl[topRange])}</span></div>
       <div class="awards">${awards.map(a => { const d = DMAP[a.k] || PLACES[a.k]; return `<div class="award"><span class="medal" style="background:${d ? d.hi : '#F2B33D'}">${svgI(a.k)}</span><h3>${esc(a.title)}</h3><div class="w">${av(a.who)} ${esc(a.who.name)}</div><div class="why">${esc(a.why)}</div></div>`; }).join('')}</div></div>` : ''}
     <div class="sec board" style="padding-block:18px 22px">
@@ -2772,6 +2840,37 @@ function renderTop(){
       <div class="sub" style="margin-top:14px">Cada noche va de las ${NIGHT_CUTOFF_H}:00 a las ${NIGHT_CUTOFF_H}:00 del día siguiente. Lo de las 4 de la mañana cuenta para la noche de antes.</div>
     </div>`;
   el.querySelectorAll('.seg').forEach(b => b.onclick = () => { topRange = b.dataset.r; render(); });
+}
+
+const TAV_TITLES = ['Rey de la Barra','Escudero del Grifo','Aprendiz de Borracho','Calientabancos','Sobrio de Guardia'];
+const TAV_QUIPS = [
+  ['El tabernero ya le guarda taburete.','Su hígado ha pedido la baja voluntaria.','Tiene más cuenta abierta que el bar.','Le llaman el Grifo Humano.','Los camareros le saludan por su nombre.'],
+  ['A una ronda de la corona.','Bebe con ambición, pero le falta fe.','Plata en la barra, oro en la resaca.','Siempre el segundo. Como el pan.'],
+  ['Bronce, que también brilla.','Promete. Su madre no está orgullosa.','Va bien, pero se toma su tiempo.','Último del podio, primero en pedir kebab.'],
+  ['Ni podio ni vergüenza. Tibio.','Se pide agua entre ronda y ronda. Sospechoso.','Casi, pero no.'],
+  ['Alguien tiene que conducir.','Bebe para socializar. Qué aburrido.','Viene por el ambiente, dice.']
+];
+const LITROS = {cerveza:.25, copa:.25, chupito:.04, tinto:.3, vino:.15, otros:.2, agua:0};
+const tavQuip = (pid, i) => { const q = TAV_QUIPS[i]; return q[(hashStr(pid + topRange) + i) % q.length]; };
+const FOAM_SVG = '<svg class="foam" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h10v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z" fill="#F2B33D" stroke="#3A2603" stroke-width="1.4"/><path d="M15 10h2a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2" fill="none" stroke="#3A2603" stroke-width="1.6"/><path d="M4.5 8.5a2.5 2.5 0 0 1 3-3.4 2.6 2.6 0 0 1 5 0 2.4 2.4 0 0 1 3 3.4z" fill="#FFF6E0" stroke="#3A2603" stroke-width="1.2"/></svg>';
+function tavernTop(rows, drinks){
+  const favOf = pid => { const f = DRINKS.map(d => [d, drinks.filter(x => x.pid === pid && x.t === d.k).length]).sort((a,b) => b[1]-a[1])[0]; return f && f[1] ? f[0].n.toLowerCase() : null; };
+  const top3 = rows.slice(0, 3), next = rows.slice(3, 5), rest = rows.slice(5);
+  const barrels = `<div class="tav-stage"><div class="barrels">${[0,1,2].map(i => { const r = top3[i]; if (!r) return `<div class="bslot b${i+1}"></div>`;
+      return `<div class="bslot b${i+1}"><div class="bav">${i === 0 ? CROWN : ''}${av(r.p)}${i === 0 ? FOAM_SVG : ''}</div>
+        <div class="btitle">${TAV_TITLES[i]}</div><div class="bname">${esc(r.p.name)}</div>
+        <div class="barrel">${i === 0 ? '<span class="drip"></span>' : ''}<b>${i+1}</b><span class="bpts">${fmtPts(r.pts)} pts</span></div></div>`; }).join('')}</div><div class="tav-floor"></div></div>`;
+  const sayings = `<div class="sayings">${top3.map((r, i) => { const f = favOf(r.pid);
+      return `<div class="saying" style="animation-delay:${i*90}ms"><span class="sp g${i+1}">${i+1}</span><span class="st"><b>${esc(r.p.name)}, ${TAV_TITLES[i]}</b><i>«${esc(tavQuip(r.pid, i))}»</i><span>${fmtPts(r.pts)} pts · ${plural(r.n,'bebida','bebidas')}${f ? ' · lo suyo: ' + esc(f) : ''}</span></span><span class="sav">${av(r.p)}</span></div>`; }).join('')}</div>`;
+  const plaques = next.length ? `<div class="sec"><div class="sec-h"><h2>Placas de honor (más o menos)</h2></div><div class="plaques">${next.map((r, j) => { const i = j + 3;
+      return `<div class="plaque" style="animation-delay:${j*90}ms"><span class="pp">${i+1}.º · ${TAV_TITLES[i]}</span><span class="pav">${av(r.p)}</span><b>${esc(r.p.name)}</b><i>«${esc(tavQuip(r.pid, i))}»</i><small>${fmtPts(r.pts)} pts</small></div>`; }).join('')}</div></div>` : '';
+  const parroquia = rest.length ? `<div class="sec"><div class="sec-h"><h2>Y el resto de la parroquia</h2></div><div class="parroquia">${rest.map((r, j) => `<span>${av(r.p)}${esc(r.p.name)} <em>${j+6}.º · ${fmtPts(r.pts)}</em></span>`).join('')}</div></div>` : '';
+  const lit = drinks.reduce((a, d) => a + (LITROS[d.t] || 0), 0), nDr = drinks.filter(d => d.t !== 'agua').length;
+  const bill = nDr ? `<div class="sec"><div class="tab-bill"><h3>La cuenta del tabernero</h3>
+      ${DRINKS.map(d => [d, drinks.filter(x => x.t === d.k).length]).filter(x => x[1]).map(([d, n]) => `<div class="ln"><span>${n} × ${esc(d.n)}</span><span>${fmtPts(n * d.pts)} pts</span></div>`).join('')}
+      <div class="ln tot"><span>TOTAL</span><span>${fmtPts(ptsOf(drinks))} pts</span></div>
+      <div class="fn">Unos ${fmtPts(lit)} litros entre todos${lit >= 1.5 ? `: ${fmtPts(lit / 1.5)} botellas de agua de las grandes, pero sin agua` : ''}. Gracias por su visita.</div></div></div>` : '';
+  return {barrels, sayings, plaques, parroquia, bill};
 }
 
 /* ================= EL BURDEL ================= */
@@ -2939,7 +3038,7 @@ const TUTO = [
   {ill:'stepper', tab:'mine', t:'Apunta lo que bebes', p:'Le das al + cuando pides y al − si te has colado. Cuanto más fuerte, más puntos. La noche va de 17:00 a 17:00.', joke:'De "Sobrio como un juez" a "Leyenda del bar". Tú verás.'},
   {ill:'fichar',  tab:'mine', t:'Ficha al entrar', p:'Fichas al entrar en un bar o en la disco, o tocas "Estoy con…" para entrar donde ya está un amigo. Al salir, desfichas y le pones nota al sitio.', joke:'Como en el curro, pero aquí vas con ganas.'},
   {ill:'perfil',  tab:'stats', t:'Tú y tus stats', p:'Tus mejores fiestas, tus horas de bar y tus récords. Toca tu nombre arriba para cambiar foto, nombre o si estás soltero o en pareja.', joke:'Si te pusiste un nombre absurdo, aún estás a tiempo.'},
-  {ill:'podium',  tab:'group', t:'El grupo y El top', p:'En El grupo, las gráficas, quién está fichado ahora y quién hizo qué. En El top, el ranking del pedo con premios.', joke:'Spoiler: el problema del grupo eres tú.'},
+  {ill:'podium',  tab:'group', t:'El grupo y El top', p:'En El grupo, las gráficas, quién está fichado ahora y quién hizo qué. En El top, el podio de barriles de la taberna.', joke:'Spoiler: el problema del grupo eres tú.'},
   {ill:'fotos',   tab:'fotos', t:'Pruebas del Delito', p:'Sube las fotos de la noche con un marco de broma y dales pulgar arriba. Las más votadas van al podio.', joke:'Lo que se sube, no se olvida.'},
   {ill:'casino',  tab:'casino', t:'Gran Casino Resaca', p:'Ruleta, blackjack, más alta o más baja, dados y La Verdad, con 500 preguntas picantes. Saca el móvil en la mesa y a jugar.', joke:'La banca siempre gana. Tú, a veces bebes.'},
   {ill:'tabernia', tab:'tabernia', t:'Las Crónicas de Tabernia', p:'Todos los bares y discotecas donde habéis estado, con la nota media de la cuadrilla.', joke:'Que los dioses del vermut nos protejan.'},
