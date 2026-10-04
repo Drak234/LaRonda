@@ -159,6 +159,10 @@ h1,h2,h3{text-wrap:balance;margin:0}
 .tab[aria-selected="true"]{background:var(--amber);color:var(--on-accent)}
 .tab[data-v="burdel"]{color:var(--pink)}
 .tab[data-v="burdel"][aria-selected="true"]{background:var(--pink);color:#18051A;box-shadow:0 0 18px var(--pink)}
+.tab[data-v="banco"]{color:#F3DC96}
+.tab[data-v="banco"] svg{filter:drop-shadow(0 0 4px rgba(243,220,150,.45))}
+.tab[data-v="banco"][aria-selected="true"],body.bank .tab[data-v="banco"][aria-selected="true"]{background:linear-gradient(#FBEFC4,#E9CB7A);color:#2A2008;box-shadow:0 0 16px rgba(243,220,150,.55)}
+.tab[data-v="banco"][aria-selected="true"] svg{filter:none}
 @media (max-width:640px){.tab{padding:10px 8px;font-size:13px}.tab span{display:none}.tab[aria-selected="true"] span{display:inline}}
 @media (max-width:470px){.tab{padding:10px 9px}.tab[aria-selected="true"] span{display:none}}
 .view{animation:viewIn .35s ease both}
