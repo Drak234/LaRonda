@@ -1763,8 +1763,13 @@ function subscribe(coll){
 (async () => {
   db = await connectDb();
   if (!db){ dbState = 'off'; refresh(); return; }
+  let knownPeople = null;
   db.collection('people').onSnapshot(snap => {
     people = snap.docs.map(d => ({id:d.id, ...d.data()})).filter(p => p.name);
+    // aviso cuando alguien nuevo se une a la cuadrilla
+    if (knownPeople && me) people.filter(p => !knownPeople.has(p.id) && p.id !== me && Date.now() - (p.createdAt || 0) < 600e3)
+      .forEach(p => setTimeout(() => toast(`🎉 ${emoTxt(p)} ${p.name} se ha unido a la cuadrilla`), 400));
+    knownPeople = new Set(people.map(p => p.id));
     dbState = 'ok'; refresh();
   }, () => { dbState = 'off'; refresh(); });
   subscribe('nights'); subscribe('burdel'); subscribe('fichajes'); subscribeFotos(); pkSubscribe();
