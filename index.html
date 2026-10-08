@@ -3031,8 +3031,12 @@ function pkSubscribe(){
   clearInterval(pk.beat);
   pk.beat = setInterval(() => { if (pk.mySeat && !pk.mySeat.leave && document.visibilityState === 'visible') pkWriteSeat({beat:Date.now()}); pkEngineTick(); pkPaint(true); }, 20000);
 }
+// contadores de jugada y de recompra: nunca por debajo de lo que el croupier ya ha visto
+// (si se reinician al volver a sentarte, el croupier ignora tus jugadas y te quedas atascado)
+const pkSeqFloor = () => Math.max(pk.mySeat?.seq || 0, pk.seats[me]?.seq || 0, pk.st?.seen?.[me] || 0, pk.eng?.seen?.[me] || 0);
+const pkRebuyFloor = () => Math.max(pk.mySeat?.rebuySeq || 0, pk.seats[me]?.rebuySeq || 0, pk.st?.rebuySeen?.[me] || 0, pk.eng?.rebuySeen?.[me] || 0);
 function pkWriteSeat(patch){
-  const base = pk.mySeat && pk.mySeat.pid ? pk.mySeat : {pid:me, ts:Date.now(), seq:0, act:null, rebuySeq:0, leave:false};
+  const base = pk.mySeat && pk.mySeat.pid ? pk.mySeat : {pid:me, ts:Date.now(), seq:pkSeqFloor(), act:null, rebuySeq:pkRebuyFloor(), leave:false};
   const next = JSON.parse(JSON.stringify({...base, ...patch, pid:me, beat:Date.now()}));
   delete next._local;
   pk.mySeat = {...next, _local:true}; pk.seats[me] = next;
@@ -3053,7 +3057,7 @@ function pkErrMsg(e){
 /* acciones del jugador */
 function pkSit(){
   if (!canWrite()) return;
-  pkWriteSeat({ts:Date.now(), leave:false, seq:(pk.mySeat?.seq || 0), act:null});
+  pkWriteSeat({ts:Date.now(), leave:false, seq:pkSeqFloor(), rebuySeq:pkRebuyFloor(), act:null});
   const st = pk.st, act = pkActiveSeats().filter(s => s.pid !== me);
   const present = pkPresentSeats().filter(s => s.pid !== me);
   const leaderAlive = st && st.leader && act.some(s => s.pid === st.leader);
@@ -3096,7 +3100,7 @@ function pkStand(){
 }
 function pkAct(t, to){
   if (!canWrite() || !pk.mySeat) return;
-  pkWriteSeat({seq:(pk.mySeat.seq || 0) + 1, act:{t, to:to || 0, h:pk.st?.hand || 0}});
+  pkWriteSeat({seq:pkSeqFloor() + 1, act:{t, to:to || 0, h:pk.st?.hand || 0}});
   try { navigator.vibrate && navigator.vibrate(15); } catch(e){}
   pkPaint();
 }
@@ -3343,7 +3347,7 @@ function pkPaint(soft){
   if (st && st.toAct === me && pk.lastTurn !== `${st.hand}-${st.phase}-${st.currentBet}`){ pk.lastTurn = `${st.hand}-${st.phase}-${st.currentBet}`; try { navigator.vibrate && navigator.vibrate([30, 40, 30]); } catch(e){} }
   const on = (id, fn) => { const e = document.getElementById(id); if (e) e.onclick = fn; };
   on('pkSit', pkSit); on('pkStand', pkStand); on('pkStart', pkStart); on('pkTake', pkTakeOver);
-  on('pkRebuy', () => { if (!canWrite()) return; pkWriteSeat({rebuySeq:(pk.mySeat?.rebuySeq || 0) + 1}); toast('Pides fichas al croupier.'); });
+  on('pkRebuy', () => { if (!canWrite()) return; pkWriteSeat({rebuySeq:pkRebuyFloor() + 1}); toast('Pides fichas al croupier.'); });
   body.querySelectorAll('[data-pk]').forEach(b => b.onclick = () => pkAct(b.dataset.pk, Number(b.dataset.to || 0)));
 }
 
