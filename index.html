@@ -779,6 +779,7 @@ body.casino .tab[aria-selected="true"]{background:var(--gold);color:#1E1404}
 .rl-grid button[aria-pressed="true"],.rl-out button[aria-pressed="true"]{box-shadow:0 0 0 3px var(--gold),0 0 14px rgba(231,196,106,.7);transform:scale(1.08);position:relative;z-index:1}
 .rl-bet{text-align:center;font-size:13.5px;color:#E3F0E7}
 .rl-bet b{color:var(--gold)}
+.rl-clear{margin-left:6px;font-size:12px;font-weight:700;color:#FFE9B0;padding:3px 9px;border-radius:99px;border:1px solid rgba(231,196,106,.5);background:rgba(0,0,0,.25)}
 .rl-hist{display:flex;gap:5px;justify-content:center;flex-wrap:wrap}
 .rl-hist i{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:800;color:#fff;border:1px solid rgba(255,255,255,.4)}
 /* cartas */
@@ -2596,7 +2597,7 @@ const rlColor = n => n === 0 ? 'verde' : RL_RED.has(n) ? 'rojo' : 'negro';
 const rlHex = n => n === 0 ? '#0E7A3E' : RL_RED.has(n) ? '#B3202A' : '#15120F';
 const RL_BETS = {rojo:['Rojo', n => RL_RED.has(n)], negro:['Negro', n => n !== 0 && !RL_RED.has(n)], par:['Par', n => n !== 0 && n % 2 === 0], impar:['Impar', n => n % 2 === 1],
   bajo:['1 a 18', n => n >= 1 && n <= 18], alto:['19 a 36', n => n >= 19]};
-const rl = {bet:null, spinning:false, W:0, B:-Math.PI/2, r:128, result:null, hist:[], verdict:null};
+const rl = {bets:[], spinning:false, W:0, B:-Math.PI/2, r:128, result:null, hist:[], verdict:null};
 const SUITS = [['♠',0],['♥',1],['♦',1],['♣',0]];
 const CARD_RANKS = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
 function newDeck(){ const d = []; SUITS.forEach(([s, red]) => CARD_RANKS.forEach((r, i) => d.push({r, s, red, v:i + 1}))); for (let i = d.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [d[i], d[j]] = [d[j], d[i]]; } return d; }
@@ -2650,27 +2651,35 @@ function mountRuleta(){
   const box = $('#casGame');
   const top = [], mid = [], bot = [];
   for (let c = 0; c < 12; c++){ top.push(3*c + 3); mid.push(3*c + 2); bot.push(3*c + 1); }
-  const cell = n => `<button data-bet="n${n}" class="${RL_RED.has(n) ? 'rd' : 'bk'}" aria-pressed="${rl.bet === 'n' + n}" aria-label="Número ${n}">${n}</button>`;
+  const cell = n => `<button data-bet="#${n}" class="${RL_RED.has(n) ? 'rd' : 'bk'}" aria-pressed="${rl.bets.includes('#' + n)}" aria-label="Número ${n}">${n}</button>`;
   box.innerHTML = `<div class="ctable">
-    <h3>Ruleta europea</h3><p class="crule">Elige dónde crees que cae la bola. Si fallas, ya sabéis lo que toca.</p>
+    <h3>Ruleta europea</h3><p class="crule">Elige uno o varios sitios donde crees que cae la bola. Si aciertas alguno, te libras; si no, ya sabéis lo que toca.</p>
     <div class="wheel-wrap"><canvas id="rlCv" width="600" height="600" aria-label="Ruleta"></canvas><div class="wheel-res" id="rlRes"></div></div>
     ${verdictHtml(rl.verdict, 'rlV')}
-    <div class="rl-board"><div class="rl-grid"><button data-bet="n0" class="z" aria-pressed="${rl.bet === 'n0'}" aria-label="Cero">0</button>${top.map(cell).join('')}${mid.map(cell).join('')}${bot.map(cell).join('')}</div>
-      <div class="rl-out">${Object.entries(RL_BETS).map(([k, [lbl]]) => `<button data-bet="${k}" class="${k === 'rojo' ? 'rd' : k === 'negro' ? 'bk' : ''}" aria-pressed="${rl.bet === k}">${lbl}</button>`).join('')}</div></div>
+    <div class="rl-board"><div class="rl-grid"><button data-bet="#0" class="z" aria-pressed="${rl.bets.includes('#0')}" aria-label="Cero">0</button>${top.map(cell).join('')}${mid.map(cell).join('')}${bot.map(cell).join('')}</div>
+      <div class="rl-out">${Object.entries(RL_BETS).map(([k, [lbl]]) => `<button data-bet="${k}" class="${k === 'rojo' ? 'rd' : k === 'negro' ? 'bk' : ''}" aria-pressed="${rl.bets.includes(k)}">${lbl}</button>`).join('')}</div></div>
     <div class="rl-bet" id="rlBet"></div>
     <div class="cbtns"><button class="cbtn" id="rlSpin">¡Girar la ruleta!</button></div>
     <div><div class="hand-l" style="text-align:center;margin-bottom:6px">Últimos números</div><div class="rl-hist" id="rlHist"></div></div>
   </div>`;
   const grid = box.querySelector('.rl-grid');
   [...grid.children].slice(1).forEach((b, i) => { b.style.gridRow = String(Math.floor(i / 12) + 1); b.style.gridColumn = String(i % 12 + 2); });
-  box.querySelectorAll('[data-bet]').forEach(b => b.onclick = () => { if (rl.spinning) return; rl.bet = rl.bet === b.dataset.bet ? null : b.dataset.bet; box.querySelectorAll('[data-bet]').forEach(x => x.setAttribute('aria-pressed', x.dataset.bet === rl.bet)); paintBet(); });
+  const syncBets = () => { box.querySelectorAll('[data-bet]').forEach(x => x.setAttribute('aria-pressed', rl.bets.includes(x.dataset.bet))); paintBet(); };
+  box.querySelectorAll('[data-bet]').forEach(b => b.onclick = () => {
+    if (rl.spinning) return; const k = b.dataset.bet;
+    rl.bets = rl.bets.includes(k) ? rl.bets.filter(x => x !== k) : [...rl.bets, k];
+    syncBets();
+  });
+  box.querySelector('#rlBet').onclick = e => { if (e.target.closest('#rlClear') && !rl.spinning){ rl.bets = []; syncBets(); } };
   $('#rlSpin').onclick = spinRuleta;
   paintBet(); paintHist(); drawWheel();
   if (rl.result != null && !rl.spinning) showRes(rl.result);
 }
-function betLabel(b){ if (!b) return null; if (b[0] === 'n') return 'al ' + b.slice(1); return 'a ' + RL_BETS[b][0].toLowerCase(); }
-function betWins(b, n){ if (b[0] === 'n') return Number(b.slice(1)) === n; return RL_BETS[b][1](n); }
-function paintBet(){ const e = $('#rlBet'); if (e) e.innerHTML = rl.bet ? `Apuestas <b>${esc(betLabel(rl.bet))}</b>` : 'Sin apuesta: gira y que decida la suerte.'; }
+// apuestas: '#17' es un número; 'rojo', 'negro', 'par'… son apuestas de fuera
+const betLabel = b => b[0] === '#' ? 'al ' + b.slice(1) : 'a ' + RL_BETS[b][0].toLowerCase();
+const betWins = (b, n) => b[0] === '#' ? Number(b.slice(1)) === n : RL_BETS[b][1](n);
+const betList = bs => { const l = bs.map(betLabel); return l.length > 1 ? l.slice(0, -1).join(', ') + ' y ' + l[l.length - 1] : l[0] || ''; };
+function paintBet(){ const e = $('#rlBet'); if (e) e.innerHTML = rl.bets.length ? `Apuestas <b>${esc(betList(rl.bets))}</b> <button class="rl-clear" id="rlClear">Quitar todo</button>` : 'Toca uno o varios números o casillas. Sin apuesta, gira y que decida la suerte.'; }
 function paintHist(){ const e = $('#rlHist'); if (e) e.innerHTML = rl.hist.length ? rl.hist.map(n => `<i style="background:${rlHex(n)}">${n}</i>`).join('') : '<span class="hint" style="color:#E3F0E7">Todavía no ha girado.</span>'; }
 function showRes(n){ const e = $('#rlRes'); if (e) e.innerHTML = `<span style="background:${rlHex(n)}">${n}</span>`; }
 function drawWheel(){
@@ -2732,7 +2741,11 @@ function spinRuleta(){
 function finishRuleta(n){
   rl.spinning = false; rl.result = n; rl.hist = [n, ...rl.hist].slice(0, 12);
   const col = rlColor(n);
-  if (rl.bet){ const ok = betWins(rl.bet, n); rl.verdict = ok ? VERDICT('win', '¡Acertaste!', `Ha caído el ${n} ${col}. Te libras: reparte tú.`) : VERDICT('lose', 'La casa gana', `Ha caído el ${n} ${col}. Apostaste ${betLabel(rl.bet)}: bebes.`); }
+  if (rl.bets.length){
+    const hits = rl.bets.filter(b => betWins(b, n));
+    rl.verdict = hits.length ? VERDICT('win', '¡Acertaste!', `Ha caído el ${n} ${col}. Aciertas ${betList(hits)}: te libras, reparte tú.`)
+      : VERDICT('lose', 'La casa gana', `Ha caído el ${n} ${col}. Apostaste ${betList(rl.bets)}: bebes.`);
+  }
   else rl.verdict = VERDICT('', `${n} ${col}`, n === 0 ? 'El cero. Chupito para todos.' : 'Que la suerte decida quién bebe.');
   try { navigator.vibrate && navigator.vibrate([30, 40, 30]); } catch(e){}
   if (!document.getElementById('rlCv')) return;
