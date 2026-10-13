@@ -82,6 +82,60 @@ h1,h2,h3{text-wrap:balance;margin:0}
 #pour.go{animation:pourUp 1.25s cubic-bezier(.6,0,.3,1) forwards}
 @keyframes pourUp{0%{transform:translateY(105%)}45%{transform:translateY(0)}60%{transform:translateY(0)}100%{transform:translateY(-110%)}}
 
+/* ---------- GRUPOS ---------- */
+#groups{padding-block:30px 48px;max-width:620px;margin:0 auto}
+.gr-top{text-align:center;display:grid;gap:4px;justify-items:center;margin-bottom:14px}
+.gr-top .logo{font-size:clamp(46px,13vw,72px)}
+.gr-top h1{font-family:var(--font-display);font-weight:400;font-size:clamp(30px,8vw,42px);color:var(--foam);margin-top:6px}
+.gr-hi{text-align:center;color:var(--ink-2);margin:0 auto 18px;max-width:42ch}
+.gr-hi b{color:var(--foam)}
+.gr-sec{display:grid;gap:10px;margin-bottom:22px}
+.gr-card{border-radius:20px;background:var(--surface);border:1px solid var(--line);overflow:hidden;animation:slideUp .35s ease both;box-shadow:inset 4px 0 0 var(--gc)}
+.gr-card.cur{border-color:var(--gc)}
+.gr-main{width:100%;display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:12px;padding:14px 14px 14px 16px;text-align:left}
+.gr-badge{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:26px;background:color-mix(in srgb,var(--gc) 22%,transparent);box-shadow:inset 0 0 0 1.5px var(--gc)}
+.gr-txt{display:grid;min-width:0}
+.gr-txt b{font-size:18px;color:var(--foam);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gr-txt small{font-size:12.5px;color:var(--muted)}
+.gr-faces{display:flex}
+.gr-face{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:16px;background:var(--surface-2);box-shadow:0 0 0 2px var(--surface);margin-left:-8px;overflow:hidden}
+.gr-face .avx{font-size:26px}
+.gr-go{font-weight:800;font-size:13px;color:var(--on-accent);background:var(--gc);padding:7px 12px;border-radius:99px}
+.gr-tools{display:flex;gap:6px;padding:0 12px 12px}
+.gr-tools button{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--ink-2);padding:6px 11px;border-radius:99px;background:var(--surface-2)}
+.gr-tools button svg{width:15px;height:15px}
+.gr-tools button.warn{background:var(--red);color:#fff}
+.gr-pass{display:grid;grid-template-columns:1fr auto;gap:8px;padding:0 14px 14px}
+.gr-pass .err{grid-column:1/-1;min-height:0}
+.gr-pass.shake{animation:shake .45s}
+.gr-search{display:flex;align-items:center;gap:10px;background:var(--surface);border:1.5px solid var(--line);border-radius:999px;padding:4px 16px;transition:border-color .2s}
+.gr-search:focus-within{border-color:var(--amber)}
+.gr-search svg{width:20px;height:20px;color:var(--muted);flex:none}
+.gr-search input{flex:1;min-width:0;background:none;border:0;padding:10px 0;font-size:16px;color:var(--ink)}
+.gr-search input:focus{outline:none}
+.gr-create{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:16px;border-radius:20px;border:2px dashed var(--line);color:var(--ink-2);font-weight:800}
+.gr-create span{font-size:22px;color:var(--amber)}
+.gr-new{display:grid;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px;animation:slideUp .3s ease both}
+.gr-new-t{font-family:var(--font-display);font-weight:400;font-size:24px;color:var(--foam)}
+.gr-emos{display:flex;flex-wrap:wrap;gap:6px}
+.gr-emos button{width:40px;height:40px;border-radius:12px;font-size:22px;background:var(--surface-2)}
+.gr-emos button[aria-pressed="true"]{box-shadow:0 0 0 2px var(--amber);background:color-mix(in srgb,var(--amber) 20%,transparent)}
+.gr-foot{text-align:center;color:var(--muted);font-size:13.5px;margin-top:6px}
+.gr-foot button{color:var(--amber);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.who-other{margin-top:22px}
+.who-more summary{cursor:pointer;text-align:center;color:var(--amber);font-weight:700;padding:8px}
+.coasters.small{grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:14px;margin-top:12px}
+.coasters.small .coaster .emo{font-size:34px}
+.grp-btn{display:grid;justify-items:start;line-height:.95;text-align:left}
+.grp-btn small{font-family:var(--font-body);font-size:11.5px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);transform:rotate(4deg) translateX(4px);text-shadow:none;display:flex;align-items:center;gap:3px}
+.grp-btn small::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--amber)}
+.grp-btn small::after{content:"▾";font-size:10px;opacity:.7}
+.invite-btn{width:100%;display:flex;align-items:center;gap:12px;text-align:left;padding:12px 14px;margin:-4px 0 14px;border-radius:16px;background:color-mix(in srgb,var(--amber) 14%,var(--surface));border:1px dashed var(--amber)}
+.invite-btn svg{width:22px;height:22px;color:var(--amber);flex:none}
+.invite-btn span{display:grid}
+.invite-btn b{color:var(--foam)}
+.invite-btn small{color:var(--ink-2);font-size:12.5px}
+
 /* ---------- WHO ---------- */
 #who{padding-block:36px 40px;max-width:760px;margin:0 auto}
 .who-head{text-align:center;display:grid;gap:6px;margin-bottom:28px}
@@ -1298,15 +1352,26 @@ body.neon .toast{background:#FFE1F2;box-shadow:0 0 24px rgba(255,60,172,.6)}
   </form>
 </section>
 
+<!-- ============ GRUPOS ============ -->
+<section id="groups" class="screen" hidden>
+  <div class="gr-top">
+    <div class="logo" aria-label="La Ronda"><span>La</span> <span>Ronda</span></div>
+    <h1>Tus grupos</h1>
+  </div>
+  <div id="grBody"></div>
+</section>
+
 <!-- ============ WHO ============ -->
 <section id="who" class="screen" hidden>
   <div class="who-head">
-    <span class="eyebrow">Paso 2 de 2</span>
+    <span class="eyebrow" id="whoGroup">Tu grupo</span>
     <h1>¿Quién eres?</h1>
     <p>Toca tu posavasos. Si no estás, créate uno.</p>
   </div>
   <div id="dbBannerWho"></div>
   <div class="coasters" id="coasters"></div>
+  <div class="who-other" id="whoOther"></div>
+  <p class="gr-foot"><button id="whoBack">← Volver a los grupos</button></p>
   <form class="newform" id="newForm" hidden autocomplete="off">
     <div style="display:grid;gap:6px">
       <label class="lbl" for="newName">Tu nombre (o mote)</label>
@@ -1334,12 +1399,12 @@ body.neon .toast{background:#FFE1F2;box-shadow:0 0 24px rgba(255,60,172,.6)}
 <!-- ============ APP ============ -->
 <section id="app" class="screen" hidden>
   <header class="top">
-    <div class="mini-logo">La Ronda</div>
+    <button class="mini-logo grp-btn" id="grpBtn" title="Cambiar de grupo" aria-label="Cambiar de grupo">La Ronda<small id="grpName"></small></button>
     <div class="row" style="gap:8px;flex-wrap:nowrap">
       <button class="me-chip" id="meChip" title="Mi perfil" aria-label="Abrir mi perfil"><span class="e" id="meEmo"></span><span class="n" id="meName"></span></button>
       <button class="icon-btn" id="helpBtn" title="Ver el tutorial" aria-label="Ver el tutorial" style="font-family:var(--font-display);font-size:18px">?</button>
-      <button class="icon-btn" id="lockBtn" title="Cerrar la barra" aria-label="Cerrar la barra">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+      <button class="icon-btn" id="lockBtn" title="Cambiar de grupo" aria-label="Cambiar de grupo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.2A5 5 0 0 1 21 19"/></svg>
       </button>
     </div>
   </header>
@@ -1396,6 +1461,9 @@ const PASS = 'chinchin';            // contraseña de la barra
 const NIGHT_CUTOFF_H = 17;           // cada noche va de 17:00 a 17:00 del día siguiente
 const GLASS_MAX = 30;                // puntos para llenar la caña
 const ICONS = {
+  share:'<path d="M12 3v12"/><path d="M7.5 7.5L12 3l4.5 4.5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/>',
+  search:'<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/>',
+  groups:'<circle cx="9" cy="8" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.2A5 5 0 0 1 21 19"/>',
   cerveza:'<path d="M5 8h10v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"/><path d="M15 10h2a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2"/><path d="M5 8a2.5 2.5 0 0 1 2.5-3 2.5 2.5 0 0 1 5 0A2.5 2.5 0 0 1 15 8"/><path d="M8.5 11.5v6M11.5 11.5v6"/>',
   copa:'<path d="M6 5h12l-1.5 15a1 1 0 0 1-1 1h-7a1 1 0 0 1-1-1z"/><path d="M6.5 10h11"/><path d="M15 2l-1.5 8"/>',
   chupito:'<path d="M6.5 6h11l-1.8 13.2a1 1 0 0 1-1 .8H9.3a1 1 0 0 1-1-.8z"/><path d="M7.4 11h9.2"/>',
@@ -1585,7 +1653,8 @@ function mixColor(items){
 
 /* ================= STATE ================= */
 let db = null, dbState = 'connecting'; // connecting | ok | off
-let people = [];                         // {id,name,emoji,status}
+let people = [];                         // miembros del grupo actual {id,name,emoji,status,groups}
+let knownMembers = null;
 const data = {nights:{}, burdel:{}, fichajes:{}};     // id -> {pid,night,items}
 const pending = {nights:{}, burdel:{}, fichajes:{}};  // id -> items (optimista)
 const chains = {};
@@ -1602,7 +1671,7 @@ function docsOf(coll){
 }
 function flat(coll){
   const arr = [];
-  docsOf(coll).forEach(n => (n.items||[]).forEach(it => arr.push({...it, pid:n.pid, doc:n.night, night:nightKey(it.ts)})));
+  docsOf(coll).forEach(n => { if (!memberIds.has(n.pid)) return; (n.items||[]).forEach(it => arr.push({...it, pid:n.pid, doc:n.night, night:nightKey(it.ts)})); });
   return arr.sort((a,b) => a.ts - b.ts);
 }
 const allDrinks = () => flat('nights');
@@ -1625,6 +1694,209 @@ function nightRangeTxt(k){ const [st, en] = nightBounds(k); return `de ${DAYS[st
 function nightChip(k){ const en = nightBounds(k)[1].getTime(); const left = en - Date.now();
   return `<span class="night-chip" title="Cada noche de La Ronda va de ${pad(NIGHT_CUTOFF_H)}:00 a ${pad(NIGHT_CUTOFF_H)}:00 del día siguiente">${svgI('moon')}<span>Noche del ${fmtNight(k)} · ${nightRangeTxt(k)}</span>${left > 0 && k === tonightKey() ? `<em>cierra en <b data-close="${en}">${shortDur(left)}</b></em>` : ''}</span>`; }
 
+/* ================= GRUPOS =================
+   El perfil y todo lo que apuntas es tuyo y vale en todos tus grupos.
+   Dentro de un grupo solo se ve a sus miembros: estadísticas, top, burdel, fotos y casino.
+   - Membresía: people/<id>.groups = ['mib', …]. Quien no tiene el campo es de los de siempre → grupo MIB.
+   - Grupos: docs "grp_<id>" en la colección del casino ({name, hash, emoji, createdBy, createdAt}).
+   - Contraseña: se guarda solo su huella (SHA-256). El enlace de invitación lleva un trozo de esa huella.
+   - Casino: las mesas de cada grupo llevan delante "<grupo>~". MIB conserva las de siempre. */
+const MIB = 'mib';
+let allPeople = [], groups = {}, groupsLoaded = false, memberIds = new Set();
+let curG = store.get('ronda_grp') || null;
+const isMember = (p, g) => !!p && (Array.isArray(p.groups) ? p.groups.includes(g) : g === MIB);
+const grpOf = p => p ? (Array.isArray(p.groups) ? p.groups : [MIB]) : [];
+const myGroups = () => grpOf(allPeople.find(x => x.id === me)).filter(g => grp(g));
+const grp = g => groups[g] || (g === MIB ? {id:MIB, name:'MIB', emoji:'🍻', builtin:true} : null);
+const grpName = g => grp(g)?.name || 'tu grupo';
+const gk = name => curG && curG !== MIB ? `${curG}~${name}` : name;
+const normTxt = s => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
+async function sha(txt){
+  const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(txt));
+  return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
+}
+const passHash = (g, pass) => sha(`laronda:${g}:${normTxt(pass)}`);
+async function groupHash(g){ const G = grp(g); if (!G) return null; if (G.hash) return G.hash; return g === MIB ? passHash(MIB, PASS) : null; }
+const inviteToken = h => (h || '').slice(0, 20);
+async function inviteUrl(g){ const h = await groupHash(g); return `${APP_URL}?g=${encodeURIComponent(g)}&k=${inviteToken(h)}`; }
+function applyGroup(){
+  people = curG ? allPeople.filter(p => isMember(p, curG)) : [];
+  memberIds = new Set(people.map(p => p.id));
+  const n = $('#grpName'); if (n) n.textContent = curG ? grpName(curG) : '';
+}
+async function savePeopleGroups(pid, next){
+  const p = allPeople.find(x => x.id === pid); if (p) p.groups = next;
+  await db.collection('people').doc(pid).update({groups:next});
+}
+async function joinGroup(g){
+  const p = allPeople.find(x => x.id === me); if (!p) return;
+  if (Array.isArray(p.groups) && p.groups.includes(g)) return;
+  await savePeopleGroups(me, [...new Set([...grpOf(p), g])]);
+}
+async function leaveGroup(g){
+  const p = allPeople.find(x => x.id === me); if (!p) return;
+  await savePeopleGroups(me, grpOf(p).filter(x => x !== g));
+}
+function enterGroup(g, opts = {}){
+  curG = g; store.set('ronda_grp', g);
+  applyGroup(); pkReset(); casMounted = false;
+  knownMembers = {g, ids:new Set(people.map(p => p.id))};
+  show('app'); setView(opts.view || 'mine');
+  if (opts.toast !== false) toast(`${rand(['Dentro de', 'Bienvenido a', 'Pasa, que estás en'])} ${grpName(g)}`);
+}
+function goGroups(){ grState.q = ''; grState.open = null; grState.create = false; show('groups'); renderGroups(); }
+async function shareGroup(g){
+  try {
+    const url = await inviteUrl(g), G = grp(g);
+    const text = `Únete a ${G.name} en La Ronda, el contador de lo que bebemos. Entra con este enlace:`;
+    if (navigator.share){ await navigator.share({title:`${G.name} · La Ronda`, text, url}); return; }
+    await navigator.clipboard.writeText(`${text} ${url}`);
+    toast('Enlace de invitación copiado. Pégalo en el grupo de WhatsApp.');
+  } catch(e){ if (e && e.name === 'AbortError') return; toast('No se ha podido compartir. Prueba otra vez.'); }
+}
+async function createGroup(name, pass, emoji){
+  const base = normTxt(name).replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 20) || 'grupo';
+  const id = `${base}-${Math.random().toString(36).slice(2, 6)}`;
+  const doc = {name, emoji, hash:await passHash(id, pass), createdBy:me || null, createdAt:Date.now()};
+  await db.collection('poker').doc('grp_' + id).set(doc);
+  groups[id] = {id, ...doc};
+  return id;
+}
+
+/* invitaciones por enlace: ?g=<grupo>&k=<código> */
+(() => {
+  try {
+    const qs = new URLSearchParams(location.search);
+    if (qs.get('g') && qs.get('k')){
+      store.set('ronda_inv', JSON.stringify({g:qs.get('g'), k:qs.get('k')}));
+      history.replaceState(null, '', location.pathname + location.hash);
+    }
+  } catch(e){}
+})();
+let inviteBusy = false;
+async function handleInvite(){
+  let inv = null; try { inv = JSON.parse(store.get('ronda_inv') || 'null'); } catch(e){}
+  if (!inv || inviteBusy || dbState !== 'ok' || !groupsLoaded) return;
+  inviteBusy = true;
+  try {
+    const G = grp(inv.g);
+    if (!G){ store.set('ronda_inv', null); toast('Ese grupo ya no existe. Pide un enlace nuevo.'); return; }
+    if (inviteToken(await groupHash(inv.g)) !== inv.k){ store.set('ronda_inv', null); toast('Ese enlace de invitación no es válido. Pide uno nuevo.'); return; }
+    store.set('ronda_inv', null);
+    if (me && allPeople.some(p => p.id === me)){
+      if (!readOnly) await joinGroup(inv.g);
+      enterGroup(inv.g, {toast:false}); toast(`🎉 Te has unido a ${G.name}`);
+    } else { curG = inv.g; applyGroup(); grState.invited = inv.g; show('who'); renderWho(); }
+  } catch(e){ toast(writeErrMsg(e)); }
+  finally { inviteBusy = false; }
+}
+// tras cargar perfiles y grupos: comprueba que sigues siendo de tu grupo
+function checkPlace(){
+  if (dbState !== 'ok') return;
+  handleInvite();
+  if (!$('#app').hidden && me){
+    if (!allPeople.some(p => p.id === me)){ me = null; store.set('ronda_me', null); goGroups(); return; }
+    if (!curG || !isMember(allPeople.find(p => p.id === me), curG)){ curG = null; store.set('ronda_grp', null); applyGroup(); goGroups(); }
+  }
+  if (grIdle()) renderGroups();
+}
+
+/* pantalla de grupos */
+const grState = {q:'', open:null, create:false, invited:null, leave:null, emoji:'🍻'};
+const GR_EMOJIS = ['🍻', '🍷', '🥃', '🍸', '🎉', '🔥', '🦁', '🐺', '👑', '💀', '🌙', '⚽'];
+const GR_COLORS = ['#F2B33D', '#E0566B', '#5BC0EB', '#9BE564', '#C77DFF', '#FF8C42'];
+const grColor = g => GR_COLORS[[...g].reduce((a, c) => a + c.charCodeAt(0), 0) % GR_COLORS.length];
+function grCard(g, mine){
+  const G = grp(g), mem = allPeople.filter(p => isMember(p, g));
+  const faces = mem.slice(0, 5).map(p => `<span class="gr-face">${av(p)}</span>`).join('');
+  const open = grState.open === g;
+  return `<div class="gr-card ${mine ? 'mine' : ''} ${g === curG ? 'cur' : ''}" style="--gc:${grColor(g)}">
+    <button class="gr-main" data-enter="${esc(g)}" aria-label="${mine ? 'Entrar en' : 'Unirme a'} ${esc(G.name)}">
+      <span class="gr-badge">${esc(G.emoji || '🍻')}</span>
+      <span class="gr-txt"><b>${esc(G.name)}</b><small>${plural(mem.length, 'miembro', 'miembros')}${g === curG ? ' · estás aquí' : ''}</small></span>
+      <span class="gr-faces">${faces}</span>
+      <span class="gr-go">${mine ? 'Entrar' : 'Unirme'}</span>
+    </button>
+    ${mine ? `<div class="gr-tools"><button data-share="${esc(g)}">${svgI('share')}Invitar</button><button data-leave="${esc(g)}" class="${grState.leave === g ? 'warn' : ''}">${grState.leave === g ? '¿Seguro? Toca otra vez' : 'Salir del grupo'}</button></div>` : ''}
+    ${open ? `<form class="gr-pass" data-pass="${esc(g)}" autocomplete="off"><input class="txt" type="password" placeholder="Contraseña de ${esc(G.name)}" aria-label="Contraseña de ${esc(G.name)}" autocomplete="off"><button class="btn sm" type="submit">Entrar</button><div class="err" role="alert"></div></form>` : ''}
+  </div>`;
+}
+function renderGroups(){
+  const box = $('#grBody'); if (!box) return;
+  const meP = allPeople.find(p => p.id === me);
+  const mine = me ? myGroups() : [];
+  const q = normTxt(grState.q);
+  const all = [...new Set([MIB, ...Object.keys(groups)])].filter(g => grp(g));
+  const found = q ? all.filter(g => !mine.includes(g) && normTxt(grp(g).name).includes(q)) : [];
+  const loading = dbState === 'connecting' || !groupsLoaded;
+  box.innerHTML = `${dbBannerHtml()}
+    ${meP ? `<p class="gr-hi">Hola, <b>${esc(meP.name)}</b>. ${mine.length ? 'Elige con qué cuadrilla sales hoy.' : 'Aún no estás en ningún grupo: busca el tuyo o crea uno.'}</p>` : `<p class="gr-hi">Cada grupo es una cuadrilla con su propia barra, sus rankings y su casino. Busca el tuyo o crea uno nuevo.</p>`}
+    ${mine.length ? `<div class="gr-sec"><span class="lbl">Tus grupos</span>${mine.map(g => grCard(g, true)).join('')}</div>` : ''}
+    <div class="gr-sec"><span class="lbl">Buscar grupo</span>
+      <label class="gr-search">${svgI('search')}<input id="grQ" type="search" placeholder="Escribe el nombre, por ejemplo: Los Chavales" value="${esc(grState.q)}" autocomplete="off" enterkeyhint="search"></label>
+      <div id="grRes">${loading ? '<p class="empty">Buscando grupos…</p>' : q ? (found.length ? found.map(g => grCard(g, false)).join('') : `<p class="empty">No hay ningún grupo que se llame así. ¿Lo creas tú?</p>`) : ''}</div>
+    </div>
+    <div class="gr-sec">
+      ${grState.create ? `<form class="gr-new" id="grNew" autocomplete="off">
+        <b class="gr-new-t">Crear un grupo</b>
+        <label class="lbl" for="grNName">Nombre del grupo</label><input class="txt" id="grNName" maxlength="24" placeholder="Los Chavales">
+        <span class="lbl">Icono</span><div class="gr-emos">${GR_EMOJIS.map(e => `<button type="button" data-ge="${e}" aria-pressed="${grState.emoji === e}">${e}</button>`).join('')}</div>
+        <label class="lbl" for="grNPass">Contraseña para entrar</label><input class="txt" id="grNPass" type="text" maxlength="30" placeholder="La que le daréis a la cuadrilla" autocomplete="off">
+        <div class="err" id="grNErr" role="alert"></div>
+        <div class="row"><button class="btn" type="submit">Crear y entrar</button><button class="btn ghost" type="button" id="grNCancel">Cancelar</button></div>
+      </form>` : `<button class="gr-create" id="grCreate"><span>+</span>Crear un grupo nuevo</button>`}
+    </div>
+    ${meP ? `<p class="gr-foot">¿No eres ${esc(meP.name)}? <button id="grNotMe">Cambiar de perfil</button></p>` : ''}`;
+  const qi = $('#grQ');
+  qi.oninput = () => { grState.q = qi.value; grState.open = null; const pos = qi.selectionStart; renderGroups(); const n = $('#grQ'); n.focus(); try { n.setSelectionRange(pos, pos); } catch(e){} };
+  box.querySelectorAll('[data-enter]').forEach(b => b.onclick = () => {
+    const g = b.dataset.enter;
+    if (mine.includes(g)){ if (!me) return; enterGroup(g); return; }
+    grState.open = grState.open === g ? null : g; renderGroups();
+    setTimeout(() => box.querySelector(`[data-pass="${CSS.escape(g)}"] input`)?.focus(), 30);
+  });
+  box.querySelectorAll('[data-pass]').forEach(f => f.onsubmit = async e => {
+    e.preventDefault();
+    const g = f.dataset.pass, inp = f.querySelector('input'), err = f.querySelector('.err');
+    if (!inp.value.trim()){ err.textContent = 'Pon la contraseña del grupo.'; return; }
+    if (await passHash(g, inp.value) !== await groupHash(g)){ err.textContent = rand(['Esa no es. Pregunta a la cuadrilla.', 'Contraseña incorrecta.', 'Nanai. Prueba otra vez.']); f.classList.remove('shake'); void f.offsetWidth; f.classList.add('shake'); return; }
+    if (me && allPeople.some(p => p.id === me)){
+      if (!canWrite()) return;
+      try { await joinGroup(g); } catch(x){ err.textContent = writeErrMsg(x); return; }
+      enterGroup(g, {toast:false}); toast(`🎉 Te has unido a ${grpName(g)}`);
+    } else { curG = g; applyGroup(); grState.invited = g; pourTo(() => { show('who'); renderWho(); }); }
+  });
+  box.querySelectorAll('[data-share]').forEach(b => b.onclick = () => shareGroup(b.dataset.share));
+  box.querySelectorAll('[data-leave]').forEach(b => b.onclick = async () => {
+    const g = b.dataset.leave;
+    if (grState.leave !== g){ grState.leave = g; renderGroups(); setTimeout(() => { if (grState.leave === g){ grState.leave = null; if (!$('#groups').hidden) renderGroups(); } }, 3500); return; }
+    grState.leave = null; if (!canWrite()) return;
+    try { await leaveGroup(g); if (curG === g){ curG = null; store.set('ronda_grp', null); applyGroup(); } toast(`Has salido de ${grpName(g)}. Tus datos siguen siendo tuyos.`); renderGroups(); }
+    catch(x){ toast(writeErrMsg(x)); }
+  });
+  const cb = $('#grCreate'); if (cb) cb.onclick = () => { grState.create = true; renderGroups(); setTimeout(() => $('#grNName')?.focus(), 30); };
+  const nf = $('#grNew');
+  if (nf){
+    nf.querySelectorAll('[data-ge]').forEach(b => b.onclick = () => { grState.emoji = b.dataset.ge; nf.querySelectorAll('[data-ge]').forEach(x => x.setAttribute('aria-pressed', x === b)); });
+    $('#grNCancel').onclick = () => { grState.create = false; renderGroups(); };
+    nf.onsubmit = async e => {
+      e.preventDefault();
+      const name = $('#grNName').value.trim().replace(/\s+/g, ' '), pass = $('#grNPass').value.trim(), err = $('#grNErr');
+      if (name.length < 2){ err.textContent = 'Ponle un nombre al grupo.'; return; }
+      if (all.some(g => normTxt(grp(g).name) === normTxt(name))){ err.textContent = 'Ya hay un grupo con ese nombre. Búscalo o elige otro.'; return; }
+      if (pass.length < 3){ err.textContent = 'La contraseña tiene que tener al menos 3 letras.'; return; }
+      if (!canWrite()) return;
+      try {
+        const g = await createGroup(name, pass, grState.emoji);
+        grState.create = false;
+        if (me && allPeople.some(p => p.id === me)){ await joinGroup(g); enterGroup(g, {toast:false}); toast(`🎉 Grupo ${name} creado. Invita a la cuadrilla desde El grupo.`); }
+        else { curG = g; applyGroup(); grState.invited = g; show('who'); renderWho(); }
+      } catch(x){ err.textContent = writeErrMsg(x); }
+    };
+  }
+  const nm = $('#grNotMe'); if (nm) nm.onclick = () => { me = null; store.set('ronda_me', null); toast('Elige tu grupo y luego tu posavasos.'); renderGroups(); };
+}
+
 /* ================= GATE ================= */
 (function drawCap(){
   const n = 21, R = 74, r = 64, cx = 80, cy = 80; let d = '';
@@ -1637,7 +1909,7 @@ function nightChip(k){ const en = nightBounds(k)[1].getTime(); const left = en -
     <text x="80" y="103" text-anchor="middle" font-family="Bagel Fat One, Arial Black, sans-serif" font-size="25" fill="#3A2603">RONDA</text>`;
 })();
 function show(id){
-  ['gate','who','app'].forEach(s => $('#'+s).hidden = s !== id);
+  ['gate','who','app','groups'].forEach(s => $('#'+s).hidden = s !== id);
   $('#tabs').hidden = id !== 'app';
   document.body.classList.toggle('neon', id === 'app' && view === 'burdel');
   document.body.classList.toggle('fantasy', id === 'app' && view === 'tabernia');
@@ -1663,6 +1935,14 @@ $('#gateForm').addEventListener('submit', e => {
 let newEmoji = EMOJIS[0], newStatus = null;
 function renderWho(){
   $('#dbBannerWho').innerHTML = dbBannerHtml();
+  $('#whoGroup').textContent = curG ? `Grupo ${grpName(curG)}` : 'Tu grupo';
+  const others = allPeople.filter(p => !isMember(p, curG)).sort((a,b) => a.name.localeCompare(b.name,'es'));
+  $('#whoOther').innerHTML = others.length && dbState === 'ok' ? `<details class="who-more"><summary>¿Ya tienes perfil en otro grupo? Tócalo aquí</summary><div class="coasters small">${others.map(p => `<button class="coaster" data-other="${esc(p.id)}"><span class="emo">${av(p)}</span><span class="nm">${esc(p.name)}</span><span class="sub">unirme con este</span></button>`).join('')}</div></details>` : '';
+  $('#whoOther').querySelectorAll('[data-other]').forEach(b => b.onclick = async () => {
+    if (!canWrite()) return; me = b.dataset.other; store.set('ronda_me', me);
+    try { await joinGroup(curG); } catch(e){ toast(writeErrMsg(e)); return; }
+    applyGroup(); pickMe(me);
+  });
   const box = $('#coasters');
   if (dbState === 'connecting'){ box.innerHTML = `<p class="empty" style="grid-column:1/-1">Abriendo la barra…</p>`; return; }
   const list = [...people].sort((a,b) => a.name.localeCompare(b.name,'es'));
@@ -1685,19 +1965,22 @@ $('#newForm').addEventListener('submit', async e => {
   e.preventDefault();
   const name = $('#newName').value.trim();
   if (!name){ $('#newErr').textContent = 'Ponte un nombre, aunque sea un mote.'; return; }
-  if (people.some(p => p.name.toLowerCase() === name.toLowerCase())){ $('#newErr').textContent = 'Ese nombre ya está pillado. Toca su posavasos o elige otro.'; return; }
+  if (allPeople.some(p => p.name.toLowerCase() === name.toLowerCase())){ $('#newErr').textContent = 'Ese nombre ya está pillado. Si eres tú, búscalo en «¿Ya tienes perfil en otro grupo?», o elige otro.'; return; }
   if (!newStatus){ $('#newErr').textContent = 'Dinos si estás soltero/a o en pareja. Cuenta para El Burdel.'; return; }
   if (readOnly){ $('#newErr').textContent = RO_MSG; return; }
   if (!db){ $('#newErr').textContent = 'No hay conexión con la barra compartida, así que no se puede crear el posavasos ahora.'; return; }
   try {
-    const ref = await db.collection('people').add({name, emoji:newEmoji, status:newStatus, createdAt:Date.now()});
-    if (!person(ref.id)) people.push({id:ref.id, name, emoji:newEmoji, status:newStatus});
+    const groupsNew = curG ? [curG] : [MIB];
+    const ref = await db.collection('people').add({name, emoji:newEmoji, status:newStatus, groups:groupsNew, createdAt:Date.now()});
+    if (!allPeople.some(p => p.id === ref.id)) allPeople.push({id:ref.id, name, emoji:newEmoji, status:newStatus, groups:groupsNew, createdAt:Date.now()});
+    applyGroup();
     $('#newForm').hidden = true; $('#newName').value = '';
     pickMe(ref.id, true);
   } catch(err){ $('#newErr').textContent = writeErrMsg(err); }
 });
 function pickMe(id, isNew){
   me = id; store.set('ronda_me', id); statsPid = null;
+  if (curG){ store.set('ronda_grp', curG); applyGroup(); pkReset(); casMounted = false; }
   pourTo(() => {
     show('app'); setView('mine');
     if (isNew && !store.get('ronda_tuto_' + id)) setTimeout(() => openTuto(), 500);
@@ -1706,7 +1989,9 @@ function pickMe(id, isNew){
 }
 $('#helpBtn').onclick = () => openTuto();
 $('#meChip').onclick = () => openProfile();
-$('#lockBtn').onclick = () => { store.set('ronda_ok', null); $('#pass').value=''; $('#cap').classList.remove('pop'); show('gate'); };
+$('#lockBtn').onclick = () => goGroups();
+$('#grpBtn').onclick = () => goGroups();
+$('#whoBack').onclick = () => { $('#newForm').hidden = true; goGroups(); };
 
 /* ================= DB ================= */
 // Base de datos: Firebase en la web publicada (GitHub Pages); la de Claude dentro del artifact.
@@ -1764,14 +2049,14 @@ function subscribe(coll){
 (async () => {
   db = await connectDb();
   if (!db){ dbState = 'off'; refresh(); return; }
-  let knownPeople = null;
   db.collection('people').onSnapshot(snap => {
-    people = snap.docs.map(d => ({id:d.id, ...d.data()})).filter(p => p.name);
-    // aviso cuando alguien nuevo se une a la cuadrilla
-    if (knownPeople && me) people.filter(p => !knownPeople.has(p.id) && p.id !== me && Date.now() - (p.createdAt || 0) < 600e3)
-      .forEach(p => setTimeout(() => toast(`🎉 ${emoTxt(p)} ${p.name} se ha unido a la cuadrilla`), 400));
-    knownPeople = new Set(people.map(p => p.id));
-    dbState = 'ok'; refresh();
+    allPeople = snap.docs.map(d => ({id:d.id, ...d.data()})).filter(p => p.name);
+    applyGroup();
+    // aviso cuando alguien nuevo entra en tu grupo
+    if (knownMembers && knownMembers.g === curG && me) people.filter(p => !knownMembers.ids.has(p.id) && p.id !== me)
+      .forEach(p => setTimeout(() => toast(`🎉 ${emoTxt(p)} ${p.name} se ha unido a ${grpName(curG)}`), 400));
+    if (curG) knownMembers = {g:curG, ids:new Set(people.map(p => p.id))};
+    dbState = 'ok'; refresh(); checkPlace();
   }, () => { dbState = 'off'; refresh(); });
   subscribe('nights'); subscribe('burdel'); subscribe('fichajes'); subscribeFotos(); pkSubscribe();
   if (!window.RONDA_FIREBASE) checkWrite();
@@ -1925,7 +2210,8 @@ function stamp(txt, small, neon){
 }
 
 /* ================= ROUTER ================= */
-function refresh(){ if (!$('#who').hidden) renderWho(); if (!$('#app').hidden) render(); }
+const grIdle = () => !$('#groups').hidden && !document.querySelector('#groups input:focus') && ![...document.querySelectorAll('#groups input')].some(i => i.type === 'password' && i.value);
+function refresh(){ if (!$('#who').hidden) renderWho(); if (!$('#app').hidden) render(); if (grIdle()) renderGroups(); }
 function setView(v){
   view = v;
   document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', t.dataset.v === v));
@@ -2315,11 +2601,11 @@ let fotos = {}, likes = {}, fotosFirst = true, fotoSort = 'top';
 const imgCache = {}; let imgQueue = [], imgActive = 0;
 const likeCount = id => Object.values(likes).filter(l => l.photo === id).length;
 const iLiked = id => !!likes[`${id}__${me}`];
-function fotoList(){ return Object.values(fotos).filter(f => person(f.pid)).sort((a,b) => a.ts - b.ts).map((f, i) => ({...f, n:i+1})); }
+function fotoList(){ return Object.values(fotos).filter(f => person(f.pid) && (f.g || MIB) === curG).sort((a,b) => a.ts - b.ts).map((f, i) => ({...f, n:i+1})); }
 function subscribeFotos(){
   db.collection('fotos').onSnapshot(snap => {
     const next = {}; snap.docs.forEach(d => { const v = d.data(); if (v && v.pid) next[d.id] = {id:d.id, ...v}; });
-    if (!fotosFirst) snap.docChanges().forEach(ch => { if (ch.type !== 'added') return; const v = ch.doc.data(); if (!v || v.pid === me || Date.now() - v.ts > 180000) return; const p = person(v.pid); if (p) toast(`📸 ${emoTxt(p)} ${p.name} ha aportado una prueba`); });
+    if (!fotosFirst) snap.docChanges().forEach(ch => { if (ch.type !== 'added') return; const v = ch.doc.data(); if (!v || v.pid === me || (v.g || MIB) !== curG || Date.now() - v.ts > 180000) return; const p = person(v.pid); if (p) toast(`📸 ${emoTxt(p)} ${p.name} ha aportado una prueba`); });
     fotosFirst = false; fotos = next; if (view === 'fotos') render();
   }, () => {});
   db.collection('likes').onSnapshot(snap => {
@@ -2453,7 +2739,7 @@ async function startUpload(file){
     try {
       const ref = db.collection('fotos').doc(); const id = ref.id;
       await db.collection('fotoimg').doc(id).set({img:url});
-      const meta = {pid:me, ts:Date.now(), night:tonightKey(), frame, caption};
+      const meta = {pid:me, g:curG || MIB, ts:Date.now(), night:tonightKey(), frame, caption};
       imgCache[id] = url; fotos[id] = {id, ...meta};
       await ref.set(meta);
       close(); fotoSort = 'new'; render(); stamp('Archivada', rand(['Prueba nº ' + String(fotoList().length).padStart(3,'0'),'Caso abierto','Ya no hay vuelta atrás']));
@@ -3020,13 +3306,28 @@ const pkIsLeader = () => pk.st && pk.st.leader === me && !!pk.mySeat && !pk.mySe
 function pkSubscribe(){
   if (pk.subscribed || !db) return; pk.subscribed = true;
   db.collection('poker').onSnapshot(snap => {
-    const seats = {}, slots = {}, chGames = []; let st = null, chs = null;
-    snap.docs.forEach(d => { const v = d.data(); if (!v) return;
-      if (d.id === 'mesa') st = v;
-      else if (d.id === 'chess') chs = v;
-      else if (d.id.startsWith('chessg_')) chGames.push(v);
-      else if (d.id.startsWith('slot_')){ if (v.who) slots[v.who] = v; }
-      else if (d.id.startsWith('s_') && v.pid) seats[v.pid] = v; });
+    pk.raw = snap.docs.map(d => ({id:d.id, v:d.data()}));
+    pkIngest();
+  }, e => { pk.err = e; pkPaint(); });
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && pk.mySeat && !pk.mySeat.leave && !readOnly && db && dbState === 'ok'){ pkWriteSeat({beat:Date.now()}); pkEngineTick(); pkPaint(true); } });
+  clearInterval(pk.beat);
+  pk.beat = setInterval(() => { if (pk.mySeat && !pk.mySeat.leave && document.visibilityState === 'visible') pkWriteSeat({beat:Date.now()}); pkEngineTick(); pkPaint(true); }, 20000);
+}
+// reparte los docs del casino: grupos (globales), monederos de la tragaperras (globales) y mesas del grupo actual
+function pkIngest(){
+    const seats = {}, slots = {}, chGames = [], grs = {}; let st = null, chs = null;
+    (pk.raw || []).forEach(({id, v}) => { if (!v) return;
+      if (id.startsWith('grp_')){ grs[id.slice(4)] = {id:id.slice(4), ...v}; return; }
+      if (id.startsWith('slot_')){ if (v.who) slots[v.who] = v; return; }
+      const cut = id.indexOf('~'), g = cut >= 0 ? id.slice(0, cut) : MIB, k = cut >= 0 ? id.slice(cut + 1) : id;
+      if (g !== curG) return;
+      if (k === 'mesa') st = v;
+      else if (k === 'chess') chs = v;
+      else if (k.startsWith('chessg_')) chGames.push(v);
+      else if (k.startsWith('s_') && v.pid) seats[v.pid] = v; });
+    const firstGroups = !groupsLoaded; groups = grs; groupsLoaded = true;
+    if (firstGroups || !$('#groups').hidden) checkPlace();
+    applyGroup();
     ch.st = chs; ch.games = chGames;
     if (document.getElementById('chRoot')) chPaint();
     pk.slots = slots;
@@ -3039,10 +3340,13 @@ function pkSubscribe(){
     if (pk.st && pk.st.leader !== me) pk.eng = null;
     pkEngineTick();
     pkPaint();
-  }, e => { pk.err = e; pkPaint(); });
-  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && pk.mySeat && !pk.mySeat.leave && !readOnly && db && dbState === 'ok'){ pkWriteSeat({beat:Date.now()}); pkEngineTick(); pkPaint(true); } });
-  clearInterval(pk.beat);
-  pk.beat = setInterval(() => { if (pk.mySeat && !pk.mySeat.leave && document.visibilityState === 'visible') pkWriteSeat({beat:Date.now()}); pkEngineTick(); pkPaint(true); }, 20000);
+}
+// al cambiar de grupo: olvida la mesa del grupo anterior y vuelve a leer la del nuevo
+function pkReset(){
+  clearTimeout(pk.timer);
+  Object.assign(pk, {st:null, seats:{}, eng:null, mySeat:null, lastTurn:null});
+  ch.st = null; ch.games = []; ch.sel = null; ch.promo = null; ch.seenLast = null;
+  if (pk.raw) pkIngest();
 }
 // contadores de jugada y de recompra: nunca por debajo de lo que el croupier ya ha visto
 // (si se reinician al volver a sentarte, el croupier ignora tus jugadas y te quedas atascado)
@@ -3053,13 +3357,13 @@ function pkWriteSeat(patch){
   const next = JSON.parse(JSON.stringify({...base, ...patch, pid:me, beat:Date.now()}));
   delete next._local;
   pk.mySeat = {...next, _local:true}; pk.seats[me] = next;
-  return db.collection('poker').doc('s_' + me).set(next).catch(e => { pk.err = e; toast(pkErrMsg(e)); pkPaint(); });
+  return db.collection('poker').doc(gk('s_' + me)).set(next).catch(e => { pk.err = e; toast(pkErrMsg(e)); pkPaint(); });
 }
 function pkWriteState(st){
   st.updatedAt = Date.now();
   const clean = JSON.parse(JSON.stringify(st));
   pk.eng = clean; pk.st = clean;
-  return db.collection('poker').doc('mesa').set(clean).catch(e => { pk.err = e; toast(pkErrMsg(e)); });
+  return db.collection('poker').doc(gk('mesa')).set(clean).catch(e => { pk.err = e; toast(pkErrMsg(e)); });
 }
 function pkErrMsg(e){
   const c = e && e.code;
@@ -3804,7 +4108,7 @@ const chPieceSvg = p => `<svg class="ch-pc ${chIsW(p) ? 'w' : 'b'}" viewBox="0 0
    Cada jugador escribe solo su jugada con update(), así nunca se pisan. */
 let ch = {st:null, games:[], sel:null, promo:null, seenLast:null, confirm:null, lastTurnKey:null};
 const CH_STALE = 600e3, CH_AFK = 180e3;
-const chRef = () => db.collection('poker').doc('chess');
+const chRef = () => db.collection('poker').doc(gk('chess'));
 const chPresent = pid => !!(ch.st && pid && Date.now() - (ch.st['beat_' + pid] || 0) < CH_STALE);
 const chSeated = () => !!(ch.st && (ch.st.host === me || ch.st.guest === me));
 const chMyColor = () => { const st = ch.st; if (!st || st.phase === 'lobby') return null; return st.white === me ? 'w' : st.black === me ? 'b' : null; };
@@ -3837,7 +4141,7 @@ function chEndPatch(st, result, reason){
 }
 function chRecord(st, result, reason){
   if (!st.gid || !st.white || !st.black) return;
-  db.collection('poker').doc('chessg_' + st.gid).set({gid:st.gid, w:st.white, b:st.black, result, reason, plies:(st.moves || []).length, ts:Date.now()}).catch(() => {});
+  db.collection('poker').doc(gk('chessg_' + st.gid)).set({gid:st.gid, w:st.white, b:st.black, result, reason, plies:(st.moves || []).length, ts:Date.now()}).catch(() => {});
 }
 function chEnd(result, reason, extra = {}){
   const st = ch.st; const patch = {...chEndPatch(st, result, reason), ...extra};
@@ -4134,7 +4438,8 @@ function crewHtml(){
   const drinks = allDrinks().filter(d => d.t !== 'agua');
   const list = [...people].sort((a,b) => (a.createdAt || 0) - (b.createdAt || 0) || a.name.localeCompare(b.name, 'es'));
   return `<div class="sec">
-    <div class="sec-h"><h2>La cuadrilla</h2><span class="eyebrow">${plural(list.length, 'integrante', 'integrantes')}</span></div>
+    <div class="sec-h"><h2>${esc(grpName(curG))}</h2><span class="eyebrow">${plural(list.length, 'integrante', 'integrantes')}</span></div>
+    <button class="invite-btn" id="inviteBtn">${svgI('share')}<span><b>Invitar a alguien a ${esc(grpName(curG))}</b><small>Le mandas el enlace y entra directo, sin contraseña</small></span></button>
     <div class="crew">${list.map((p, i) => {
       const mine = drinks.filter(d => d.pid === p.id);
       const nights = new Set(mine.map(d => d.night)).size;
@@ -4281,6 +4586,7 @@ function renderGroup(){
   const cm = $('#chronMore'); if (cm) cm.onclick = () => { chronLimit += 60; render(); };
   el.querySelectorAll('.seg[data-ok]').forEach(b => b.onclick = () => { okupaRange = b.dataset.ok; render(); });
   el.querySelectorAll('.mate').forEach(b => b.onclick = () => { statsPid = b.dataset.p; setView('stats'); });
+  const ib = $('#inviteBtn'); if (ib) ib.onclick = () => shareGroup(curG);
   if (!window.Chart) return;
   const T = chartTheme();
   if (fichR.length) charts.push(new Chart($('#cTime'), {type:'bar',
@@ -4643,7 +4949,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#avMod
 
 /* ================= TUTORIAL ================= */
 const TUTO = [
-  {ill:'glass',   t:'Bienvenido a La Ronda', p:'La app para contar lo que bebe la cuadrilla. Como Strava, pero con resaca. Abajo tienes las pestañas; te las enseñamos rapidito.', joke:'Son 9 pantallas. Menos que una ronda.'},
+  {ill:'glass',   t:'Bienvenido a La Ronda', p:'La app para contar lo que bebe tu cuadrilla. Como Strava, pero con resaca. Arriba ves tu grupo: tócalo para cambiar de grupo o crear otro. Abajo, las pestañas.', joke:'Son 9 pantallas. Menos que una ronda.'},
   {ill:'stepper', tab:'mine', t:'Apunta lo que bebes', p:'Le das al + cuando pides y al − si te has colado. Cuanto más fuerte, más puntos. La noche va de 17:00 a 17:00.', joke:'De "Sobrio como un juez" a "Leyenda del bar". Tú verás.'},
   {ill:'fichar',  tab:'mine', t:'Ficha al entrar', p:'Fichas al entrar en un bar o en la disco, o tocas "Estoy con…" para unirte a un amigo. Al salir, desfichas y le pones nota (solo la primera vez). ¿Se te olvidó? Lo corriges abajo.', joke:'Como en el curro, pero aquí vas con ganas.'},
   {ill:'perfil',  tab:'stats', t:'Tus stats y El Banco', p:'Tus mejores fiestas y récords, y en El Banco (la última pestaña) lo que llevas fundido en euros. Toca tu nombre arriba para cambiar foto, nombre o estado.', joke:'Si te pusiste un nombre absurdo, aún estás a tiempo.'},
@@ -4746,8 +5052,10 @@ function closeTuto(){
 })();
 
 /* ================= BOOT ================= */
-if (store.get('ronda_ok') === '1'){ if (me){ show('app'); render(); } else { show('who'); renderWho(); } }
-else show('gate');
+// los de siempre (ya tenían perfil en este móvil) entran directos en MIB
+if (me && !curG && store.get('ronda_ok') === '1'){ curG = MIB; store.set('ronda_grp', MIB); }
+applyGroup();
+if (me && curG && !store.get('ronda_inv')){ show('app'); render(); } else { show('groups'); renderGroups(); }
 })();
 </script>
 
