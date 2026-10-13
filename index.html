@@ -126,10 +126,15 @@ h1,h2,h3{text-wrap:balance;margin:0}
 .who-more summary{cursor:pointer;text-align:center;color:var(--amber);font-weight:700;padding:8px}
 .coasters.small{grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:14px;margin-top:12px}
 .coasters.small .coaster .emo{font-size:34px}
-.grp-btn{display:grid;justify-items:start;line-height:.95;text-align:left}
-.grp-btn small{font-family:var(--font-body);font-size:11.5px;font-weight:800;letter-spacing:.06em;color:var(--ink-2);transform:rotate(4deg) translateX(4px);text-shadow:none;display:flex;align-items:center;gap:3px}
-.grp-btn small::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--amber)}
-.grp-btn small::after{content:"▾";font-size:10px;opacity:.7}
+.grp-btn{display:grid;justify-items:start;gap:6px;text-align:left;padding:2px 0;min-width:0}
+.grp-btn .mini-logo{line-height:1}
+.grp-pill{display:inline-flex;align-items:center;gap:6px;max-width:min(46vw,190px);padding:3px 10px 3px 4px;border-radius:99px;background:var(--surface);border:1px solid var(--line);
+  font:800 12.5px/1.2 var(--font-body);color:var(--ink);box-shadow:0 2px 6px rgba(0,0,0,.25);transition:transform .15s,border-color .2s}
+.grp-pill i{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:12px;background:color-mix(in srgb,var(--amber) 22%,transparent)}
+.grp-pill b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.grp-pill::after{content:"";width:6px;height:6px;margin-left:1px;border-right:1.8px solid var(--muted);border-bottom:1.8px solid var(--muted);transform:translateY(-2px) rotate(45deg);flex:none}
+.grp-btn:hover .grp-pill,.grp-btn:focus-visible .grp-pill{border-color:var(--amber)}
+.grp-btn:active .grp-pill{transform:scale(.96)}
 .invite-btn{width:100%;display:flex;align-items:center;gap:12px;text-align:left;padding:12px 14px;margin:-4px 0 14px;border-radius:16px;background:color-mix(in srgb,var(--amber) 14%,var(--surface));border:1px dashed var(--amber)}
 .invite-btn svg{width:22px;height:22px;color:var(--amber);flex:none}
 .invite-btn span{display:grid}
@@ -1399,7 +1404,7 @@ body.neon .toast{background:#FFE1F2;box-shadow:0 0 24px rgba(255,60,172,.6)}
 <!-- ============ APP ============ -->
 <section id="app" class="screen" hidden>
   <header class="top">
-    <button class="mini-logo grp-btn" id="grpBtn" title="Cambiar de grupo" aria-label="Cambiar de grupo">La Ronda<small id="grpName"></small></button>
+    <button class="grp-btn" id="grpBtn" title="Cambiar de grupo" aria-label="Cambiar de grupo"><span class="mini-logo">La Ronda</span><span class="grp-pill" id="grpName"></span></button>
     <div class="row" style="gap:8px;flex-wrap:nowrap">
       <button class="me-chip" id="meChip" title="Mi perfil" aria-label="Abrir mi perfil"><span class="e" id="meEmo"></span><span class="n" id="meName"></span></button>
       <button class="icon-btn" id="helpBtn" title="Ver el tutorial" aria-label="Ver el tutorial" style="font-family:var(--font-display);font-size:18px">?</button>
@@ -1722,7 +1727,7 @@ async function inviteUrl(g){ const h = await groupHash(g); return `${APP_URL}?g=
 function applyGroup(){
   people = curG ? allPeople.filter(p => isMember(p, curG)) : [];
   memberIds = new Set(people.map(p => p.id));
-  const n = $('#grpName'); if (n) n.textContent = curG ? grpName(curG) : '';
+  const n = $('#grpName'); if (n){ n.hidden = !curG; n.innerHTML = curG ? `<i>${esc(grp(curG)?.emoji || '🍻')}</i><b>${esc(grpName(curG))}</b>` : ''; }
 }
 async function savePeopleGroups(pid, next){
   const p = allPeople.find(x => x.id === pid); if (p) p.groups = next;
