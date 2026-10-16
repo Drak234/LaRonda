@@ -2447,8 +2447,12 @@ function renderStats(){
   const totalPts = ptsOf(mineAlc);
   const avg = nightsArr.length ? totalPts / nightsArr.length : 0;
   const fav = DRINKS.map(d => [d, mineAlc.filter(x => x.t === d.k).length]).sort((a,b) => b[1]-a[1])[0];
-  const paces = nightsArr.filter(n => n.n >= 2 && n.last > n.first).map(n => (n.n - 1) / ((n.last - n.first) / 3600e3));
-  const pace = paces.length ? paces.reduce((a,b) => a+b, 0) / paces.length : 0;
+  // ritmo: bebidas totales entre horas de fiesta totales. Cada noche dura lo que haya entre la primera y la última
+  // bebida o lo fichado esa noche (lo que sea más), y como mínimo 1 hora: así apuntar varias de golpe no dispara el ritmo
+  const fichAll = allFich().filter(s => s.pid === pid);
+  const paceN = nightsArr.filter(n => n.n >= 2);
+  const paceH = paceN.reduce((a, n) => a + Math.max(1, (n.last - n.first) / 3600e3, fichAll.filter(s => s.night === n.k).reduce((t, s) => t + sessDur(s), 0) / 3600e3), 0);
+  const pace = paceH ? paceN.reduce((a, n) => a + n.n, 0) / paceH : 0;
   const maxLv = best[0] ? levelFor(best[0].pts) : 0;
   const groupNight = {}; all.filter(d => d.t !== 'agua').forEach(d => { const g = groupNight[d.night] = groupNight[d.night] || {}; g[d.pid] = (g[d.pid]||0) + DMAP[d.t].pts; });
   const placeOn = k => { const arr = Object.entries(groupNight[k] || {}).sort((a,b) => b[1]-a[1]); return [arr.findIndex(x => x[0] === pid) + 1, arr.length]; };
