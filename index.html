@@ -5075,6 +5075,6 @@ if (me && curG && !store.get('ronda_inv')){ show('app'); render(); } else { show
 })();
 </script>
 
-<script>if('serviceWorker' in navigator && location.protocol==='https:'){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
+<script>if('serviceWorker' in navigator && location.protocol==='https:'){let had=!!navigator.serviceWorker.controller,done=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(had&&!done){done=true;location.reload();}});addEventListener('load',()=>navigator.serviceWorker.register('sw.js').then(r=>r.update()).catch(()=>{}));}</script>
 </body>
 </html>
