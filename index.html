@@ -2147,9 +2147,37 @@ function setOut(s, out){
     const n = {...it}; if (out) n.out = out; else delete n.out; return n;
   }));
 }
-function checkIn(t, join){
+// al fichar siempre se pregunta el sitio (obligatorio)
+function askPlace(t, join){
   if (!canWrite()) return;
-  const place = (join ? (join.place || '') : ($('#placeName')?.value || '')).trim().slice(0, 40);
+  const P = PLACES[t]; const box = $('#rateModal'); box.hidden = false;
+  const sugg = knownPlaces(t).slice(0, 8);
+  box.innerHTML = `<form class="tcard rate-card" id="placeForm" autocomplete="off">
+    <div class="ttop"><span class="tstep">Fichar ${t === 'disco' ? 'en discoteca' : 'en bar'}</span><button class="tskip" type="button" data-x>Cancelar</button></div>
+    <div class="tbody">
+      <div class="rate-ico" style="--fc:${P.hi}">${svgI(t)}</div>
+      <h2>${t === 'disco' ? '¿En qué discoteca estás?' : '¿En qué bar estás?'}</h2>
+      <input class="txt" id="placeIn" maxlength="40" placeholder="${t === 'disco' ? 'Por ejemplo: Kapital' : 'Por ejemplo: La Bodeguita'}" aria-label="Nombre del sitio" enterkeyhint="done">
+      ${sugg.length ? `<div class="rate-sugg">${sugg.map(n => `<button type="button" class="seg" data-name="${esc(n)}">${esc(n)}</button>`).join('')}</div>` : ''}
+      <div class="err" id="placeErr" role="alert"></div>
+      <button class="btn" type="submit">${svgI(t)} Fichar aquí</button>
+      <div class="hint">Así sabemos dónde estáis y Tabernia lleva la cuenta.</div>
+    </div></form>`;
+  const close = () => { box.hidden = true; box.innerHTML = ''; };
+  box.querySelector('[data-x]').onclick = close;
+  box.onclick = e => { if (e.target === box) close(); };
+  box.querySelectorAll('[data-name]').forEach(b => b.onclick = () => { $('#placeIn').value = b.dataset.name; $('#placeErr').textContent = ''; });
+  $('#placeForm').onsubmit = e => {
+    e.preventDefault();
+    const name = $('#placeIn').value.trim().replace(/\s+/g, ' ').slice(0, 40);
+    if (!name){ $('#placeErr').textContent = t === 'disco' ? 'Dinos en qué discoteca estás.' : 'Dinos en qué bar estás.'; $('#placeIn').focus(); return; }
+    close(); checkIn(t, join, name);
+  };
+  setTimeout(() => $('#placeIn')?.focus({preventScroll:true}), 60);
+}
+function checkIn(t, join, placeName){
+  if (!canWrite()) return;
+  const place = (placeName || (join && join.place) || '').trim().slice(0, 40);
   const open = openSession(me);
   const outAt = Date.now();
   if (open) setOut(open, outAt);
@@ -2339,8 +2367,12 @@ function renderMine(){
   el.querySelectorAll('.stepper .minus').forEach(b => b.onclick = () => removeLast('nights', b.dataset.k));
   el.querySelectorAll('.del[data-n]').forEach(b => b.onclick = () => removeItem('nights', b.dataset.n, Number(b.dataset.ts)));
   el.querySelectorAll('.del[data-fts]').forEach(b => b.onclick = () => removeItem('fichajes', b.dataset.fn, Number(b.dataset.fts)));
-  el.querySelectorAll('[data-in]').forEach(b => b.onclick = () => checkIn(b.dataset.in));
-  el.querySelectorAll('[data-with]').forEach(b => b.onclick = () => { const s = openSession(b.dataset.with); if (s) checkIn(s.t, {pid:b.dataset.with, place:s.place || ''}); else { toast('Ya no está fichado.'); render(); } });
+  el.querySelectorAll('[data-in]').forEach(b => b.onclick = () => askPlace(b.dataset.in));
+  el.querySelectorAll('[data-with]').forEach(b => b.onclick = () => {
+    const s = openSession(b.dataset.with); if (!s){ toast('Ya no está fichado.'); render(); return; }
+    const join = {pid:b.dataset.with, place:s.place || ''};
+    if (join.place) checkIn(s.t, join); else askPlace(s.t, join);
+  });
   el.querySelectorAll('[data-rate]').forEach(b => b.onclick = () => askRating(allFich().find(x => x.pid === me && x.ts === Number(b.dataset.rate))));
   const fo = $('#fOut'); if (fo) fo.onclick = () => checkOut(Date.now());
   const fe = $('#fEdit'); if (fe) fe.onclick = openEditFich;
@@ -2369,7 +2401,6 @@ function fichHtml(key){
     const w = withHtml();
     body = `<div class="fich">${w}${w ? '<span class="lbl">O ficha tú en otro sitio</span>' : ''}
       <div class="fich-btns">${Object.values(PLACES).map(P => `<button class="fbtn" data-in="${P.k}" style="--fc:${P.hi}"><span class="fi">${svgI(P.k)}</span><span><b>Fichar ${P.k === 'bar' ? 'en bar' : 'en discoteca'}</b><span>${P.k === 'bar' ? 'Arranca el reloj de barra' : 'Arranca el reloj de pista'}</span></span></button>`).join('')}</div>
-      <input class="txt" id="placeName" list="placesList" maxlength="40" aria-label="Nombre del sitio" placeholder="Nombre del sitio (opcional): La Bodeguita, Kapital…"><datalist id="placesList">${knownPlaces().map(n => `<option value="${esc(n)}">`).join('')}</datalist>
     </div>`;
   }
   const list = done.length ? `<div class="card" style="padding:2px 16px">${done.map(x => `<div class="sess"><span class="dot" style="background:${PLACES[x.t].hi}">${svgI(x.t)}</span>
@@ -4967,7 +4998,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#avMod
 const TUTO = [
   {ill:'glass',   t:'Bienvenido a La Ronda', p:'La app para contar lo que bebe tu cuadrilla. Como Strava, pero con resaca. Arriba ves tu grupo: tócalo para cambiar de grupo o crear otro. Abajo, las pestañas.', joke:'Son 9 pantallas. Menos que una ronda.'},
   {ill:'stepper', tab:'mine', t:'Apunta lo que bebes', p:'Le das al + cuando pides y al − si te has colado. Cuanto más fuerte, más puntos. La noche va de 17:00 a 17:00.', joke:'De "Sobrio como un juez" a "Leyenda del bar". Tú verás.'},
-  {ill:'fichar',  tab:'mine', t:'Ficha al entrar', p:'Fichas al entrar en un bar o en la disco, o tocas "Estoy con…" para unirte a un amigo. Al salir, desfichas y le pones nota (solo la primera vez). ¿Se te olvidó? Lo corriges abajo.', joke:'Como en el curro, pero aquí vas con ganas.'},
+  {ill:'fichar',  tab:'mine', t:'Ficha al entrar', p:'Fichas al entrar en un bar o en la disco y dices cuál, o tocas "Estoy con…" para unirte a un amigo. Al salir, desfichas y le pones nota (solo la primera vez). ¿Se te olvidó? Lo corriges abajo.', joke:'Como en el curro, pero aquí vas con ganas.'},
   {ill:'perfil',  tab:'stats', t:'Tus stats y El Banco', p:'Tus mejores fiestas y récords, y en El Banco (la última pestaña) lo que llevas fundido en euros. Toca tu nombre arriba para cambiar foto, nombre o estado.', joke:'Si te pusiste un nombre absurdo, aún estás a tiempo.'},
   {ill:'podium',  tab:'group', t:'El grupo y El top', p:'En El grupo, las gráficas, quién está fichado ahora y quién hizo qué. En El top, el podio de barriles de la taberna.', joke:'Spoiler: el problema del grupo eres tú.'},
   {ill:'fotos',   tab:'fotos', t:'Pruebas del Delito', p:'Sube las fotos de la noche con un marco de broma y dales pulgar arriba. Las más votadas van al podio.', joke:'Lo que se sube, no se olvida.'},
