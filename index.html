@@ -2644,7 +2644,7 @@ const FRAMES = {
 };
 const CAP_IDEAS = ['Esto no pasó.','Nadie se acuerda de nada.','Pruebas irrefutables.','El momento exacto en que todo se torció.','Sin comentarios.','Mañana lo negará.','Aquí empezó todo.','Hubo testigos.'];
 const BURSTS = ['¡PILLADO!','¡TOMA YA!','¡ESCÁNDALO!','¡LO NIEGA!'];
-let fotos = {}, likes = {}, fotosFirst = true, fotoSort = 'top';
+let fotos = {}, likes = {}, fotosFirst = true, fotoSort = 'new';
 const imgCache = {}; let imgQueue = [], imgActive = 0;
 const likeCount = id => Object.values(likes).filter(l => l.photo === id).length;
 const iLiked = id => !!likes[`${id}__${me}`];
@@ -2704,7 +2704,7 @@ function renderFotos(){
   const list = fotoList();
   const ranked = [...list].map(f => ({...f, likes:likeCount(f.id)})).sort((a,b) => b.likes - a.likes || a.ts - b.ts);
   const podium = ranked.filter(f => f.likes > 0).slice(0, 3);
-  const shown = fotoSort === 'top' ? ranked : [...list].reverse();
+  const shown = fotoSort === 'top' ? ranked : [...list].sort((a, b) => (b.ts || 0) - (a.ts || 0));
   el.innerHTML = `
     <div class="sec" style="margin-top:8px">
       <div class="ev-hero">
@@ -2721,7 +2721,7 @@ function renderFotos(){
       <div class="podio-f">${podium.map((f, i) => `<div class="pf p${i+1}"><span class="pf-place">${i === 0 ? '<svg viewBox="0 0 24 24"><path d="M3 8l4 4 5-7 5 7 4-4-2 11H5z" fill="#F2B33D" stroke="#7A5005" stroke-width="1.2" stroke-linejoin="round"/></svg>' : ''}${i+1}.º</span>${frameHtml(f)}${likeBtn(f)}</div>`).join('')}</div></div>` : ''}
     <div class="sec">
       <div class="sec-h"><h2>Archivo de pruebas</h2>
-        <div class="filters" role="group" aria-label="Ordenar"><button class="seg" data-fs="top" aria-pressed="${fotoSort === 'top'}">Más pulgares</button><button class="seg" data-fs="new" aria-pressed="${fotoSort === 'new'}">Recientes</button></div></div>
+        <div class="filters" role="group" aria-label="Ordenar"><button class="seg" data-fs="new" aria-pressed="${fotoSort === 'new'}">Recientes</button><button class="seg" data-fs="top" aria-pressed="${fotoSort === 'top'}">Más pulgares</button></div></div>
       ${shown.length ? `<div class="fgrid">${shown.map((f, i) => `<div class="fcell" style="animation-delay:${Math.min(i, 12) * 50}ms">${frameHtml(f)}
           <div class="fmeta"><span class="fwho">${av(person(f.pid))}<span>${esc(person(f.pid).name)}</span></span>${likeBtn(f)}</div></div>`).join('')}</div>`
       : `<div class="card"><p class="empty">${dbState === 'connecting' ? 'Abriendo el archivo…' : 'Aún no hay pruebas. Sospechoso. Sube la primera y que empiece el juicio.'}</p></div>`}
