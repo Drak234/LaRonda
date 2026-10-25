@@ -899,6 +899,10 @@ body.fantasy .tab[aria-selected="true"]{background:#C9A24A;color:#241805}
 .rate-grid button:active{transform:translateY(3px) scale(.94);box-shadow:0 1px 0 color-mix(in srgb,var(--nc) 55%,#000)}
 .rate-sugg{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
 .rate-card .txt{text-align:center}
+.auto-txt{margin:0;color:var(--ink-2);font-size:15px;line-height:1.45;max-width:30ch}
+.auto-big{display:flex;align-items:baseline;justify-content:center;gap:8px;padding:4px 18px 8px;border-radius:20px;background:color-mix(in srgb,var(--amber) 16%,transparent);box-shadow:inset 0 0 0 2px var(--amber);animation:vpop .5s cubic-bezier(.2,1.6,.4,1)}
+.auto-big b{font-family:var(--font-display);font-weight:400;font-size:72px;line-height:1;color:var(--amber);text-shadow:0 4px 0 var(--amber-deep)}
+.auto-big span{font-family:var(--font-display);font-size:28px;color:var(--foam)}
 .nota-chip{min-width:34px;padding:5px 9px;border-radius:999px;font-family:var(--font-display);font-size:15px;color:#14100A;background:var(--nc)}
 .t-scroll{width:min(250px,86%);display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;padding:12px;border-radius:6px;color:#3B2A14;background:radial-gradient(ellipse at 30% 20%,#F1E2BC,#E2C995 70%,#D2B178);box-shadow:0 8px 18px rgba(0,0,0,.45)}
 /* ---------- LOS OKUPAS ---------- */
@@ -3044,7 +3048,29 @@ function fichAutoCheck(){
   const box = $('#rateModal'); if (!box.hidden) return;
   const now = Date.now();
   const s = allFich().filter(x => x.pid === me && x.auto && !x.asked && x.autoAt && now >= x.autoAt && now - x.autoAt < AUTO_ASK && !openSession(me)).sort((a, b) => b.ts - a.ts)[0];
-  if (s) askStill(s);
+  if (s){ askStill(s); return; }
+  // pasaron las 4 h sin entrar: solo avisamos de que se le contaron 5 h
+  const late = allFich().filter(x => x.pid === me && x.auto && !x.asked && x.autoAt && now - x.autoAt >= AUTO_ASK).sort((a, b) => b.ts - a.ts)[0];
+  if (late) tellAuto(late);
+}
+function tellAuto(s){
+  const P = PLACES[s.t]; const box = $('#rateModal'); box.hidden = false;
+  // se marcan todos los cierres automáticos pendientes de avisar, para no avisar de uno en uno
+  allFich().filter(x => x.pid === me && x.auto && !x.asked && x.ts !== s.ts).forEach(x => setFields(x, {asked:true}));
+  setFields(s, {asked:true});
+  box.innerHTML = `<div class="tcard rate-card auto-card">
+    <div class="ttop"><span class="tstep">Fichaje cerrado solo</span></div>
+    <div class="tbody">
+      <div class="rate-ico" style="--fc:${P.hi}">${svgI(s.t)}</div>
+      <h2>Tu último fichaje no se cerró</h2>
+      <p class="auto-txt">Fichaste ${P.en}${s.place ? ' (' + esc(s.place) + ')' : ''} el ${esc(fmtNightLong(s.night))} y no desfichaste, así que te hemos contado</p>
+      <div class="auto-big"><b>5</b><span>horas</span></div>
+      <div class="hint">Si estuviste más o menos, ajústalo en «Quiero modificar mi último fichaje».</div>
+      <button class="btn" data-ok>Entendido</button>
+    </div></div>`;
+  const close = () => { box.hidden = true; box.innerHTML = ''; render(); };
+  box.querySelector('[data-ok]').onclick = close;
+  box.onclick = e => { if (e.target === box) close(); };
 }
 function askStill(s){
   const P = PLACES[s.t]; const box = $('#rateModal'); box.hidden = false;
