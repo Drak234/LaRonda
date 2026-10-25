@@ -1839,9 +1839,14 @@ function flat(coll){
 const allDrinks = () => flat('nights');
 const allBurdel = () => flat('burdel');
 const allFich = () => flat('fichajes').filter(s => PLACES[s.t]);
-const sessEnd = s => s.out || Math.min(Date.now(), s.ts + MAX_OPEN);
+// desfichaje automático: a las 12 h sin desfichar se cierra solo y cuenta 5 h.
+// Si confirmas que sigues dentro, las 12 h vuelven a contar desde ese momento (campo ok).
+const AUTO_AFTER = 12 * 3600e3, AUTO_LEN = 5 * 3600e3, AUTO_ASK = 4 * 3600e3;
+const sessBase = s => s.ok || s.ts;
+const autoDue = s => !s.out && Date.now() - sessBase(s) >= AUTO_AFTER;
+const sessEnd = s => s.out || (autoDue(s) ? sessBase(s) + AUTO_LEN : Date.now());
 const sessDur = s => Math.max(0, sessEnd(s) - s.ts);
-const openSession = pid => allFich().filter(s => s.pid === pid && !s.out && Date.now() - s.ts < 36 * 3600e3).sort((a,b) => b.ts - a.ts)[0];
+const openSession = pid => allFich().filter(s => s.pid === pid && !s.out && !autoDue(s)).sort((a,b) => b.ts - a.ts)[0];
 const fmtH = ms => fmtPts(ms / 3600e3) + ' h';
 function clock(ms){ const s = Math.floor(ms/1000); return `${pad(Math.floor(s/3600))}:${pad(Math.floor(s/60)%60)}:${pad(s%60)}`; }
 function shortDur(ms){ const m = Math.floor(ms/60000); return m >= 60 ? `${Math.floor(m/60)} h ${pad(m%60)}` : `${m} min`; }
@@ -2340,7 +2345,7 @@ function checkIn(t, join, placeName){
 // amigos fichados ahora mismo en otro sitio distinto al mío
 function friendsInside(){
   const mine = openSession(me);
-  return people.filter(p => p.id !== me).map(p => [p, openSession(p.id)]).filter(([, s]) => s && Date.now() - s.ts < MAX_OPEN)
+  return people.filter(p => p.id !== me).map(p => [p, openSession(p.id)]).filter(([, s]) => s)
     .filter(([, s]) => !mine || mine.t !== s.t || placeKey(mine.place) !== placeKey(s.place))
     .sort((a, b) => b[1].ts - a[1].ts);
 }
@@ -2401,7 +2406,7 @@ function stamp(txt, small, neon){
 
 /* ================= ROUTER ================= */
 const grIdle = () => !$('#groups').hidden && !document.querySelector('#groups input:focus') && ![...document.querySelectorAll('#groups input')].some(i => i.type === 'password' && i.value);
-function refresh(){ if (!$('#who').hidden) renderWho(); if (!$('#app').hidden) render(); if (grIdle()) renderGroups(); }
+function refresh(){ if (!$('#who').hidden) renderWho(); if (!$('#app').hidden) render(); if (grIdle()) renderGroups(); fichAutoCheck(); }
 function setView(v){
   view = v;
   document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', t.dataset.v === v));
@@ -2540,7 +2545,7 @@ function fichHtml(key){
       <div class="live"><span class="pulse-dot"></span><b>Fichado ${P.en}${s.place ? ' · ' + esc(s.place) : ''}</b></div>
       <div class="timer" data-since="${s.ts}" aria-label="Tiempo dentro">${clock(Date.now() - s.ts)}</div>
       <div class="hint">Entraste el ${fmtNight(s.night)} a las ${fmtTime(s.ts)}</div>
-      ${Date.now() - s.ts > 8*3600e3 ? `<div class="warn">Llevas más de 8 horas fichado. Si se te olvidó desfichar, toca abajo «Quiero modificar mi último fichaje».</div>` : ''}
+      ${Date.now() - sessBase(s) > 8*3600e3 ? `<div class="warn">Llevas más de 8 horas fichado. Si se te olvidó desfichar, hazlo ya: a las 12 horas la app te desficha sola y te cuenta 5 horas.</div>` : ''}
       <div class="fich-row">
         <button class="btn sm out" id="fOut">${svgI('logout')} Desfichar</button>
         <button class="btn sm ghost" data-in="${other}">${svgI(other)} Me muevo a ${other === 'bar' ? 'un bar' : 'la disco'}</button>
@@ -3027,6 +3032,46 @@ function knownPlaces(t){
   allFich().filter(x => (!t || x.t === t) && x.place).forEach(x => { const k = placeKey(x.place); (m[k] = m[k] || {name:x.place, n:0}).n++; });
   return Object.values(m).sort((a,b) => b.n - a.n).map(x => x.name);
 }
+// cierra mis fichajes olvidados y, si se cerraron hace menos de 4 h, pregunta si sigo dentro
+const autoDone = new Set();
+function fichAutoCheck(){
+  if (!me || dbState !== 'ok' || readOnly || $('#app').hidden) return;
+  allFich().filter(s => s.pid === me && autoDue(s) && !autoDone.has(s.ts)).forEach(s => {
+    autoDone.add(s.ts);
+    const base = sessBase(s);
+    setFields(s, {out:base + AUTO_LEN, auto:true, autoAt:base + AUTO_AFTER, asked:false});
+  });
+  const box = $('#rateModal'); if (!box.hidden) return;
+  const now = Date.now();
+  const s = allFich().filter(x => x.pid === me && x.auto && !x.asked && x.autoAt && now >= x.autoAt && now - x.autoAt < AUTO_ASK && !openSession(me)).sort((a, b) => b.ts - a.ts)[0];
+  if (s) askStill(s);
+}
+function askStill(s){
+  const P = PLACES[s.t]; const box = $('#rateModal'); box.hidden = false;
+  box.innerHTML = `<div class="tcard rate-card">
+    <div class="ttop"><span class="tstep">Fichaje cerrado solo</span></div>
+    <div class="tbody">
+      <div class="rate-ico" style="--fc:${P.hi}">${svgI(s.t)}</div>
+      <h2>¿Sigues ${s.t === 'disco' ? 'en la discoteca' : 'en el bar'}${s.place ? ' (' + esc(s.place) + ')' : ''}?</h2>
+      <div class="hint">Llevabas 12 horas fichado sin desfichar, así que la app te desfichó y te contó 5 horas.</div>
+      <div class="row" style="justify-content:center;gap:10px;margin-top:6px"><button class="btn" data-yes>Sí, sigo aquí</button><button class="btn ghost" data-no>No, ya me fui</button></div>
+    </div></div>`;
+  const close = () => { box.hidden = true; box.innerHTML = ''; };
+  box.querySelector('[data-yes]').onclick = () => {
+    if (!canWrite()) return;
+    const id = `${s.pid}__${s.doc || s.night}`;
+    writeArr('fichajes', id, itemsOf('fichajes', id).map(it => {
+      if (it.ts !== s.ts) return it;
+      const n = {...it, ok:Date.now(), asked:true}; delete n.out; delete n.auto; delete n.autoAt; return n;
+    }));
+    autoDone.delete(s.ts);
+    close(); render(); toast(`Fichaje recuperado. Sigues ${P.en}${s.place ? ' (' + s.place + ')' : ''}.`);
+  };
+  const no = () => { setFields(s, {asked:true}); close(); render(); };
+  box.querySelector('[data-no]').onclick = () => { no(); toast('Perfecto. Te quedan contadas 5 horas.'); };
+  box.onclick = e => { if (e.target === box) no(); };
+}
+setInterval(() => { fichAutoCheck(); }, 60000);
 function setFields(s, fields){
   const id = `${s.pid}__${s.doc || s.night}`;
   writeArr('fichajes', id, itemsOf('fichajes', id).map(it => it.ts === s.ts ? {...it, ...fields} : it));
@@ -5194,7 +5239,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#avMod
 const TUTO = [
   {ill:'glass',   t:'Bienvenido a La Ronda', p:'La app para contar lo que bebe tu cuadrilla. Como Strava, pero con resaca. Arriba ves tu grupo: tócalo para cambiar de grupo o crear otro. Abajo, las pestañas.', joke:'Son 9 pantallas. Menos que una ronda.'},
   {ill:'stepper', tab:'mine', t:'Apunta lo que bebes', p:'Le das al + cuando pides y al − si te has colado. Cuanto más fuerte, más puntos. La noche va de 17:00 a 17:00.', joke:'De "Sobrio como un juez" a "Leyenda del bar". Tú verás.'},
-  {ill:'fichar',  tab:'mine', t:'Ficha al entrar', p:'Fichas al entrar en un bar o en la disco y dices cuál, o tocas "Estoy con…" para unirte a un amigo. Al salir, desfichas y le pones nota (solo la primera vez). ¿Se te olvidó? Lo corriges abajo.', joke:'Como en el curro, pero aquí vas con ganas.'},
+  {ill:'fichar',  tab:'mine', t:'Ficha al entrar', p:'Fichas al entrar en un bar o en la disco y dices cuál, o tocas "Estoy con…" para unirte a un amigo. Al salir, desfichas y le pones nota (solo la primera vez). ¿Se te olvidó? A las 12 h te desficha la app.', joke:'Como en el curro, pero aquí vas con ganas.'},
   {ill:'perfil',  tab:'stats', t:'Tus stats y El Banco', p:'Tus mejores fiestas y récords, y en El Banco (la última pestaña) lo que llevas fundido en euros. Toca tu nombre arriba para cambiar foto, nombre o estado.', joke:'Si te pusiste un nombre absurdo, aún estás a tiempo.'},
   {ill:'podium',  tab:'group', t:'El grupo y El top', p:'En El grupo, las gráficas, quién está fichado ahora y quién hizo qué. En El top, el podio de barriles de la taberna.', joke:'Spoiler: el problema del grupo eres tú.'},
   {ill:'fotos',   tab:'fotos', t:'Pruebas del Delito', p:'Sube las fotos de la noche con un marco de broma y dales pulgar arriba. Las más votadas van al podio.', joke:'Lo que se sube, no se olvida.'},
