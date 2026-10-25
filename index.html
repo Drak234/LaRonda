@@ -1848,7 +1848,9 @@ const allFich = () => flat('fichajes').filter(s => PLACES[s.t]);
 const AUTO_AFTER = 12 * 3600e3, AUTO_LEN = 5 * 3600e3, AUTO_ASK = 4 * 3600e3;
 const sessBase = s => s.ok || s.ts;
 const autoDue = s => !s.out && Date.now() - sessBase(s) >= AUTO_AFTER;
-const sessEnd = s => s.out || (autoDue(s) ? sessBase(s) + AUTO_LEN : Date.now());
+// si alguien desficha cuando ya han pasado más de 12 h (se le olvidó y lo hizo al día siguiente), también cuentan 5 h,
+// salvo que lo haya corregido a mano en «Quiero modificar mi último fichaje» (edited)
+const sessEnd = s => s.out ? (!s.edited && s.out - sessBase(s) > AUTO_AFTER ? sessBase(s) + AUTO_LEN : s.out) : (autoDue(s) ? sessBase(s) + AUTO_LEN : Date.now());
 const sessDur = s => Math.max(0, sessEnd(s) - s.ts);
 const openSession = pid => allFich().filter(s => s.pid === pid && !s.out && !autoDue(s)).sort((a,b) => b.ts - a.ts)[0];
 const fmtH = ms => fmtPts(ms / 3600e3) + ' h';
@@ -2363,7 +2365,11 @@ function withHtml(){
 function checkOut(at){
   if (!canWrite()) return;
   const s = openSession(me); if (!s) return;
-  const out = Math.max(s.ts + 60000, Math.min(at, Date.now()));
+  let out = Math.max(s.ts + 60000, Math.min(at, Date.now()));
+  if (out - sessBase(s) > AUTO_AFTER){
+    out = sessBase(s) + AUTO_LEN; setFields(s, {out, auto:true, autoAt:sessBase(s) + AUTO_AFTER, asked:true}); render();
+    toast('Más de 12 horas sin desfichar: te contamos 5 horas. Si estuviste más, corrígelo abajo.'); return;
+  }
   setOut(s, out); render();
   toast(`Desfichado: ${fmtDur(out - s.ts)} ${PLACES[s.t].en}`, {label:'Deshacer', fn:() => { setOut(s, null); render(); }});
   setTimeout(() => maybeRate({...s, out}), 350);
@@ -2616,7 +2622,7 @@ function openEditFich(){
     if (r[1] - r[0] < 60000){ $('#efErr').textContent = 'Tienes que haber estado al menos un minuto.'; return; }
     if (r[1] - r[0] > 20 * 3600e3){ $('#efErr').textContent = 'Más de 20 horas seguidas no cuela. Revisa las horas.'; return; }
     if (!canWrite()) return;
-    setFields(s, {ts:r[0], out:r[1]}); close(); render();
+    setFields(s, {ts:r[0], out:r[1], edited:true}); close(); render();
     toast(`Fichaje corregido: ${fmtDur(r[1] - r[0])} ${P.en}`);
   };
   const op = $('#efOpen'); if (op) op.onclick = () => { if (!canWrite()) return; setOut(s, null); close(); render(); toast('Vale, sigues dentro. El reloj vuelve a correr.'); };
@@ -3119,7 +3125,7 @@ function askRating(s){
         ${sugg.length ? `<div class="rate-sugg">${sugg.map(n => `<button type="button" class="seg" data-name="${esc(n)}">${esc(n)}</button>`).join('')}</div>` : ''}`}
       <div class="rate-grid">${Array.from({length:10}, (_, i) => `<button type="button" data-n="${i+1}" style="--nc:${notaColor(i+1)}" aria-label="Nota ${i+1}">${i+1}</button>`).join('')}</div>
       <div class="err" id="rateErr" role="alert"></div>
-      <div class="hint">${s.out ? fmtDur(Math.max(0, s.out - s.ts)) + ' ' + P.en + '. ' : ''}Un toque y listo.</div>
+      <div class="hint">${s.out ? fmtDur(Math.max(0, sessEnd(s) - s.ts)) + ' ' + P.en + '. ' : ''}Un toque y listo.</div>
     </div></div>`;
   const close = () => { box.hidden = true; box.innerHTML = ''; };
   box.querySelector('[data-x]').onclick = close;
